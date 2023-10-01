@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import { useState, useEffect } from "react";
-import "../assets/css/StockLoadingSpinner.css";
+import "../../../assets/css/StockLoadingSpinner.css";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 
 function AllProducts() {
