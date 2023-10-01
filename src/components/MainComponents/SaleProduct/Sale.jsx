@@ -1,8 +1,8 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from "react";
-import Aside from "../Aside";
+import Aside from "../../NavbarAndAsideCom/Aside";
 import Scan from "./Scan";
-import Navbar from "../../Navbar";
+import Navbar from "../../NavbarAndAsideCom/Navbar";
 import LoadingSpinner from "../../LoaddingComponents/LoadingSpinner";
 
 function Sale() {
@@ -30,9 +30,11 @@ function Sale() {
   return (
     <div className="">
       <div className="">
+        {/* Import Navbar มาใช้ */}
         <Navbar />
       </div>
       <div className="flex h-[90vh]">
+        {/* Import Aside มาใช้ */}
         <Aside />
         <div className="w-[40%] flex bg-white flex-wrap justify-center full overflow-y-scroll gap-1">
           {/* ถ้ายัง fetch api ให้ดึงหน้า โหลดมาใช้ */}

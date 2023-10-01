@@ -1,5 +1,5 @@
-import Aside from "../Aside";
-import Navbar from "../../Navbar";
+import Aside from "../../NavbarAndAsideCom/Aside";
+import Navbar from "../../NavbarAndAsideCom/Navbar";
 import "../../../assets/css/StockLoadingSpinner.css";
 import { useState } from "react";
 import OutStockProducts from "./OutStockProducts";
@@ -13,8 +13,10 @@ function Stock() {
 
   return (
     <div>
+      {/* Import Navbar มาใช้ */}
       <Navbar />
       <div className="flex w-full h-full">
+        {/* Import Aside มาใช้ */}
         <Aside />
         <div className="w-[80%] flex flex-col pl-1">
           <div className="w-full h-[4rem] text-[#4C49ED] text-[32px] font-semibold items-center flex pl-4 ">

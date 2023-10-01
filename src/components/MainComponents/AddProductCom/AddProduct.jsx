@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React from "react";
-import Aside from "../Aside";
-import Navbar from "../../Navbar";
+import Aside from "../../NavbarAndAsideCom/Aside";
+import Navbar from "../../NavbarAndAsideCom/Navbar";
 
 function AddProduct() {
   return (

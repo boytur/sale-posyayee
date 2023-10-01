@@ -2,7 +2,7 @@
 import React from "react";
 import { BsShop } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import userPic from "../assets/img/user.png";
+import userPic from "../../assets/img/user.png";
 import { BiSearchAlt } from "react-icons/bi";
 
 let userName = "Default";
