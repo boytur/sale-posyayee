@@ -1,14 +1,13 @@
-// eslint-disable-next-line no-unused-vars
 import { useState, useEffect } from "react";
 import "../assets/css/StockLoadingSpinner.css";
-import {AiFillDelete, AiFillEdit} from 'react-icons/ai';
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 
-function AllProducts() {
+function OutStockProducts() {
   const [stockProducts, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     // Fetch data from the API
-    fetch("http://localhost:5500/view-product")
+    fetch("http://localhost:5500/view-outstock-product")
       .then((response) => response.json())
       .then((data) => {
         setProducts(data.products); //ชื่อ collection
@@ -30,9 +29,13 @@ function AllProducts() {
           className=" overflow-y-scroll"
           style={{ maxHeight: "calc(100vh - 16rem)" }}
         >
-          {stockProducts.map((product) => (
+          {stockProducts.map((product, index) => (
             <div key={product._id} className="mt-1 pl-4">
-              <table className="w-full text-center h-[3rem] rounded-md">
+              <table
+                className={`w-full text-center h-[3rem] rounded-md ${
+                  index % 2 !== 0 ? "bg-[#d9d9d91a]" : "bg-white"
+                }`}
+              >
                 <thead>
                   <tr>
                     <th
@@ -103,9 +106,13 @@ function AllProducts() {
                       }}
                     >
                       <ul className="flex justify-center gap-3">
-                        <button><AiFillDelete size={30}/></button>
-                        <p>|</p>
-                        <button><AiFillEdit size={30}/></button>
+                        <button className=" hover:scale-125">
+                          <AiFillEdit size={30} color="#36454f" />
+                        </button>
+                        <p className="text-[#cfd1d1]">|</p>
+                        <button className=" hover:scale-125">
+                          <AiFillDelete size={30} color="#f75d59" />
+                        </button>
                       </ul>
                     </th>
                   </tr>
@@ -119,4 +126,4 @@ function AllProducts() {
   );
 }
 
-export default AllProducts;
+export default OutStockProducts;

@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import Sale from "./components/Sale";
-import Stock from "./components/Stock";
-import AddProduct from "./components/AddProduct";
-import Analysis from "./components/Analysis";
+import Sale from "./components/MainComponents/SaleProduct/Sale";
+import Stock from "./components/MainComponents/StockProductCom/Stock";
+import AddProduct from "./components/MainComponents/AddProductCom/AddProduct";
+import Analysis from "./components/MainComponents/AnalysisCom/Analysis";
 
 function App() {
   return (

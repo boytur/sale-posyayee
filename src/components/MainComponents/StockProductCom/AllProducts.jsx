@@ -1,12 +1,14 @@
+// eslint-disable-next-line no-unused-vars
 import { useState, useEffect } from "react";
 import "../assets/css/StockLoadingSpinner.css";
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 
-function OutStockProducts() {
+function AllProducts() {
   const [stockProducts, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     // Fetch data from the API
-    fetch("http://localhost:5500/view-outstock-product")
+    fetch("http://localhost:5500/view-product")
       .then((response) => response.json())
       .then((data) => {
         setProducts(data.products); //ชื่อ collection
@@ -28,9 +30,13 @@ function OutStockProducts() {
           className=" overflow-y-scroll"
           style={{ maxHeight: "calc(100vh - 16rem)" }}
         >
-          {stockProducts.map((product) => (
+          {stockProducts.map((product, index) => (
             <div key={product._id} className="mt-1 pl-4">
-              <table className="w-full text-center h-[3rem] rounded-md">
+              <table
+                className={`w-full text-center h-[3rem] rounded-md ${
+                  index % 2 !== 0 ? "bg-[#d9d9d91a]" : "bg-white"
+                }`}
+              >
                 <thead>
                   <tr>
                     <th
@@ -91,7 +97,11 @@ function OutStockProducts() {
                         fontWeight: "normal",
                       }}
                     >
-                      {product.barcode == null ? <p>ไม่มี</p> : product.barcode}
+                      {product.barcode == null ? (
+                        <p className=" text-[10px] font-thin">ไม่มี</p>
+                      ) : (
+                        product.barcode
+                      )}
                     </th>
                     <th
                       style={{
@@ -99,7 +109,17 @@ function OutStockProducts() {
                         borderLeft: "2px solid #ffff",
                         fontWeight: "normal",
                       }}
-                    ></th>
+                    >
+                      <ul className="flex justify-center gap-3">
+                        <button className=" hover:scale-125">
+                          <AiFillEdit size={30} color="#36454f" />
+                        </button>
+                        <p className="text-[#cfd1d1]">|</p>
+                        <button className=" hover:scale-125">
+                          <AiFillDelete size={30} color="#f75d59" />
+                        </button>
+                      </ul>
+                    </th>
                   </tr>
                 </thead>
               </table>
@@ -111,4 +131,4 @@ function OutStockProducts() {
   );
 }
 
-export default OutStockProducts;
+export default AllProducts;

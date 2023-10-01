@@ -1,17 +1,17 @@
-import Aside from "./Aside";
-import Navbar from "./Navbar";
-import "../assets/css/StockLoadingSpinner.css";
+import Aside from "../Aside";
+import Navbar from "../../Navbar";
+import "../../../assets/css/StockLoadingSpinner.css";
 import { useState } from "react";
 import OutStockProducts from "./OutStockProducts";
 import AllProducts from "./AllProducts";
 
 function Stock() {
-  let [btnCheck , setBtnCheck] = useState(true);
-  function onBtnClick (){
-    setBtnCheck(!btnCheck)
+  let [btnCheck, setBtnCheck] = useState(true);
+  function onBtnClick() {
+    setBtnCheck(!btnCheck);
   }
 
-   return (
+  return (
     <div>
       <Navbar />
       <div className="flex w-full h-full">
@@ -24,12 +24,18 @@ function Stock() {
           </div>
           <div>
             <div className="flex gap-6 w-full bg-white pl-4 rounded-md h-[3rem] items-center">
-              <button onClick={onBtnClick} 
-              className={btnCheck ? "text-[#4C49ED] underline" : "text-black"}>
+              <button
+                onClick={onBtnClick}
+                className={btnCheck ? "text-[#4C49ED] underline" : "text-black"}
+              >
                 <p>สินค้าใกล้จะหมด</p>
               </button>
-              <button onClick={onBtnClick}
-               className={!btnCheck ? "text-[#4C49ED] underline" : "text-black"}>
+              <button
+                onClick={onBtnClick}
+                className={
+                  !btnCheck ? "text-[#4C49ED] underline" : "text-black"
+                }
+              >
                 <p>สินค้าทั้งหมด</p>
               </button>
             </div>
@@ -66,7 +72,7 @@ function Stock() {
               </thead>
             </table>
           </div>
-          {btnCheck ? (<OutStockProducts/>):(<AllProducts/>)}
+          {btnCheck ? <OutStockProducts /> : <AllProducts />}
         </div>
       </div>
     </div>

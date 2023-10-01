@@ -9,7 +9,7 @@ function Aside() {
   const navigate = useNavigate();
   const location = useLocation();
 
-   // กำหนดปุ่มที่เป็น "active" ตามเส้นทางปัจจุบัน
+  // กำหนดปุ่มที่เป็น "active" ตามเส้นทางปัจจุบัน
   const getActiveButton = (route) => {
     return location.pathname === route ? "bg-[#E4E3FF] text-[#4C49ED]" : "";
   };

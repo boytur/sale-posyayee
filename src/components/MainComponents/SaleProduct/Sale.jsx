@@ -1,9 +1,9 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from "react";
-import Aside from "./Aside";
+import Aside from "../Aside";
 import Scan from "./Scan";
-import Navbar from "./Navbar";
-import LoadingSpinner from "./LoadingSpinner";
+import Navbar from "../../Navbar";
+import LoadingSpinner from "../../LoaddingComponents/LoadingSpinner";
 
 function Sale() {
   const [products, setProducts] = useState([]);
@@ -28,7 +28,6 @@ function Sale() {
   );
 
   return (
-    
     <div className="">
       <div className="">
         <Navbar />
