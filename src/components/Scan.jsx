@@ -3,7 +3,7 @@ import React from 'react'
 
 function Scan() {
   return (
-    <div className='border w-[43%] h-full flex justify-center'>Scan</div>
+    <div className='border h-full w-[40%] flex justify-center'>Scan</div>
   )
 }
 
