@@ -48,7 +48,7 @@ function OutStockProducts() {
                       <div className="flex gap-2 items-center overflow-hidden">
                         <img
                           src={product.image}
-                          className="w-[50px] h-[40px] object-cover"
+                          className="w-[50px] h-[40px] object-cover rounded-md"
                           alt=""
                         />
                         {product.name}
