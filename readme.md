@@ -1,8 +1,8 @@
 ** First commit **
 - สร้างหน้าหลัก Route ของ Aside (Left nav bar)
 - เชื่อม API สินค้าไม่มีบาร์โค้ดมาแสดงหน้าหลัก 
-  
 
+![สกรีนช็อต 2023-09-30 165341](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/5e7eae68-6e28-4233-8e76-49205b78c613)
 
 ** Second commit **
 - ทำหน้าสต็อก 
