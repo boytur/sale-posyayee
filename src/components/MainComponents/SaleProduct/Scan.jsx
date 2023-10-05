@@ -72,7 +72,9 @@ function Scan({ cart, setCart }) {
   //ยกเลิกการขาย modal
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const openCancelModal = () => {
-    setIsCancelModalOpen(true);
+    if (cartItems.length > 0){
+      setIsCancelModalOpen(true);
+    }
   };
   const closeCancelModal = () => {
     setIsCancelModalOpen(false);
