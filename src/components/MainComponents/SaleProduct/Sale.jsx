@@ -1,49 +1,69 @@
-/* eslint-disable react/prop-types */
-// eslint-disable-next-line no-unused-vars
-import React, { useState, useEffect } from "react";
+/*
+  Sale.jsx เป็นหน้าหลักของการแสดงผล
+  โดยตัวมันเองจะแสดงสินค้าที่ไม่มีบาร์โค้ด (หน้าตรงกลาง)
+  จะประกอบไปด้วยหน้าย่อย 3 หน้าคือ
+  Scan.jsx คือหน้า scan สินค้าลงในตะกร้า
+  Aside.jsx คือหน้า Navbar ด้านซ้าย
+  Navbar.jsx คือ Navbar ด้านบน 
+
+  **เพิ่มเติม**
+  -มีการส่ง props scan , setScan ไปใช้
+  -มีการเรียกใช้ LoadingSpinner.jsx เพื่อเป็นหน้าโหลดรอ fetch API
+  -มีการเรียกใช้ Toastify ช่วยทำการแจ้งเตือน
+  DATE : 30/กันยายน/2023
+  OWNER : piyawat W.
+
+*/
+import { useState, useEffect } from "react";
 import Aside from "../../NavbarAndAsideCom/Aside";
 import Scan from "./Scan";
 import Navbar from "../../NavbarAndAsideCom/Navbar";
 import LoadingSpinner from "../../LoaddingComponents/LoadingSpinner";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+
 function Sale() {
+
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [cart, setCart] = useState([]);
-  // Function to add a product to the cart
+
+  // ฟังก์ชันเพิ่มสินค้าในตะกร้า
   function addProduct(product) {
-    // Check if the product is already in the cart
+    // ค้นหาว่าสินค้าที่ถูกส่งเข้ามาอยู่ในตะกร้าแล้วหรือไม่
     const existingProductIndex = cart.findIndex(
       (item) => item._id === product._id
     );
 
     if (existingProductIndex !== -1) {
-      // If it exists, update the quantity
+      // ถ้าสินค้านี้มีอยู่ในตะกร้าแล้ว
+      // ให้เพิ่มปริมาณสินค้าในตะกร้าเดิมของสินค้านี้
       const updatedCart = [...cart];
       updatedCart[existingProductIndex].quantity += 1;
       setCart(updatedCart);
     } else {
-      // If it doesn't exist, add it to the cart with a quantity of 1
+      // ถ้าสินค้านี้ยังไม่มีอยู่ในตะกร้า
+      // ให้เพิ่มสินค้านี้เข้าไปในตะกร้าพร้อมปริมาณเป็น 1
       setCart([...cart, { ...product, quantity: 1 }]);
     }
   }
 
   useEffect(() => {
-    // Fetch data from the API
+    // Fetch API สินค้าทั้งหมด
     fetch("http://localhost:5500/view-product")
       .then((response) => response.json())
       .then((data) => {
         setProducts(data.products);
-        setIsLoading(false); // Set loading to false when data is fetched
+        setIsLoading(false); // Set หน้าโหลดเป็นโหลดเสร็จ
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
-        setIsLoading(false); // Set loading to false on error as well
+        setIsLoading(false); // Set หน้าโหลดเป็นโหลดเสร็จ
       });
   }, []);
 
-  // Filter products where barcode is null
+  // ฟิลเตอร์หาโปรดัคที่มีบาร์โค้ดเป็น null
   const filteredProducts = products.filter(
     (product) => product.barcode === null
   );
@@ -51,10 +71,12 @@ function Sale() {
   return (
     <div>
       <div>
-        {/* Import Navbar */}
+        {/* <div className="flex justify-center bg-[#000000d4] w-full absolute z-50 h-full items-center">
+        </div> */}
+        {/* Import Navbar มาใช้ */}
         <Navbar />
       </div>
-      <div className="flex h-[90vh]">
+      <div className="flex h-[90vh] relative">
         {/* การแจ้งเตือน */}
         <ToastContainer
           position="top-center"
@@ -68,14 +90,14 @@ function Sale() {
           pauseOnHover
           theme="light"
         />
-        {/* Import Aside */}
+        {/* Import Aside มาใช้ */}
         <Aside />
         <div className="w-[40%] flex bg-white flex-wrap justify-center full overflow-y-scroll gap-1">
-          {/* If still loading, display loading spinner */}
+          {/* ถ้ายังโหลดให้แสดงหน้าโหลด ถ้าไม่ ให้แสดงข้อมูล*/}
           {isLoading ? (
             <LoadingSpinner />
           ) : (
-            // If fetching API is done, display products
+            // map ข้อมูลจากสินค้าที่ไม่มีบาร์โค้ด
             filteredProducts.map((product) => (
               <div
                 key={product._id}
@@ -99,7 +121,7 @@ function Sale() {
             ))
           )}
         </div>
-        {/* Render the Scan component and pass cart and setCart as props */}
+        {/* แสดงคอมโพนเนนต์ Scan และส่ง cart และ setCart เป็น props */}
         <Scan cart={cart} setCart={setCart} />
       </div>
     </div>

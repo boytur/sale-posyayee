@@ -1,26 +1,40 @@
-/* eslint-disable react/prop-types */
 import { AiFillDelete } from "react-icons/ai";
-import {useEffect} from "react";
-import {toast } from "react-toastify";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PropTypes from "prop-types";
+import Modal from "react-modal";
+
+Modal.setAppElement("#root");
+
+Scan.propTypes = {
+  cart: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  setCart: PropTypes.func.isRequired,
+};
 
 function Scan({ cart, setCart }) {
-  // Ensure cart is an array before calling map
   let cartItems = Array.isArray(cart) ? cart : [];
-  // คำนวณราคารวมใหม่ทุกครั้งที่มีการเพิ่มหรือลบสินค้า
-  let totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+
+  let totalPrice = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+
+  let totalPriceCommas = totalPrice.toLocaleString("en-US");
 
   function deleteProductCart(_id) {
-    // ใช้ findIndex เพื่อหา index ของสินค้าที่ต้องการลบ
-    const indexToDelete = cart.findIndex(item => item._id === _id);
-  
-    // ตรวจสอบว่าพบสินค้าที่ต้องการลบหรือไม่
+    const indexToDelete = cart.findIndex((item) => item._id === _id);
+
     if (indexToDelete !== -1) {
       const deletedItem = cart[indexToDelete];
       const updatedItems = [...cart];
-      updatedItems.splice(indexToDelete, 1); // ลบสินค้าออกจากอาเรย์
-  
-      // แสดงข้อความ toast โดยใช้ชื่อสินค้าที่ถูกลบ
+      updatedItems.splice(indexToDelete, 1);
+
       toast.error(`ลบ ${deletedItem.name}`, {
         position: "top-center",
         autoClose: 500,
@@ -30,37 +44,58 @@ function Scan({ cart, setCart }) {
         draggable: true,
         progress: undefined,
         theme: "colored",
-        });
-      // อัปเดตตะกร้าสินค้า
+      });
+
       setCart(updatedItems);
     }
   }
 
-  function cancelOrder() {
-    setCart([]);
-  }
-
-  //เช็คว่ากดปุ่มอะไร
   const PayMoney = () => {
-    // your logic here
-    console.log('pressed Enter ✅');
+    openConfirmModal();
   };
+
   useEffect(() => {
-    const keyDownHandler = event => {
-      console.log('User pressed: ', event.key);
+    const keyDownHandler = (event) => {
+      console.log("User pressed: ", event.key);
 
-      if (event.key === 'Enter') {
+      if (event.key === "Enter") {
         event.preventDefault();
-
-        // 👇️ your logic here
         PayMoney();
       }
     };
-    document.addEventListener('keydown', keyDownHandler);
+    document.addEventListener("keydown", keyDownHandler);
     return () => {
-      document.removeEventListener('keydown', keyDownHandler);
+      document.removeEventListener("keydown", keyDownHandler);
     };
   }, []);
+
+  //ยกเลิกการขาย modal
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const openCancelModal = () => {
+    setIsCancelModalOpen(true);
+  };
+  const closeCancelModal = () => {
+    setIsCancelModalOpen(false);
+  };
+
+  const confirmCancelOrder = () => {
+    setCart([]);
+    closeCancelModal();
+    // ทำงานเมื่อผู้ใช้ยืนยันการยกเลิกการขาย
+  };
+
+  //ยืนยันการจ่ายตัง modal
+  const [isComfirmModaOpen, SetComfirmModaOpen] = useState(false);
+  const openConfirmModal = () => {
+    SetComfirmModaOpen(true);
+  };
+  const closeConfirmModal = () => {
+    SetComfirmModaOpen(false);
+  };
+  const confirmPayOrder = () => {
+    setCart([]);
+    closeConfirmModal();
+  };
 
   return (
     <div className=" h-full w-[40%] flex justify-center">
@@ -134,7 +169,7 @@ function Scan({ cart, setCart }) {
                           fontWeight: "normal",
                         }}
                       >
-                        {item.quantity} {/* Display quantity */}
+                        {item.quantity}
                       </th>
                       <th
                         style={{
@@ -163,22 +198,139 @@ function Scan({ cart, setCart }) {
             <p>ราคารวม</p>
           </div>
           <div className="text-[2.5rem] text-[#4C49ED] pr-4 flex">
-            <p className="font-semibold">{totalPrice.toFixed(2)} </p>
+            <p className="font-semibold">{totalPriceCommas}</p>
             <p>&nbsp;฿</p>
           </div>
         </div>
         <div className="w-full gap-3 flex justify-between p-2">
           <button
             className="w-[304px] h-[80px]  bg-[#D6D6D6CC] rounded-md text-[#ff000077] hover:bg-[#d6d6d6]"
-            onClick={() => cancelOrder()}
+            onClick={openCancelModal}
           >
             <p>ยกเลิกการขาย</p>
           </button>
-          <button className="w-[304px] h-[80px]  bg-[#4C49ED] rounded-md text-[2.5rem] text-white hover:bg-[#4c49edc4]">
+          <button
+            className="w-[304px] h-[80px]  bg-[#4C49ED] rounded-md text-[2.5rem] text-white hover:bg-[#4c49edc4]"
+            onClick={openConfirmModal}
+          >
             <p>จ่าย</p>
           </button>
         </div>
       </div>
+
+      {/* Modal ยืนยันการยกเลิกการขาย */}
+      <Modal
+        isOpen={isCancelModalOpen}
+        onRequestClose={closeCancelModal}
+        contentLabel="ยืนยันการยกเลิก"
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+          },
+          content: {
+            width: "40rem", // Set the width you desire
+            height: "25rem", // Set the height you desire
+            margin: "auto", // Center the modal horizontally
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: "8px", // Rounded corners
+          },
+        }}
+      >
+        <div className=" w-full h-full text-center">
+          <div>
+            <div className="text-[#4C49ED] font-bold text-[2rem]">
+              <h2>ยืนยันการยกเลิกการขาย</h2>
+            </div>
+            <hr />
+            <div className="h-full">
+              <p className="mt-[5rem]">
+                คุณแน่ใจหรือไม่ที่ต้องการยกเลิกการขาย?
+              </p>
+            </div>
+          </div>
+          <div className="w-full  gap-6 flex justify-center mt-[8rem]">
+            <div>
+              <button
+                onClick={confirmCancelOrder}
+                className="w-[17rem] bg-[#4C49ED] text-white border h-[4rem] rounded-md hover:bg-[#4c49edc4]"
+              >
+                ยืนยัน
+              </button>
+            </div>
+            <div>
+              <button
+                onClick={closeCancelModal}
+                className="w-[17rem]  border h-[4rem] rounded-md text-[#ff000077] bg-[#D6D6D6CC] hover:bg-[#d6d6d6]"
+              >
+                ยกเลิก
+              </button>
+            </div>
+          </div>
+        </div>
+      </Modal>
+      {/* Modal ยืนยันการจ่ายเงิน */}
+      <Modal
+        isOpen={isComfirmModaOpen}
+        onRequestClose={closeConfirmModal}
+        contentLabel="ยืนยันการยกเลิก"
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+          },
+          content: {
+            width: "40rem", // Set the width you desire
+            height: "25rem", // Set the height you desire
+            margin: "auto", // Center the modal horizontally
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: "8px", // Rounded corners
+          },
+        }}
+      >
+        <div className=" w-full h-full text-center">
+          <div>
+            <div className="text-[#4C49ED] font-bold text-[2rem]">
+              <h2>ยืนยันการจ่ายเงิน</h2>
+            </div>
+            <hr />
+            <div className="h-full flex justify-center">
+              <div className="mt-[3rem] flex gap-4">
+                <label className="h-[3rem] items-center flex">เงินสด :</label>
+                <input
+                  className="h-[3rem] border text-black p-3 placeholder:p-3"
+                  type="number"
+                  placeholder="ป้อนเงินรับมา"
+                  name=""
+                  id=""
+                />
+              </div>
+            </div>
+          </div>
+          <div className="w-full  gap-6 flex justify-center mt-[8rem]">
+            <div>
+              <button
+                onClick={confirmPayOrder}
+                className="w-[17rem] bg-[#4C49ED] text-white border h-[4rem] rounded-md hover:bg-[#4c49edc4]"
+              >
+                ยืนยัน
+              </button>
+            </div>
+            <div>
+              <button
+                onClick={closeConfirmModal}
+                className="w-[17rem]  border h-[4rem] rounded-md text-[#ff000077] bg-[#D6D6D6CC] hover:bg-[#d6d6d6]"
+              >
+                ยกเลิก
+              </button>
+            </div>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }
