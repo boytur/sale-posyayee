@@ -23,12 +23,15 @@
 - ทำฟังก์ชันลบข้อมูลจาก scan
 - เพิ่มปุ่มแจ้งเตือนเวลาลบข้อมูลด้วย toatify
 - เพิ่มปุ่มยกเลิกการขาย (ยังไม่ได้สร้าง pop-up confiirm)
+
+  
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/caa5b99d-8d2a-4a01-b281-8c93c1c9cf2a)
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/c47e9ebe-dc96-4026-b77b-97113e7ddd0f)
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/6797ed15-7030-4e5b-be0a-3b391972b007)
 
 ** Fourth **
-
+- เพิ่ม Popup confirm
+  
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/d0aa4f5c-3519-4314-857d-02b3668355e4)
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/52662abb-b704-4d5c-ada6-f7005081ff8d)
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/0e8f4345-2e3b-4af3-bdaf-5f595a1a005a)
