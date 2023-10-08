@@ -42,7 +42,7 @@ function Stock() {
               </button>
             </div>
           </div>
-          <div className="mt-3 bg-white  overflow-y-scroll pl-4">
+          <div className="mt-3  overflow-y-scroll pl-4">
             <table className="w-full text-center bg-[#D9D9D9] h-[3rem] rounded-md ">
               <thead>
                 <tr>

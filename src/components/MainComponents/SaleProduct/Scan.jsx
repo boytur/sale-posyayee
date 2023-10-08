@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PropTypes from "prop-types";
 import Modal from "react-modal";
+import CancelOrder from "../../PopupComponents/CancelOrder";
+import ConfirmPayOrder from "../../PopupComponents/ConfirmPayOrder";
 
 Modal.setAppElement("#root");
 
@@ -50,29 +52,10 @@ function Scan({ cart, setCart }) {
     }
   }
 
-  const PayMoney = () => {
-    openConfirmModal();
-  };
-
-  useEffect(() => {
-    const keyDownHandler = (event) => {
-      console.log("User pressed: ", event.key);
-
-      if (event.key === "Enter") {
-        event.preventDefault();
-        PayMoney();
-      }
-    };
-    document.addEventListener("keydown", keyDownHandler);
-    return () => {
-      document.removeEventListener("keydown", keyDownHandler);
-    };
-  }, []);
-
   //ยกเลิกการขาย modal
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const openCancelModal = () => {
-    if (cartItems.length > 0){
+    if (cartItems.length > 0) {
       setIsCancelModalOpen(true);
     }
   };
@@ -87,17 +70,34 @@ function Scan({ cart, setCart }) {
   };
 
   //ยืนยันการจ่ายตัง modal
-  const [isComfirmModaOpen, SetComfirmModaOpen] = useState(false);
+  const [isComfirmModalOpen, SetComfirmModalOpen] = useState(false);
   const openConfirmModal = () => {
-    SetComfirmModaOpen(true);
+    SetComfirmModalOpen(true);
   };
   const closeConfirmModal = () => {
-    SetComfirmModaOpen(false);
+    SetComfirmModalOpen(false);
   };
   const confirmPayOrder = () => {
     setCart([]);
     closeConfirmModal();
   };
+
+  const PayMoney = () => {
+    openConfirmModal();
+  };
+
+  useEffect(() => {
+    const keyDownHandler = (event) => {
+      console.log("User pressed: ", event.key);
+      if (event.key === "Enter") {
+        PayMoney();
+      }
+    };
+    document.addEventListener("keydown", keyDownHandler);
+    return () => {
+      document.removeEventListener("keydown", keyDownHandler);
+    };
+  }, []);
 
   return (
     <div className=" h-full w-[40%] flex justify-center">
@@ -200,7 +200,7 @@ function Scan({ cart, setCart }) {
             <p>ราคารวม</p>
           </div>
           <div className="text-[2.5rem] text-[#4C49ED] pr-4 flex">
-            <p className="font-semibold">{totalPriceCommas}</p>
+            <p className="font-semibold">{totalPriceCommas}.00</p>
             <p>&nbsp;฿</p>
           </div>
         </div>
@@ -221,120 +221,18 @@ function Scan({ cart, setCart }) {
       </div>
 
       {/* Modal ยืนยันการยกเลิกการขาย */}
-      <Modal
-        isOpen={isCancelModalOpen}
-        onRequestClose={closeCancelModal}
-        contentLabel="ยืนยันการยกเลิก"
-        style={{
-          overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-          },
-          content: {
-            width: "40rem", // Set the width you desire
-            height: "25rem", // Set the height you desire
-            margin: "auto", // Center the modal horizontally
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: "8px", // Rounded corners
-          },
-        }}
-      >
-        <div className=" w-full h-full text-center">
-          <div>
-            <div className="text-[#4C49ED] font-bold text-[2rem]">
-              <h2>ยืนยันการยกเลิกการขาย</h2>
-            </div>
-            <hr />
-            <div className="h-full">
-              <p className="mt-[5rem]">
-                คุณแน่ใจหรือไม่ที่ต้องการยกเลิกการขาย?
-              </p>
-            </div>
-          </div>
-          <div className="w-full  gap-6 flex justify-center mt-[8rem]">
-            <div>
-              <button
-                onClick={confirmCancelOrder}
-                className="w-[17rem] bg-[#4C49ED] text-white border h-[4rem] rounded-md hover:bg-[#4c49edc4]"
-              >
-                ยืนยัน
-              </button>
-            </div>
-            <div>
-              <button
-                onClick={closeCancelModal}
-                className="w-[17rem]  border h-[4rem] rounded-md text-[#ff000077] bg-[#D6D6D6CC] hover:bg-[#d6d6d6]"
-              >
-                ยกเลิก
-              </button>
-            </div>
-          </div>
-        </div>
-      </Modal>
+      <CancelOrder
+        isCancelModalOpen={isCancelModalOpen}
+        closeCancelModal={closeCancelModal}
+        confirmCancelOrder={confirmCancelOrder}
+      />
       {/* Modal ยืนยันการจ่ายเงิน */}
-      <Modal
-        isOpen={isComfirmModaOpen}
-        onRequestClose={closeConfirmModal}
-        contentLabel="ยืนยันการยกเลิก"
-        style={{
-          overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-          },
-          content: {
-            width: "40rem", // Set the width you desire
-            height: "25rem", // Set the height you desire
-            margin: "auto", // Center the modal horizontally
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: "8px", // Rounded corners
-          },
-        }}
-      >
-        <div className=" w-full h-full text-center">
-          <div>
-            <div className="text-[#4C49ED] font-bold text-[2rem]">
-              <h2>ยืนยันการจ่ายเงิน</h2>
-            </div>
-            <hr />
-            <div className="h-full flex justify-center">
-              <div className="mt-[3rem] flex gap-4">
-                <label className="h-[3rem] items-center flex">เงินสด :</label>
-                <input
-                  className="h-[3rem] border text-black p-3 placeholder:p-3"
-                  type="number"
-                  placeholder="ป้อนเงินรับมา"
-                  name=""
-                  id=""
-                />
-              </div>
-            </div>
-          </div>
-          <div className="w-full  gap-6 flex justify-center mt-[8rem]">
-            <div>
-              <button
-                onClick={confirmPayOrder}
-                className="w-[17rem] bg-[#4C49ED] text-white border h-[4rem] rounded-md hover:bg-[#4c49edc4]"
-              >
-                ยืนยัน
-              </button>
-            </div>
-            <div>
-              <button
-                onClick={closeConfirmModal}
-                className="w-[17rem]  border h-[4rem] rounded-md text-[#ff000077] bg-[#D6D6D6CC] hover:bg-[#d6d6d6]"
-              >
-                ยกเลิก
-              </button>
-            </div>
-          </div>
-        </div>
-      </Modal>
+      <ConfirmPayOrder
+        isComfirmModaOpen={isComfirmModalOpen}
+        closeConfirmModal={closeConfirmModal}
+        confirmPayOrder={confirmPayOrder}
+      />
     </div>
   );
 }
-
 export default Scan;
