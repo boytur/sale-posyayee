@@ -7,7 +7,7 @@
   Navbar.jsx คือ Navbar ด้านบน 
 
   **เพิ่มเติม**
-  -มีการส่ง props scan , setScan ไปใช้
+  -มีการส่ง props scan , setScan ไปใช้ บรรทัด 125
   -มีการเรียกใช้ LoadingSpinner.jsx เพื่อเป็นหน้าโหลดรอ fetch API
   -มีการเรียกใช้ Toastify ช่วยทำการแจ้งเตือน
   DATE : 30/กันยายน/2023
@@ -15,8 +15,8 @@
 
 */
 import { useState, useEffect } from "react";
-import Aside from "../../NavbarAndAsideCom/Aside";
 import Scan from "./Scan";
+import Aside from "../../NavbarAndAsideCom/Aside";
 import Navbar from "../../NavbarAndAsideCom/Navbar";
 import LoadingSpinner from "../../LoaddingComponents/LoadingSpinner";
 import { ToastContainer } from "react-toastify";
@@ -25,9 +25,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 function Sale() {
 
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [cart, setCart] = useState([]);
+  const [products, setProducts] = useState([]); //รอเก็บข้อมูลเข้า Array products
+  const [isLoading, setIsLoading] = useState(true); //เช็คสถานะโหลด
+  const [cart, setCart] = useState([]); //ตระกร้าสินค้าที่รอการชำระ
 
   // ฟังก์ชันเพิ่มสินค้าในตะกร้า
   function addProduct(product) {
@@ -48,7 +48,6 @@ function Sale() {
       setCart([...cart, { ...product, quantity: 1 }]);
     }
   }
-
   useEffect(() => {
     // Fetch API สินค้าทั้งหมด
     fetch("http://localhost:5500/view-product")

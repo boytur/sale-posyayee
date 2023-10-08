@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import Modal from "react-modal";
 import CancelOrder from "../../PopupComponents/CancelOrder";
 import ConfirmPayOrder from "../../PopupComponents/ConfirmPayOrder";
+import Swal from "sweetalert2"; // import SweetAlert2
 
 Modal.setAppElement("#root");
 
@@ -66,6 +67,11 @@ function Scan({ cart, setCart }) {
   const confirmCancelOrder = () => {
     setCart([]);
     closeCancelModal();
+    Swal.fire({
+      icon: "success",
+      title: "ยกเลิกการขาย",
+      timer:3000
+    });
     // ทำงานเมื่อผู้ใช้ยืนยันการยกเลิกการขาย
   };
 
@@ -85,7 +91,8 @@ function Scan({ cart, setCart }) {
   const PayMoney = () => {
     openConfirmModal();
   };
-
+  
+  // Enter  เพื่อเปิด Modal การจ่ายเงิน
   useEffect(() => {
     const keyDownHandler = (event) => {
       console.log("User pressed: ", event.key);
@@ -98,7 +105,6 @@ function Scan({ cart, setCart }) {
       document.removeEventListener("keydown", keyDownHandler);
     };
   }, []);
-
   return (
     <div className=" h-full w-[40%] flex justify-center">
       <div className="w-full flex flex-col">
@@ -225,12 +231,14 @@ function Scan({ cart, setCart }) {
         isCancelModalOpen={isCancelModalOpen}
         closeCancelModal={closeCancelModal}
         confirmCancelOrder={confirmCancelOrder}
+
       />
       {/* Modal ยืนยันการจ่ายเงิน */}
       <ConfirmPayOrder
         isComfirmModaOpen={isComfirmModalOpen}
         closeConfirmModal={closeConfirmModal}
         confirmPayOrder={confirmPayOrder}
+        totalPrice = {totalPrice}
       />
     </div>
   );
