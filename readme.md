@@ -29,7 +29,7 @@
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/c47e9ebe-dc96-4026-b77b-97113e7ddd0f)
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/6797ed15-7030-4e5b-be0a-3b391972b007)
 
-** Fourth **
+** Fourth commit **
 - เพิ่ม Popup confirm
   
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/d0aa4f5c-3519-4314-857d-02b3668355e4)
@@ -42,7 +42,7 @@
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/81c07f21-9500-4f99-ad0f-38e02c2856f7)
 
 
-** fifth commit **
+** Fifth commit **
 
 - เพิ่ม Modal การแก้ไขข้อมูลของ AllProduct , OutStockProduct
 - เพิ่ม Modal คอนเฟิร์มการลบข้อมูลของ AllProduct , OutStockProduct
@@ -50,3 +50,12 @@
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/d64f57f9-2f96-4c37-98d0-c1cbe3639272)
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/32f422eb-5b3d-4cdb-9602-17c7f49029c4)
 
+ ** sixth **
+
+ - ทำพรีวิวรูปตรง edit products
+ - ทำหน้า Login
+ - เปลี่ยน design หน้า sale
+
+![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/7dadf622-8c64-47b7-ac4f-ee89e8f03263)
+![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/9baaa2fa-7979-4892-bee4-d83d8ecf6bd0)
+![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/7355794c-7436-4f9d-b4f1-4d0129a24617)
