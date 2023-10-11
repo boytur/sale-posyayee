@@ -1,3 +1,18 @@
+/*
+  AllProducts.jsx เป็นหน้าย่อยของ Stock.jsx
+  โดยตัวมันเองจะแสดงสินค้าทั้งหมด
+
+
+  **เพิ่มเติม**
+  -มีการส่ง props EditProduct ,DeleteProduct ไปใช้ บรรทัด 191
+   เพื่อเขียนคอมโพเน้นต์แยกของหน้า Modal การแก้ไขสินค้า (รูปปากกา)
+   และเพื่อเขียนคอมโพเน้นต์ลบสินค้า Modal การยืนยันลบสินค้า (รูปถังขยะ)
+
+  DATE : 11/ตุลาคม/2023
+  OWNER : piyawat W.
+
+*/
+
 // eslint-disable-next-line no-unused-vars
 import { useState, useEffect } from "react";
 import "../../../assets/css/StockLoadingSpinner.css";
@@ -58,7 +73,6 @@ function AllProducts() {
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
-        setLoading(false);
       });
   }, []);
 
@@ -155,13 +169,13 @@ function AllProducts() {
                       }}
                     >
                       <ul className="flex justify-center gap-3">
-                        <button className=" hover:scale-125"
+                        <button className=" hover:scale-110"
                         onClick={ ()=> editClick(product._id)}
                         >
                           <AiFillEdit size={30} color="#36454f" />
                         </button>
                         <p className="text-[#cfd1d1]">|</p>
-                        <button className=" hover:scale-125"
+                        <button className=" hover:scale-110"
                         onClick={ ()=> deleteClick(product._id)}
                         >
                           <AiFillDelete size={30} color="#f75d59" />

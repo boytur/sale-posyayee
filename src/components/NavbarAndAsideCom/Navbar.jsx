@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 import userPic from "../../assets/img/user.png";
 import { BiSearchAlt } from "react-icons/bi";
 
-let userName = "Default";
+let userName = "sangjun";
 function Navbar() {
   return (
     <div className="h-[4.5rem] flex justify-between bg-white w-full">
-      <Link to="/" className="flex items-center pl-8 gap-1   w-[23%]">
+      <Link to="/" className="flex items-center pl-8 gap-1   w-[18.5%]">
         <BsShop size={32} color="#4C49ED" />
         <h1 className="font-bold text-[2.7rem] pt-1">
           <span className="text-[#4C49ED]">POS</span>YAYEE

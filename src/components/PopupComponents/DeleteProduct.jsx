@@ -1,7 +1,16 @@
-/* eslint-disable react/prop-types */
+/*
+  EditProducts.jsx เป็นหน้าย่อยของ Stock.jsx > OutStockProducts.jsx > รูปถังขยะ
+  โดยตัวมันเองจะเป็น Modal เพื่อยินยันการลบสินค้าออกจาก Database
 
+  DATE : 11/ตุลาคม/2023
+  OWNER : piyawat W.
+
+*/
+
+/* eslint-disable react/prop-types */
 import Modal from "react-modal";
 Modal.setAppElement("#root");
+
 function DeleteProduct({isDelelteModalOpen,closeDelelteModal,deleteConfirm}) {
   return (
     <>

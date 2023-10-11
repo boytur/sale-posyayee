@@ -58,7 +58,6 @@ function Sale() {
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
-        setIsLoading(false); // Set หน้าโหลดเป็นโหลดเสร็จ
       });
   }, []);
 

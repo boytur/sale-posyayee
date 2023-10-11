@@ -4,6 +4,7 @@ import Sale from "./components/MainComponents/SaleProductCom/Sale";
 import Stock from "./components/MainComponents/StockProductCom/Stock";
 import AddProduct from "./components/MainComponents/AddProductCom/AddProduct";
 import Analysis from "./components/MainComponents/AnalysisCom/Analysis";
+import Login from "./components/Login";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/add-product" element={<AddProduct />} />
           <Route path="/view-stock" element={<Stock />} />
           <Route path="/analysis" element={<Analysis />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </div>

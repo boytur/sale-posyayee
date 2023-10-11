@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Modal from "react-modal";
-import Swal from "sweetalert2"; // import SweetAlert2
+import Swal from "sweetalert2";
 Modal.setAppElement("#root");
 import paySound from '../../assets/Sounds/cash-register-purchase-87313.mp3' 
 
@@ -82,9 +82,9 @@ function ConfirmPayOrder({
             <hr />
             <div className="h-full flex pl-7 justify-center">
               <div className="mt-[3rem] flex gap-4 w-[20rem]">
-                <label className="h-[3rem] items-center flex">เงินสด :</label>
+                <label className="h-[3rem] items-center flex">เงินสด</label>
                 <input
-                  className="h-[3rem] border text-black p-3"
+                  className="block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-2 mb-3 leading-tight focus:outline-none focus:bg-white"
                   type="number"
                   placeholder="ป้อนเงินรับมา"
                   value={cashReceived}
@@ -96,12 +96,12 @@ function ConfirmPayOrder({
             </div>
             <div className="flex mt-10 pl-7 justify-center">
               <div className="w-[20rem] flex items-center">
-                <p>เงินทอน : </p>&nbsp;
+                <p>เงินทอน </p>&nbsp;
                 {isNaN(cashReceived - totalPrice) ||
                 cashReceived - totalPrice < 0 ? (
                   <p className="text-[#4C49ED] text-[2rem]">เงินไม่เพียงพอ</p>
                 ) : (
-                  <p className=" text-[#4C49ED] text-[2rem]">
+                  <p className=" text-[#4C49ED] text-[2rem] font-bold">
                     {(cashReceived - totalPrice).toLocaleString("en-US")}
                   </p>
                 )}

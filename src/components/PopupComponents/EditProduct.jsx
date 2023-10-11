@@ -1,10 +1,27 @@
+/*
+  EditProducts.jsx เป็นหน้าย่อยของ Stock.jsx > OutStockProducts.jsx > รูปปากกา
+  โดยตัวมันเองจะเป็น Modal form เพื่อกรอกข้อมูลในการแก้ไขสินค้า
+
+  DATE : 11/ตุลาคม/2023
+  OWNER : piyawat W.
+
+*/
 // eslint-disable-next-line no-unused-vars
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 Modal.setAppElement("#root");
 import {BiBarcodeReader} from 'react-icons/bi'
+
 // eslint-disable-next-line react/prop-types, no-unused-vars
 function EditProduct({ isEditModalOpen, closeEditModal, confirmEdit}) {
+  
+  //เซ็ตรูป Preview
+  const [isPreviewImg , setIsPreviewImg] = useState('https://placehold.co/600x400/EEE/31343C')
+  function setImagePreview (URL){
+    setIsPreviewImg(URL)
+    console.log(isPreviewImg);
+  }
+
   return (
     <>
       <Modal
@@ -17,7 +34,7 @@ function EditProduct({ isEditModalOpen, closeEditModal, confirmEdit}) {
           },
           content: {
             width: "40rem", // Set the width you desire
-            height: "35rem", // Set the height you desire
+            height: "38rem", // Set the height you desire
             margin: "auto", // Center the modal horizontally
             display: "flex",
             flexDirection: "column",
@@ -31,6 +48,8 @@ function EditProduct({ isEditModalOpen, closeEditModal, confirmEdit}) {
           <h2 className="text-[#4C49ED] font-bold text-2xl">
             แก้ไขรายละเอียดสินค้า
           </h2>
+          <br />
+          <hr />
           {/* --------------------------------------------------- */}
           <form className="w-full max-w-lg mt-4">
             <div className="flex flex-wrap -mx-3 mb-2">
@@ -73,11 +92,16 @@ function EditProduct({ isEditModalOpen, closeEditModal, confirmEdit}) {
                   URL รูปภาพ
                 </label>
                 <input
+                  onChange={(e) => setImagePreview(e.target.value)}
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-2 mb-3 leading-tight focus:outline-none focus:bg-white"
                   id="grid-first-name"
                   type="text"
                   placeholder="https://placehold.co/600x400/EEE/31343C"
                 />
+                <label  className="flex tracking-wide text-gray-700 text-xs font-bold mb-2 text-left"
+                >รูปจะแสดงผลดังนี้</label>
+                <img className=" w-[170px] h-[100px] object-cover" 
+                src={isPreviewImg} alt="" />
               </div>
               <div className="w-full md:w-1/4 px-3">
                 <label
@@ -103,6 +127,7 @@ function EditProduct({ isEditModalOpen, closeEditModal, confirmEdit}) {
                 >
                   บาร์โค้ด
                 </label>
+                <img src="" alt="" />
                 <div className="relative flex w-full" >
                 <input
                   className="appearance-none block w-[98%] bg-gray-200 text-gray-700 border  rounded py-3 px-2 mb-3 leading-tight focus:outline-none focus:bg-white"
@@ -120,18 +145,18 @@ function EditProduct({ isEditModalOpen, closeEditModal, confirmEdit}) {
         <div className="w-full gap-6 flex justify-center mt-4">
           <div>
             <button
-              onClick={confirmEdit}
-              className="w-[15.1rem] bg-[#4C49ED] text-white border h-[4rem] rounded-md hover:bg-[#4c49edc4]"
-            >
-              ยืนยัน
-            </button>
-          </div>
-          <div>
-            <button
               onClick={closeEditModal}
               className="w-[15.1rem] border h-[4rem] rounded-md text-[#ff000077] bg-[#D6D6D6CC] hover:bg-[#d6d6d6]"
             >
               ยกเลิก
+            </button>
+          </div>
+          <div>
+            <button
+              onClick={confirmEdit}
+              className="w-[15.1rem] bg-[#4C49ED] text-white border h-[4rem] rounded-md hover:bg-[#4c49edc4]"
+            >
+              ยืนยัน
             </button>
           </div>
         </div>
