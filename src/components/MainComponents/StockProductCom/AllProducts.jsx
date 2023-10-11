@@ -2,10 +2,32 @@
 import { useState, useEffect } from "react";
 import "../../../assets/css/StockLoadingSpinner.css";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import EditProduct from "../../PopupComponents/EditProduct";
 
 function AllProducts() {
-  const [stockProducts, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [stockProducts, setProducts] = useState([]);//เพื่อดึง Products มาใช้
+  const [loading, setLoading] = useState(true);//เช็คหน้าโหลด
+  const [isEditModalOpen,setIsEditModalOpen] = useState(false);
+  const [_idEdit, setIdEdit] = useState(""); // Declare _idEdit state
+
+  function editClick(_id) {
+    setIdEdit(_id)// Assign the value to _idEdit
+    setIsEditModalOpen(!isEditModalOpen);
+    console.log(isEditModalOpen);
+    openEditModal();
+    console.log(_idEdit); // Move the console.log here
+  }
+
+  const openEditModal = () => {
+    setIsEditModalOpen(true);
+  };
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+  };
+  const confirmEdit = () => {
+    closeEditModal();
+  };
+  
   useEffect(() => {
     // Fetch data from the API
     fetch("http://localhost:5500/view-product")
@@ -19,6 +41,8 @@ function AllProducts() {
         setLoading(false);
       });
   }, []);
+
+
   return (
     <div>
       {loading ? (
@@ -111,11 +135,14 @@ function AllProducts() {
                       }}
                     >
                       <ul className="flex justify-center gap-3">
-                        <button className=" hover:scale-125">
+                        <button className=" hover:scale-125"
+                        onClick={ ()=> editClick(product._id)}
+                        >
                           <AiFillEdit size={30} color="#36454f" />
                         </button>
                         <p className="text-[#cfd1d1]">|</p>
-                        <button className=" hover:scale-125">
+                        <button className=" hover:scale-125"
+                        >
                           <AiFillDelete size={30} color="#f75d59" />
                         </button>
                       </ul>
@@ -127,6 +154,11 @@ function AllProducts() {
           ))}
         </div>
       )}
+      <EditProduct 
+      isEditModalOpen = {isEditModalOpen}
+      closeEditModal = {closeEditModal}
+      confirmEdit = {confirmEdit}
+      />
     </div>
   );
 }

@@ -1,10 +1,30 @@
 import { useState, useEffect } from "react";
 import "../../../assets/css/StockLoadingSpinner.css";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import EditProduct from "../../PopupComponents/EditProduct";
 
 function OutStockProducts() {
   const [stockProducts, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isEditModalOpen,setIsEditModalOpen] = useState(false);
+
+  //เก็บ _id ไปเช็คเพื่อแก้ไขข้อมูล
+  function editClick (_id){
+    setIsEditModalOpen(!isEditModalOpen)
+    console.log(_id);
+    console.log(isEditModalOpen);
+    openEditModal();
+  }
+
+    const openEditModal = () => {
+      setIsEditModalOpen(true);
+    };
+    const closeEditModal = () => {
+      setIsEditModalOpen(false);
+    };
+    const confirmEdit = () => {
+      closeEditModal();
+    };
   useEffect(() => {
     // Fetch data from the API
     fetch("http://localhost:5500/view-outstock-product")
@@ -106,11 +126,14 @@ function OutStockProducts() {
                       }}
                     >
                       <ul className="flex justify-center gap-3">
-                        <button className=" hover:scale-125">
+                        <button className=" hover:scale-125"
+                        onClick={ ()=> editClick(product._id)}
+                        >
                           <AiFillEdit size={30} color="#36454f" />
                         </button>
                         <p className="text-[#cfd1d1]">|</p>
-                        <button className=" hover:scale-125">
+                        <button className=" hover:scale-125"
+                        >
                           <AiFillDelete size={30} color="#f75d59" />
                         </button>
                       </ul>
@@ -122,6 +145,11 @@ function OutStockProducts() {
           ))}
         </div>
       )}
+      <EditProduct 
+      isEditModalOpen = {isEditModalOpen}
+      closeEditModal = {closeEditModal}
+      confirmEdit = {confirmEdit}
+      />
     </div>
   );
 }

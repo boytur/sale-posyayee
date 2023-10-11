@@ -105,6 +105,7 @@ function Scan({ cart, setCart }) {
       document.removeEventListener("keydown", keyDownHandler);
     };
   }, []);
+  
   return (
     <div className=" h-full w-[40%] flex justify-center">
       <div className="w-full flex flex-col">
