@@ -117,12 +117,11 @@ function EditProduct({ isEditModalOpen, closeEditModal, confirmEdit}) {
 
           </form>
             {/* --------------------------------- */}
-        </div>
         <div className="w-full gap-6 flex justify-center mt-4">
           <div>
             <button
               onClick={confirmEdit}
-              className="w-[17rem] bg-[#4C49ED] text-white border h-[4rem] rounded-md hover:bg-[#4c49edc4]"
+              className="w-[15.1rem] bg-[#4C49ED] text-white border h-[4rem] rounded-md hover:bg-[#4c49edc4]"
             >
               ยืนยัน
             </button>
@@ -130,11 +129,12 @@ function EditProduct({ isEditModalOpen, closeEditModal, confirmEdit}) {
           <div>
             <button
               onClick={closeEditModal}
-              className="w-[17rem] border h-[4rem] rounded-md text-[#ff000077] bg-[#D6D6D6CC] hover:bg-[#d6d6d6]"
+              className="w-[15.1rem] border h-[4rem] rounded-md text-[#ff000077] bg-[#D6D6D6CC] hover:bg-[#d6d6d6]"
             >
               ยกเลิก
             </button>
           </div>
+        </div>
         </div>
       </Modal>
     </>

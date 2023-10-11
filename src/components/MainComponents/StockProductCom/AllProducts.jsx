@@ -3,12 +3,14 @@ import { useState, useEffect } from "react";
 import "../../../assets/css/StockLoadingSpinner.css";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import EditProduct from "../../PopupComponents/EditProduct";
+import DeleteProduct from "../../PopupComponents/DeleteProduct";
 
 function AllProducts() {
   const [stockProducts, setProducts] = useState([]);//เพื่อดึง Products มาใช้
   const [loading, setLoading] = useState(true);//เช็คหน้าโหลด
   const [isEditModalOpen,setIsEditModalOpen] = useState(false);
   const [_idEdit, setIdEdit] = useState(""); // Declare _idEdit state
+  const [isDelelteModalOpen,setDelelteModalOpen] = useState(false);
 
   function editClick(_id) {
     setIdEdit(_id)// Assign the value to _idEdit
@@ -28,6 +30,24 @@ function AllProducts() {
     closeEditModal();
   };
   
+  // eslint-disable-next-line no-unused-vars
+  function deleteClick(_id){
+    setDelelteModalOpen(!isDelelteModalOpen)
+    console.log(isDelelteModalOpen)
+    openDeleteModal();
+  }
+
+  
+  const openDeleteModal = () => {
+    setDelelteModalOpen(true);
+  };
+  const closeDelelteModal = () => {
+    setDelelteModalOpen(false);
+  };
+  const deleteConfirm = () => {
+    closeDelelteModal();
+  };
+
   useEffect(() => {
     // Fetch data from the API
     fetch("http://localhost:5500/view-product")
@@ -142,6 +162,7 @@ function AllProducts() {
                         </button>
                         <p className="text-[#cfd1d1]">|</p>
                         <button className=" hover:scale-125"
+                        onClick={ ()=> deleteClick(product._id)}
                         >
                           <AiFillDelete size={30} color="#f75d59" />
                         </button>
@@ -158,6 +179,11 @@ function AllProducts() {
       isEditModalOpen = {isEditModalOpen}
       closeEditModal = {closeEditModal}
       confirmEdit = {confirmEdit}
+      />
+      <DeleteProduct
+      isDelelteModalOpen = {isDelelteModalOpen}
+      closeDelelteModal = {closeDelelteModal}
+      deleteConfirm = {deleteConfirm}
       />
     </div>
   );

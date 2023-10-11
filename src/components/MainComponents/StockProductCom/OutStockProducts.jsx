@@ -2,12 +2,15 @@ import { useState, useEffect } from "react";
 import "../../../assets/css/StockLoadingSpinner.css";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import EditProduct from "../../PopupComponents/EditProduct";
+import DeleteProduct from "../../PopupComponents/DeleteProduct";
 
 function OutStockProducts() {
   const [stockProducts, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isEditModalOpen,setIsEditModalOpen] = useState(false);
+  const [isDelelteModalOpen,setDelelteModalOpen] = useState(false);
 
+  /* Edit modal */
   //เก็บ _id ไปเช็คเพื่อแก้ไขข้อมูล
   function editClick (_id){
     setIsEditModalOpen(!isEditModalOpen)
@@ -25,6 +28,28 @@ function OutStockProducts() {
     const confirmEdit = () => {
       closeEditModal();
     };
+
+
+  /* Delete modal */
+  // eslint-disable-next-line no-unused-vars
+  function deleteClick(_id){
+    setDelelteModalOpen(!isDelelteModalOpen)
+    console.log(isDelelteModalOpen)
+    console.log(_id)
+    openDeleteModal();
+  }
+
+  const openDeleteModal = () => {
+    setDelelteModalOpen(true);
+  };
+  const closeDelelteModal = () => {
+    setDelelteModalOpen(false);
+  };
+  const deleteConfirm = () => {
+    closeDelelteModal();
+  };
+
+  /* Fecth API  view-outstock-product */
   useEffect(() => {
     // Fetch data from the API
     fetch("http://localhost:5500/view-outstock-product")
@@ -38,6 +63,8 @@ function OutStockProducts() {
         setLoading(false);
       });
   }, []);
+
+
   return (
     <div>
       {loading ? (
@@ -133,6 +160,7 @@ function OutStockProducts() {
                         </button>
                         <p className="text-[#cfd1d1]">|</p>
                         <button className=" hover:scale-125"
+                        onClick={()=> deleteClick(product._id)}
                         >
                           <AiFillDelete size={30} color="#f75d59" />
                         </button>
@@ -149,6 +177,11 @@ function OutStockProducts() {
       isEditModalOpen = {isEditModalOpen}
       closeEditModal = {closeEditModal}
       confirmEdit = {confirmEdit}
+      />
+      <DeleteProduct
+      isDelelteModalOpen = {isDelelteModalOpen}
+      closeDelelteModal = {closeDelelteModal}
+      deleteConfirm = {deleteConfirm}
       />
     </div>
   );
