@@ -40,3 +40,13 @@
 
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/ae1340ac-7188-4549-959e-6c189022d673)
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/81c07f21-9500-4f99-ad0f-38e02c2856f7)
+
+
+** fifth commit **
+
+- เพิ่ม Modal การแก้ไขข้อมูลของ AllProduct , OutStockProduct
+- เพิ่ม Modal คอนเฟิร์มการลบข้อมูลของ AllProduct , OutStockProduct
+
+![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/d64f57f9-2f96-4c37-98d0-c1cbe3639272)
+![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/32f422eb-5b3d-4cdb-9602-17c7f49029c4)
+
