@@ -13,7 +13,9 @@
 - ทำหน้าโหลดดิ้ง
 - แก้ไขปุ่มตรง aside ที่ต้องดับเบิ้ลคลิ๊กถึงจะ active
   
-
+![image-3](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/587a7afd-84f0-4c68-ba77-a906d965c478)
+![image-2](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/9d1c002b-5b08-4e61-9265-2383dfda35d9)
+![image-1](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/54d15bb5-66f3-4db9-89e5-e25066a613dc)
 
 
 ** Third commit **
@@ -57,3 +59,10 @@
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/7dadf622-8c64-47b7-ac4f-ee89e8f03263)
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/9baaa2fa-7979-4892-bee4-d83d8ecf6bd0)
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/7355794c-7436-4f9d-b4f1-4d0129a24617)
+
+** seventh **
+
+- ทำเสิร์ชสินค้าและเพิ่มสินค้าเข้าตะกร้า
+
+![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/2c8ca424-8bf3-4f22-b219-304af7487b59)
+
