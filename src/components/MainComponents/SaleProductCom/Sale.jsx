@@ -72,7 +72,9 @@ function Sale() {
         {/* <div className="flex justify-center bg-[#000000d4] w-full absolute z-50 h-full items-center">
         </div> */}
         {/* Import Navbar มาใช้ */}
-        <Navbar />
+        <Navbar
+        addProduct = {addProduct}
+        />
       </div>
       <div className="flex h-[90vh] relative">
         {/* การแจ้งเตือน */}
@@ -90,7 +92,7 @@ function Sale() {
         />
         {/* Import Aside มาใช้ */}
         <Aside />
-        <div className="w-[40%] flex bg-white flex-wrap justify-center full overflow-y-scroll gap-1">
+        <div className="w-[40%]  flex bg-white flex-wrap justify-center full overflow-y-scroll gap-1">
           {/* ถ้ายังโหลดให้แสดงหน้าโหลด ถ้าไม่ ให้แสดงข้อมูล*/}
           {isLoading ? (
             <LoadingSpinner />
@@ -102,7 +104,7 @@ function Sale() {
                 className="w-[160px]"
                 onClick={() => addProduct(product)}
               >
-                <div className="border h-[200px] flex flex-col rounded-md bg-white cursor-pointer hover:border-[3px] hover:border-[#0085FF]">
+                <div className="border mt-2 h-[200px] grid rounded-md bg-white cursor-pointer hover:border-[3px] hover:border-[#0085FF]">
                   <img
                     className="h-[8rem] object-cover rounded-lg p-1"
                     src={product.image}

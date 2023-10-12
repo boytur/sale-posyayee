@@ -13,9 +13,7 @@
 - ทำหน้าโหลดดิ้ง
 - แก้ไขปุ่มตรง aside ที่ต้องดับเบิ้ลคลิ๊กถึงจะ active
   
-![Alt text](image-1.png)
-![Alt text](image-2.png)
-![Alt text](image-3.png)
+
 
 
 ** Third commit **
