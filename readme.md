@@ -50,7 +50,7 @@
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/d64f57f9-2f96-4c37-98d0-c1cbe3639272)
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/32f422eb-5b3d-4cdb-9602-17c7f49029c4)
 
- ** sixth **
+ ** sixth commit **
 
  - ทำพรีวิวรูปตรง edit products
  - ทำหน้า Login
@@ -60,9 +60,18 @@
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/9baaa2fa-7979-4892-bee4-d83d8ecf6bd0)
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/7355794c-7436-4f9d-b4f1-4d0129a24617)
 
-** seventh **
+** seventh commit **
 
 - ทำเสิร์ชสินค้าและเพิ่มสินค้าเข้าตะกร้า
 
 ![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/2c8ca424-8bf3-4f22-b219-304af7487b59)
+
+** eighth commit **
+
+- เชื่อม API delete
+- ทำป๊อบอัพเมื่อลบสินค้าเสร็จ
+- ทำแค่ใน All products ส่วน OutStcok ยังไม่ทำ
+
+![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/5444a636-3891-4842-abc0-bf683458c56a)
+![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/c3a41dba-77ea-4af5-ae5d-ec23718e4e3a)
 
