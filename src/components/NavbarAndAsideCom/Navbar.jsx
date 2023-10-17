@@ -67,8 +67,8 @@ function Navbar({ addProduct }) {
                     : `flex items-center bg-[#4545450f]`
                 }
               >
-                <div className=" w-[80px] p-2">
-                  <img src={product.image} alt="" />
+                <div className=" w-[80px] p-2 h-[60px] flex items-center">
+                  <img className=" object-cover w-full h-full rounded-md" src={product.image} alt="" />
                 </div>
                 <div className="flex justify-between items-center w-full">
                   <div className="p-2">

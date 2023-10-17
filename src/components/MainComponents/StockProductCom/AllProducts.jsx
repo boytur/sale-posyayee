@@ -52,7 +52,7 @@ function AllProducts() {
   //Madal ลบสินค้า(ถังขยะ)
   const [isDelelteModalOpen,setDelelteModalOpen] = useState(false);
   const [_id , set_idDelete] = useState('');
-  const [name ,setname] = useState('');
+  const [_name ,setname] = useState('');
   //ฟังก์ชันลบสินค้า รับ _id เพื่อเอา _id ไปเช็คลและลบ
   // eslint-disable-next-line no-unused-vars
   function deleteClick(_id,_name){
@@ -239,7 +239,7 @@ function AllProducts() {
       isDelelteModalOpen = {isDelelteModalOpen}
       closeDelelteModal = {closeDelelteModal}
       deleteConfirm = {deleteConfirm}
-      name = {name}
+      _name = {_name}
       />
     </div>
   );
