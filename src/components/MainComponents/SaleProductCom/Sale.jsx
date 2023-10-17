@@ -93,7 +93,7 @@ function Sale() {
           {isLoading ? (
             <LoadingSpinner />
           ) : (
-            <div className="grid grid-cols-3 gap-2 h-[27rem] w-[35rem] rounded-md">
+            <div className="grid grid-cols-3 gap-2 h-[12.7rem] w-[35rem] rounded-md">
               {filteredProducts.map((product) => (
                 <div
                   key={product._id}
