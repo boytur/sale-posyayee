@@ -13,7 +13,7 @@ import Modal from "react-modal";
 Modal.setAppElement("#root");
 
 // eslint-disable-next-line no-unused-vars
-function DeleteProduct({isDelelteModalOpen,closeDelelteModal,deleteConfirm,name}) {
+function DeleteProduct({isDelelteModalOpen,closeDelelteModal,deleteConfirm,name,_name}) {
   return (
     <>
     <Modal
@@ -42,7 +42,7 @@ function DeleteProduct({isDelelteModalOpen,closeDelelteModal,deleteConfirm,name}
         </h2>
         <div>
         <p className="text-[1.5rem] mt-10">
-          ฉันต้องการจะลบ "{name}"
+          ฉันต้องการจะลบ "{_name}"
         </p>
         </div>
       <div className="w-full gap-6 flex justify-center mt-[5rem]">

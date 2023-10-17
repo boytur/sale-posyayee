@@ -17,43 +17,44 @@ import "../../../assets/css/StockLoadingSpinner.css";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import EditProduct from "../../PopupComponents/EditProduct";
 import DeleteProduct from "../../PopupComponents/DeleteProduct";
+import Swal from "sweetalert2"; // import SweetAlert2
 
 function OutStockProducts() {
   const [stockProducts, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [isEditModalOpen,setIsEditModalOpen] = useState(false);
-  const [isDelelteModalOpen,setDelelteModalOpen] = useState(false);
-  const [placeholder, setPlaceholder] = useState('');
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDelelteModalOpen, setDelelteModalOpen] = useState(false);
+  const [placeholder, setPlaceholder] = useState("");
 
+  const [_name, set_Name] = useState("");
   /* Edit modal */
   //เก็บ _id ไปเช็คเพื่อแก้ไขข้อมูล
-  function editClick (_id,_name){
-    setIsEditModalOpen(!isEditModalOpen)
+  function editClick(_id, _name) {
+    setIsEditModalOpen(!isEditModalOpen);
     console.log(_id);
     console.log(isEditModalOpen);
     openEditModal();
-    setPlaceholder(_name)
-    console.log(_name)
+    setPlaceholder(_name);
   }
 
-    const openEditModal = () => {
-      setIsEditModalOpen(true);
-    };
-    const closeEditModal = () => {
-      setIsEditModalOpen(false);
-    };
-    const confirmEdit = () => {
-      closeEditModal();
-    };
-
+  const openEditModal = () => {
+    setIsEditModalOpen(true);
+  };
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+  };
+  const confirmEdit = () => {
+    closeEditModal();
+  };
 
   /* Delete modal */
+  const [_id, set_idDelete] = useState("");
   // eslint-disable-next-line no-unused-vars
-  function deleteClick(_id){
-    setDelelteModalOpen(!isDelelteModalOpen)
-    console.log(isDelelteModalOpen)
-    console.log(_id)
+  function deleteClick(_id, _name) {
+    set_idDelete(_id);
+    setDelelteModalOpen(!isDelelteModalOpen);
     openDeleteModal();
+    set_Name(_name);
   }
 
   const openDeleteModal = () => {
@@ -63,24 +64,53 @@ function OutStockProducts() {
     setDelelteModalOpen(false);
   };
   const deleteConfirm = () => {
+    if (!_id) {
+      console.log("ไม่มี _idDelete ที่จะลบ");
+      return;
+    }
+    fetch(`http://localhost:5500/delete-product/${_id}`, {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        fetchProducts();
+        //Alert เมื่อลบสินค้า
+        Swal.fire({
+          icon: "success",
+          title: `${data.message}`,
+          timer: 3000,
+        });
+      })
+      .catch((error) => {
+        console.error("เกิดข้อผิดพลาดในการลบข้อมูล:", error);
+        // Error alert
+        Swal.fire({
+          icon: "error",
+          title: "เกิดข้อผิดพลาดในการลบข้อมูล",
+          text: "กรุณาลองอีกครั้ง",
+        });
+      });
     closeDelelteModal();
   };
 
   /* Fecth API  view-outstock-product */
-  useEffect(() => {
-    // Fetch data from the API
+  const fetchProducts = () => {
     fetch("http://localhost:5500/view-outstock-product")
       .then((response) => response.json())
       .then((data) => {
-        setProducts(data.products); //ชื่อ collection
+        setProducts(data.products);
         setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
+  };
+
+  // Fetch products when the component mounts
+  useEffect(() => {
+    fetchProducts();
   }, []);
-
-
   return (
     <div>
       {loading ? (
@@ -169,14 +199,16 @@ function OutStockProducts() {
                       }}
                     >
                       <ul className="flex justify-center gap-3">
-                        <button className=" hover:scale-110"
-                        onClick={ ()=> editClick(product._id,product.name)}
+                        <button
+                          className=" hover:scale-110"
+                          onClick={() => editClick(product._id, product.name)}
                         >
                           <AiFillEdit size={30} color="#36454f" />
                         </button>
                         <p className="text-[#cfd1d1]">|</p>
-                        <button className=" hover:scale-110"
-                        onClick={()=> deleteClick(product._id)}
+                        <button
+                          className=" hover:scale-110"
+                          onClick={() => deleteClick(product._id, product.name)}
                         >
                           <AiFillDelete size={30} color="#f75d59" />
                         </button>
@@ -189,16 +221,17 @@ function OutStockProducts() {
           ))}
         </div>
       )}
-      <EditProduct 
-      isEditModalOpen = {isEditModalOpen}
-      closeEditModal = {closeEditModal}
-      confirmEdit = {confirmEdit}
-      placeholder = {placeholder}
+      <EditProduct
+        isEditModalOpen={isEditModalOpen}
+        closeEditModal={closeEditModal}
+        confirmEdit={confirmEdit}
+        placeholder={placeholder}
       />
       <DeleteProduct
-      isDelelteModalOpen = {isDelelteModalOpen}
-      closeDelelteModal = {closeDelelteModal}
-      deleteConfirm = {deleteConfirm}
+        isDelelteModalOpen={isDelelteModalOpen}
+        closeDelelteModal={closeDelelteModal}
+        deleteConfirm={deleteConfirm}
+        _name={_name}
       />
     </div>
   );
