@@ -23,7 +23,9 @@ import LoadingSpinner from "../../LoaddingComponents/LoadingSpinner";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
 function Sale() {
+
   const [products, setProducts] = useState([]); //รอเก็บข้อมูลเข้า Array products
   const [isLoading, setIsLoading] = useState(true); //เช็คสถานะโหลด
   const [cart, setCart] = useState([]); //ตระกร้าสินค้าที่รอการชำระ
@@ -71,7 +73,9 @@ function Sale() {
         {/* <div className="flex justify-center bg-[#000000d4] w-full absolute z-50 h-full items-center">
         </div> */}
         {/* Import Navbar มาใช้ */}
-        <Navbar addProduct={addProduct} />
+        <Navbar
+        addProduct = {addProduct}
+        />
       </div>
       <div className="flex h-[90vh] relative">
         {/* การแจ้งเตือน */}
@@ -89,36 +93,35 @@ function Sale() {
         />
         {/* Import Aside มาใช้ */}
         <Aside />
-        <div className="w-[40%] flex bg-white flex-wrap justify-center full overflow-y-scroll gap-1">
+        <div className="w-[40%]  flex bg-white flex-wrap justify-center full overflow-y-scroll gap-1">
+          {/* ถ้ายังโหลดให้แสดงหน้าโหลด ถ้าไม่ ให้แสดงข้อมูล*/}
           {isLoading ? (
             <LoadingSpinner />
           ) : (
-            <div className="grid grid-cols-3 gap-2 h-[12.7rem] w-[35rem] rounded-md">
-              {filteredProducts.map((product) => (
-                <div
-                  key={product._id}
-                  className="border hover:border-[3px] hover:border-[#0085FF] cursor-pointer rounded-md"
-                  onClick={() => addProduct(product)}
-                >
-                  <div className=" flex justify-center">
-                    <img
-                      className="h-[8rem] object-cover rounded-lg p-1" // เปลี่ยนความสูงที่นี่
-                      src={product.image}
-                      alt={product.name}
-                    />
-                  </div>
+            // map ข้อมูลจากสินค้าที่ไม่มีบาร์โค้ด
+            filteredProducts.map((product) => (
+              <div
+                key={product._id}
+                className="w-[160px]"
+                onClick={() => addProduct(product)}
+              >
+                <div className="border mt-2 h-[200px] grid rounded-md bg-white cursor-pointer hover:border-[3px] hover:border-[#0085FF]">
+                  <img
+                    className="h-[8rem] object-cover rounded-lg p-1"
+                    src={product.image}
+                    alt={product.name}
+                  />
                   <div className="text-left pl-2 pt-3 overflow-hidden h-[2.1rem] text-sm">
-                    {product.name}
+                    <p>{product.name}</p>
                   </div>
                   <div className="font-bold text-[#4C49ED] pl-2 text-[20px]">
-                    {product.price.toFixed(2)} ฿
+                    <h1>{product.price.toFixed(2)} ฿</h1>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))
           )}
         </div>
-
         {/* แสดงคอมโพนเนนต์ Scan และส่ง cart และ setCart เป็น props */}
         <Scan cart={cart} setCart={setCart} />
       </div>
