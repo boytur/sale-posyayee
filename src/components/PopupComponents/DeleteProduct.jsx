@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /*
   EditProducts.jsx เป็นหน้าย่อยของ Stock.jsx > OutStockProducts.jsx > รูปถังขยะ
   โดยตัวมันเองจะเป็น Modal เพื่อยินยันการลบสินค้าออกจาก Database
@@ -11,7 +12,8 @@
 import Modal from "react-modal";
 Modal.setAppElement("#root");
 
-function DeleteProduct({isDelelteModalOpen,closeDelelteModal,deleteConfirm}) {
+// eslint-disable-next-line no-unused-vars
+function DeleteProduct({isDelelteModalOpen,closeDelelteModal,deleteConfirm,name}) {
   return (
     <>
     <Modal
@@ -35,12 +37,12 @@ function DeleteProduct({isDelelteModalOpen,closeDelelteModal,deleteConfirm}) {
       }}
     >
       <div className="text-center transition-all">
-        <h2 className="text-[#4C49ED] font-bold text-2xl">
-          ยืนยันการลบสินค้า
+        <h2 className="text-[#4C49ED] font-bold text-[2rem]">
+          ยืนยันการลบ
         </h2>
         <div>
-        <p className="text-[1rem] text-2xl mt-10">
-          การดำเนินการนี้ไม่สามารถย้อนกลับได้คุณแน่ใจหรือไม่ ? 
+        <p className="text-[1.5rem] mt-10">
+          ฉันต้องการจะลบ "{name}"
         </p>
         </div>
       <div className="w-full gap-6 flex justify-center mt-[5rem]">

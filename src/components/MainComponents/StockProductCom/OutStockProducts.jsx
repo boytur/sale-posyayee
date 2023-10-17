@@ -23,14 +23,17 @@ function OutStockProducts() {
   const [loading, setLoading] = useState(true);
   const [isEditModalOpen,setIsEditModalOpen] = useState(false);
   const [isDelelteModalOpen,setDelelteModalOpen] = useState(false);
+  const [placeholder, setPlaceholder] = useState('');
 
   /* Edit modal */
   //เก็บ _id ไปเช็คเพื่อแก้ไขข้อมูล
-  function editClick (_id){
+  function editClick (_id,_name){
     setIsEditModalOpen(!isEditModalOpen)
     console.log(_id);
     console.log(isEditModalOpen);
     openEditModal();
+    setPlaceholder(_name)
+    console.log(_name)
   }
 
     const openEditModal = () => {
@@ -167,7 +170,7 @@ function OutStockProducts() {
                     >
                       <ul className="flex justify-center gap-3">
                         <button className=" hover:scale-110"
-                        onClick={ ()=> editClick(product._id)}
+                        onClick={ ()=> editClick(product._id,product.name)}
                         >
                           <AiFillEdit size={30} color="#36454f" />
                         </button>
@@ -190,6 +193,7 @@ function OutStockProducts() {
       isEditModalOpen = {isEditModalOpen}
       closeEditModal = {closeEditModal}
       confirmEdit = {confirmEdit}
+      placeholder = {placeholder}
       />
       <DeleteProduct
       isDelelteModalOpen = {isDelelteModalOpen}

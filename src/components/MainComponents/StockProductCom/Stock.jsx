@@ -1,3 +1,21 @@
+/*
+  Stock.jsx เป็นหน้าหลักของการแสดงผล
+  โดยตัวมันเองจะแสดงสินค้าในสต็อก
+  จะประกอบไปด้วยหน้าย่อย 4 หน้าคือ
+  OutStcokProduct.jsx คือหน้าแสดงสินค้าที่เหลือตํ่ากว่า 5 ชิ้น
+  AllProduct.jsx คือหน้าแสดงสินค้าทั้งหมด
+  Aside.jsx คือหน้า Navbar ด้านซ้าย
+  Navbar.jsx คือ Navbar ด้านบน 
+
+  **เพิ่มเติม**
+  มีการเรียกใช้คอมโพเน้นท์ป๊อบอัพ 
+  -EditProduct.jsx
+  -DeleteProduct.jsx
+  
+  DATE : 17/ตุลาคม/2023
+  OWNER : piyawat W.
+*/
+
 import Aside from "../../NavbarAndAsideCom/Aside";
 import Navbar from "../../NavbarAndAsideCom/Navbar";
 import "../../../assets/css/StockLoadingSpinner.css";

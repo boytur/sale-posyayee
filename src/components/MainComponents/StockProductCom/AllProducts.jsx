@@ -4,7 +4,7 @@
 
 
   **เพิ่มเติม**
-  -มีการส่ง props EditProduct ,DeleteProduct ไปใช้ บรรทัด 191
+  -มีการส่ง props EditProduct ,DeleteProduct ไปใช้
    เพื่อเขียนคอมโพเน้นต์แยกของหน้า Modal การแก้ไขสินค้า (รูปปากกา)
    และเพื่อเขียนคอมโพเน้นต์ลบสินค้า Modal การยืนยันลบสินค้า (รูปถังขยะ)
 
@@ -13,26 +13,29 @@
 
 */
 
-// eslint-disable-next-line no-unused-vars
 import { useState, useEffect } from "react";
 import "../../../assets/css/StockLoadingSpinner.css";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import EditProduct from "../../PopupComponents/EditProduct";
 import DeleteProduct from "../../PopupComponents/DeleteProduct";
+import Swal from "sweetalert2"; // import SweetAlert2
 
 function AllProducts() {
+
   const [stockProducts, setProducts] = useState([]);//เพื่อดึง Products มาใช้
   const [loading, setLoading] = useState(true);//เช็คหน้าโหลด
+   //Madal แก้ไขสินค้า(รูปปากกา)
   const [isEditModalOpen,setIsEditModalOpen] = useState(false);
-  const [_idEdit, setIdEdit] = useState(""); // Declare _idEdit state
-  const [isDelelteModalOpen,setDelelteModalOpen] = useState(false);
+  const [placeholder, setPlaceholder] = useState(''); //ส่ง Placeholder ไปใช้
 
-  function editClick(_id) {
-    setIdEdit(_id)// Assign the value to _idEdit
+  /*ฟังก์ชันแก้ไขสินค้า รับ _id และ _name เพื่อเอา _id ไปเช็คและแก้ไข
+    และเอา _name ไปทำ Placeholder
+  */
+  function editClick(_id,_name) {
     setIsEditModalOpen(!isEditModalOpen);
     console.log(isEditModalOpen);
     openEditModal();
-    console.log(_idEdit); // Move the console.log here
+    setPlaceholder(_name);
   }
 
   const openEditModal = () => {
@@ -45,37 +48,74 @@ function AllProducts() {
     closeEditModal();
   };
   
-  // eslint-disable-next-line no-unused-vars
-  function deleteClick(_id){
-    setDelelteModalOpen(!isDelelteModalOpen)
-    console.log(isDelelteModalOpen)
-    openDeleteModal();
-  }
-
   
+  //Madal ลบสินค้า(ถังขยะ)
+  const [isDelelteModalOpen,setDelelteModalOpen] = useState(false);
+  const [_id , set_idDelete] = useState('');
+  const [name ,setname] = useState('');
+  //ฟังก์ชันลบสินค้า รับ _id เพื่อเอา _id ไปเช็คลและลบ
+  // eslint-disable-next-line no-unused-vars
+  function deleteClick(_id,_name){
+    setDelelteModalOpen(!isDelelteModalOpen)
+    set_idDelete(_id);
+    openDeleteModal();
+    setname(_name);
+  }
   const openDeleteModal = () => {
     setDelelteModalOpen(true);
   };
   const closeDelelteModal = () => {
     setDelelteModalOpen(false);
   };
+  
   const deleteConfirm = () => {
+    if (!_id) {
+      console.log('ไม่มี _idDelete ที่จะลบ');
+      return;
+    }
+  
+    fetch(`http://localhost:5500/delete-product/${_id}`, {
+      method: 'DELETE',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        fetchProducts();
+        //Alert เมื่อลบสินค้า
+        Swal.fire({
+          icon: "success",
+          title: `${data.message}`,
+          timer:3000
+        });
+      })
+      .catch((error) => {
+        console.error('เกิดข้อผิดพลาดในการลบข้อมูล:', error);
+        // Error alert
+        Swal.fire({
+          icon: "error",
+          title: "เกิดข้อผิดพลาดในการลบข้อมูล",
+          text: "กรุณาลองอีกครั้ง",
+        });
+      });
     closeDelelteModal();
   };
-
-  useEffect(() => {
-    // Fetch data from the API
+  //Fecth API ดูสินค้า
+  // Function to fetch products
+  const fetchProducts = () => {
     fetch("http://localhost:5500/view-product")
       .then((response) => response.json())
       .then((data) => {
-        setProducts(data.products); //ชื่อ collection
+        setProducts(data.products);
         setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
+  };
+  // Fetch products when the component mounts
+  useEffect(() => {
+    fetchProducts();
   }, []);
-
 
   return (
     <div>
@@ -170,13 +210,13 @@ function AllProducts() {
                     >
                       <ul className="flex justify-center gap-3">
                         <button className=" hover:scale-110"
-                        onClick={ ()=> editClick(product._id)}
+                        onClick={ ()=> editClick(product._id,product.name)}
                         >
                           <AiFillEdit size={30} color="#36454f" />
                         </button>
                         <p className="text-[#cfd1d1]">|</p>
                         <button className=" hover:scale-110"
-                        onClick={ ()=> deleteClick(product._id)}
+                        onClick={ ()=> deleteClick(product._id,product.name)}
                         >
                           <AiFillDelete size={30} color="#f75d59" />
                         </button>
@@ -193,11 +233,13 @@ function AllProducts() {
       isEditModalOpen = {isEditModalOpen}
       closeEditModal = {closeEditModal}
       confirmEdit = {confirmEdit}
+      placeholder = {placeholder}
       />
       <DeleteProduct
       isDelelteModalOpen = {isDelelteModalOpen}
       closeDelelteModal = {closeDelelteModal}
       deleteConfirm = {deleteConfirm}
+      name = {name}
       />
     </div>
   );

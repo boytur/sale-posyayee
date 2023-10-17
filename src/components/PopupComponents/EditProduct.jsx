@@ -6,14 +6,14 @@
   OWNER : piyawat W.
 
 */
-// eslint-disable-next-line no-unused-vars
-import React, { useState } from "react";
+
+import { useState } from "react";
 import Modal from "react-modal";
 Modal.setAppElement("#root");
 import {BiBarcodeReader} from 'react-icons/bi'
 
 // eslint-disable-next-line react/prop-types, no-unused-vars
-function EditProduct({ isEditModalOpen, closeEditModal, confirmEdit}) {
+function EditProduct({ isEditModalOpen, closeEditModal, confirmEdit,placeholder}) {
   
   //เซ็ตรูป Preview
   const [isPreviewImg , setIsPreviewImg] = useState('https://placehold.co/600x400/EEE/31343C')
@@ -33,14 +33,14 @@ function EditProduct({ isEditModalOpen, closeEditModal, confirmEdit}) {
             backgroundColor: "rgba(0, 0, 0, 0.5)",
           },
           content: {
-            width: "40rem", // Set the width you desire
-            height: "38rem", // Set the height you desire
-            margin: "auto", // Center the modal horizontally
+            width: "40rem",
+            height: "38rem",
+            margin: "auto",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            borderRadius: "8px", // Rounded corners
+            borderRadius: "8px",
           },
         }}
       >
@@ -64,7 +64,7 @@ function EditProduct({ isEditModalOpen, closeEditModal, confirmEdit}) {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-2 mb-3 leading-tight focus:outline-none focus:bg-white"
                   id="grid-first-name"
                   type="text"
-                  placeholder="โค้ก 1.5 ลิตร" // Use the _id prop as a placeholder
+                  placeholder={placeholder}
                 />
               </div>
               <div className="w-full md:w-1/4 px-3">
@@ -133,7 +133,7 @@ function EditProduct({ isEditModalOpen, closeEditModal, confirmEdit}) {
                   className="appearance-none block w-[98%] bg-gray-200 text-gray-700 border  rounded py-3 px-2 mb-3 leading-tight focus:outline-none focus:bg-white"
                   id="grid-first-name"
                   type="number"
-                  placeholder="กดรูปบาร์โค้ดเพื่อสแกน" // Use the _id prop as a placeholder
+                  placeholder="กดรูปบาร์โค้ดเพื่อสแกน"
                 />
                 <BiBarcodeReader size={30} className=" absolute right-5 mt-[8px] cursor-pointer hover:scale-110 z-50" />
                 </div>
