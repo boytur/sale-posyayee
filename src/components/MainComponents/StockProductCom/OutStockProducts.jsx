@@ -226,6 +226,7 @@ function OutStockProducts() {
         closeEditModal={closeEditModal}
         confirmEdit={confirmEdit}
         placeholder={placeholder}
+        _id = {_id}
       />
       <DeleteProduct
         isDelelteModalOpen={isDelelteModalOpen}

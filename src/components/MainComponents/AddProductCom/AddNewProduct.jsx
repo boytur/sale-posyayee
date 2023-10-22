@@ -1,86 +1,19 @@
-/* eslint-disable react/prop-types */
-/*
-  EditProducts.jsx เป็นหน้าย่อยของ Stock.jsx > OutStockProducts.jsx > รูปปากกา
-  โดยตัวมันเองจะเป็น Modal form เพื่อกรอกข้อมูลในการแก้ไขสินค้า
+import {BiBarcodeReader} from 'react-icons/bi'
+//เซ็ตรูป Preview
 
-  DATE : 11/ตุลาคม/2023
-  OWNER : piyawat W.
+import {useState} from 'react'
+function AddNewProduct() {
 
-*/
-
-import { useState } from "react";
-import Modal from "react-modal";
-Modal.setAppElement("#root");
-import { BiBarcodeReader } from "react-icons/bi";
-
-// eslint-disable-next-line react/prop-types, no-unused-vars
-function EditProduct({
-  isEditModalOpen,
-  closeEditModal,
-  confirmEdit,
-  placeholder,
-  _id,
-}) {
-  //เซ็ตรูป Preview
-  const [isPreviewImg, setIsPreviewImg] = useState(
-    "https://placehold.co/600x400/EEE/31343C"
-  );
-  function setImagePreview(URL) {
-    setIsPreviewImg(URL);
-  }
-
-  const [name, setName] = useState("");
-  const [volume, setVolume] = useState(0);
-  const [price, setPrice] = useState(0);
-
-  const updateDataEdit = (_id) => {
-    console.log(name);
-    console.log(price);
-    console.log(volume);
-    console.log(isPreviewImg);
-    console.log(_id);
-  };
-
-  // useEffect (()=>{
-  //   console.log(volume);
-  // })
-
-  // const confirmEditBtn = () => {
-  //   fetch(`http://localhost:5500/edit-product/${_id,name,image,volume}`)
-  // }
-
+    const [isPreviewImg , setIsPreviewImg] = useState('https://placehold.co/600x400/EEE/31343C')
+    function setImagePreview (URL){
+        setIsPreviewImg(URL)
+    }
+    
   return (
-    <>
-      <Modal
-        isOpen={isEditModalOpen}
-        onRequestClose={closeEditModal}
-        contentLabel="ยืนยันการยกเลิก"
-        style={{
-          overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-          },
-          content: {
-            width: "40rem",
-            height: "42rem",
-            margin: "auto",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: "8px",
-          },
-        }}
-      >
-        <div className="text-center transition-all ">
-          <h2 className="text-[#4C49ED] font-bold text-2xl">
-            แก้ไขรายละเอียดสินค้า
-          </h2>
-          <br />
-          <hr />
-          {/* --------------------------------------------------- */}
-          <form className="w-full max-w-lg mt-4">
-            <div className="flex flex-wrap -mx-3 mb-2">
-              <div className="w-full  px-3 mb-6 md:mb-0">
+    <div className='w-full pl-3  flex bg-white h-full' >
+          <form className="w-full max-w-lg">
+            <div className="flex flex-wrap -mx-3 mb-2 mt-4">
+              <div className="w-full md:w-full px-3 mb-6 md:mb-0">
                 <label
                   className="block  tracking-wide text-gray-700 text-xs font-bold mb-2 text-left"
                   htmlFor=""
@@ -93,8 +26,7 @@ function EditProduct({
                   focus:border-gray-500"
                   id="grid-first-name"
                   type="text"
-                  placeholder={placeholder}
-                  onChange={(e) => setName(e.target.value)}
+                  placeholder= "โค้ก 1.5 ml."
                 />
               </div>
               <div className="w-2/4 px-3">
@@ -109,7 +41,6 @@ function EditProduct({
                   border-gray-200 rounded py-3 px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500
                   placeholder:text-[#D9D9D9]"
                   id="grid-last-name"
-                  onChange={(e) => setPrice(e.target.value)}
                   type="number"
                   placeholder="15"
                 />
@@ -124,7 +55,6 @@ function EditProduct({
                 <input
                   className="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-2 leading-tight focus:outline-none focus:bg-white
                    focus:border-gray-500 placeholder:text-[#D9D9D9]"
-                  onChange={(e) => setVolume(e.target.value)}
                   id="grid-last-name"
                   type="number"
                   placeholder="20"
@@ -133,7 +63,7 @@ function EditProduct({
             </div>
             {/* ---------------------------------------------------- */}
             <div className="flex flex-wrap -mx-3 mb-2">
-              <div className="w-full px-3 mb-6 md:mb-0">
+              <div className="w-full  px-3 mb-6 md:mb-0">
                 <label
                   className="block  tracking-wide text-gray-700 text-xs font-bold mb-2 text-left"
                   htmlFor=""
@@ -183,33 +113,15 @@ function EditProduct({
                 </div>
               </div>
             </div>
+            <div className='w-full flex justify-end'>
+                <button
+                    className='w-[15.1rem] bg-[#4C49ED] text-white border h-[4rem] rounded-md hover:bg-[#4c49edc4]'>
+                    <label htmlFor="">บันทึกข้อมูล</label>
+                </button>
+            </div>
           </form>
-          {/* --------------------------------- */}
-          <div className="w-full gap-6 flex justify-center mt-4">
-            <div>
-              <button
-                onClick={closeEditModal}
-                className="w-[15.1rem] border h-[4rem] rounded-md text-[#ff000077] bg-[#D6D6D6CC] hover:bg-[#d6d6d6]"
-              >
-                ยกเลิก
-              </button>
-            </div>
-            <div>
-              <button
-                onClick={() => {
-                  confirmEdit();
-                  updateDataEdit(_id);
-                }}
-                className="w-[15.1rem] bg-[#4C49ED] text-white border h-[4rem] rounded-md hover:bg-[#4c49edc4]"
-              >
-                ยืนยัน
-              </button>
-            </div>
-          </div>
-        </div>
-      </Modal>
-    </>
-  );
+    </div>
+  )
 }
 
-export default EditProduct;
+export default AddNewProduct
