@@ -99,5 +99,14 @@
 ![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/cc3eba02-0180-4a89-8768-1a4c09856ded)
 ![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/1f9dd1f9-9a54-4a4d-9895-a448250eff87)
 
+** Tenth commit **
+- เชื่อม API login
+- เก็บ token ใน session storage และ username
+- เอาชื่อไปแสดงมุมขวาบน
+
+![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/9215dabb-ab69-45e9-89ba-522bf774de08)
+![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/ae79991d-e4fe-4c63-bba9-17979e335784)
+![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/2fd9564c-6f74-4969-8f1c-a02df3baddb7)
+![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/34acaa89-046a-4f2f-b32b-a64a471330c9)
 
 
