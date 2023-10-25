@@ -15,7 +15,7 @@
   DATE : 17/ตุลาคม/2023
   OWNER : piyawat W.
 */
-
+import { useEffect } from "react";
 import Aside from "../../NavbarAndAsideCom/Aside";
 import Navbar from "../../NavbarAndAsideCom/Navbar";
 import "../../../assets/css/StockLoadingSpinner.css";
@@ -24,10 +24,28 @@ import OutStockProducts from "./OutStockProducts";
 import AllProducts from "./AllProducts";
 
 function Stock() {
+  const [stockProducts, setProducts] = useState([]); //เพื่อดึง Products มาใช้
   let [btnCheck, setBtnCheck] = useState(true);
   function onBtnClick() {
     setBtnCheck(!btnCheck);
   }
+
+  //Fecth API เพื่อนับสินค้าทั้งหมดในคลัง
+  // Function to fetch products
+  const fetchProducts = () => {
+    fetch("http://localhost:5500/view-product")
+      .then((response) => response.json())
+      .then((data) => {
+        setProducts(data.products);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
+  // Fetch products when the component mounts
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
     <div>
@@ -43,21 +61,28 @@ function Stock() {
             </div>
           </div>
           <div>
-            <div className="flex gap-6 w-full bg-white pl-4 rounded-md h-[3rem] items-center">
-              <button
-                onClick={onBtnClick}
-                className={btnCheck ? "text-[#4C49ED] underline" : "text-black"}
-              >
-                <p>สินค้าใกล้จะหมด</p>
-              </button>
-              <button
-                onClick={onBtnClick}
-                className={
-                  !btnCheck ? "text-[#4C49ED] underline" : "text-black"
-                }
-              >
-                <p>สินค้าทั้งหมด</p>
-              </button>
+            <div className="flex gap-6 w-full bg-white pl-4 rounded-md h-[3rem] items-center justify-between">
+              <div className="flex gap-6">
+                <button
+                  onClick={onBtnClick}
+                  className={
+                    btnCheck ? "text-[#4C49ED] underline" : "text-black"
+                  }
+                >
+                  <p>สินค้าใกล้จะหมด</p>
+                </button>
+                <button
+                  onClick={onBtnClick}
+                  className={
+                    !btnCheck ? "text-[#4C49ED] underline" : "text-black"
+                  }
+                >
+                  <p>สินค้าทั้งหมด</p>
+                </button>
+              </div>
+              <div className=" pr-10">
+                <p>สินค้าในคลังทั้งหมด: {stockProducts.length} ชนิด</p>
+              </div>
             </div>
           </div>
           <div className="mt-3  overflow-y-scroll pl-4">

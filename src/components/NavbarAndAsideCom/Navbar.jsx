@@ -5,13 +5,20 @@ import userPic from "../../assets/img/user.png";
 import { BiSearchAlt } from "react-icons/bi";
 import { RiAddCircleFill } from "react-icons/ri";
 
-let userName = "sangjun";
+let userName = '';
 
 // eslint-disable-next-line react/prop-types
 function Navbar({ addProduct }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [products, setProducts] = useState([]); //รอเก็บข้อมูลเข้า Array products
+  
+  useEffect(()=>{
+    userName = sessionStorage.getItem("user");
+    if (userName != null){
+      userName = userName.replace(/"/g, '');
+    }
+  })
 
   useEffect(() => {
     // Fetch API สินค้าทั้งหมด
@@ -38,7 +45,7 @@ function Navbar({ addProduct }) {
 
   return (
     <div className="h-[4.5rem] flex justify-between bg-white w-full">
-      <Link to="/" className="flex items-center pl-8 gap-1 w-[24%]">
+      <Link to="/sale-products" className="flex items-center pl-8 gap-1 w-[24%]">
         <BsShop size={32} color="#4C49ED" />
         <h1 className="font-bold text-[2.7rem] pt-1">
           <span className="text-[#4C49ED]">POS</span>YAYEE
@@ -89,12 +96,12 @@ function Navbar({ addProduct }) {
         </div>
       </div>
       <div className="w-[52%] pr-2">
-        <div className="flex p-1 items-center gap-4 justify-end">
+        <div className="flex p-1 items-center gap-4 justify-end h-full">
           <div className="font-semibold flex">
             <h1>สวัสดี</h1>
             <h1>, {userName}</h1>
           </div>
-          <img src={userPic} className="w-[60px] h-[60]" alt="user" />
+          <img src={userPic} className="w-[30px] h-[30]" alt="user" />
         </div>
       </div>
     </div>

@@ -64,7 +64,7 @@ function Sale() {
 
   // ฟิลเตอร์หาโปรดัคที่มีบาร์โค้ดเป็น null
   const filteredProducts = products.filter(
-    (product) => product.barcode === null
+    (product) => product.barcode === null || product.barcode === ""
   );
 
   return (
@@ -107,7 +107,7 @@ function Sale() {
               >
                 <div className="border mt-2 h-[200px] grid rounded-md bg-white cursor-pointer hover:border-[3px] hover:border-[#0085FF]">
                   <img
-                    className="h-[8rem] object-cover rounded-lg p-1"
+                    className="h-[8rem] object-cover rounded-lg p-1 w-full"
                     src={product.image}
                     alt={product.name}
                   />

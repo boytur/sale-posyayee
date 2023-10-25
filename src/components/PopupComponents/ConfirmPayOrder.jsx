@@ -84,7 +84,7 @@ function ConfirmPayOrder({
               <div className="mt-[3rem] flex gap-4 w-[20rem]">
                 <label className="h-[3rem] items-center flex">เงินสด</label>
                 <input
-                  className="block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-2 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  className="block w-fulltext-gray-700 border focus:outline-[#4C49ED] focus:border-none rounded py-3 px-2 mb-3 leading-tight focus:outline-none focus:bg-white"
                   type="number"
                   placeholder="ป้อนเงินรับมา"
                   value={cashReceived}
@@ -96,7 +96,7 @@ function ConfirmPayOrder({
             </div>
             <div className="flex mt-10 pl-7 justify-center">
               <div className="w-[20rem] flex items-center">
-                <p>เงินทอน </p>&nbsp;
+                <p>เงินทอน &nbsp;</p>&nbsp;
                 {isNaN(cashReceived - totalPrice) ||
                 cashReceived - totalPrice < 0 ? (
                   <p className="text-[#4C49ED] text-[2rem]">เงินไม่เพียงพอ</p>

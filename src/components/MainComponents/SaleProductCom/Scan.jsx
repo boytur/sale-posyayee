@@ -1,12 +1,12 @@
 import { AiFillDelete } from "react-icons/ai";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PropTypes from "prop-types";
 import Modal from "react-modal";
 import CancelOrder from "../../PopupComponents/CancelOrder";
 import ConfirmPayOrder from "../../PopupComponents/ConfirmPayOrder";
-import Swal from "sweetalert2"; // import SweetAlert2
+import Swal from "sweetalert2";
 
 Modal.setAppElement("#root");
 
@@ -78,7 +78,9 @@ function Scan({ cart, setCart }) {
   //ยืนยันการจ่ายตัง modal
   const [isComfirmModalOpen, SetComfirmModalOpen] = useState(false);
   const openConfirmModal = () => {
-    SetComfirmModalOpen(true);
+    if (cartItems.length>0){
+      SetComfirmModalOpen(true);
+    }
   };
   const closeConfirmModal = () => {
     SetComfirmModalOpen(false);
@@ -87,24 +89,20 @@ function Scan({ cart, setCart }) {
     setCart([]);
     closeConfirmModal();
   };
-
-  const PayMoney = () => {
-    openConfirmModal();
-  };
   
   // Enter  เพื่อเปิด Modal การจ่ายเงิน
-  useEffect(() => {
-    const keyDownHandler = (event) => {
-      console.log("User pressed: ", event.key);
-      if (event.key === "Enter") {
-        PayMoney();
-      }
-    };
-    document.addEventListener("keydown", keyDownHandler);
-    return () => {
-      document.removeEventListener("keydown", keyDownHandler);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const keyDownHandler = (event) => {
+  //     console.log("User pressed: ", event.key);
+  //     if (event.key === "Enter") {
+  //       PayMoney();
+  //     }
+  //   };
+  //   document.addEventListener("keydown", keyDownHandler);
+  //   return () => {
+  //     document.removeEventListener("keydown", keyDownHandler);
+  //   };
+  // }, []);
   
   return (
     <div className=" h-full w-[40%] flex justify-center">

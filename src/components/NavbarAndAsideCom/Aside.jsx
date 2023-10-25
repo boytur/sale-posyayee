@@ -25,9 +25,9 @@ function Aside() {
         <div className=" flex justify-start h-[6rem] mt-10">
           <button
             className={`flex gap-2 items-center text-[1.3rem] font-semibold w-full p-12 rounded-lg ${getActiveButton(
-              "/"
+              "/sale-products"
             )}`}
-            onClick={() => handleNavigate("/")}
+            onClick={() => handleNavigate("/sale-products")}
           >
             <GoHomeFill size={20} />
             <p>ขายของหน้าร้าน</p>

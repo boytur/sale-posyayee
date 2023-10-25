@@ -171,7 +171,7 @@ function AllProducts() {
                         fontSize: "22px",
                       }}
                     >
-                      {product.volume === -1 ? (
+                      {product.volume === -1 || product.volume === null ? (
                         <p className=" text-black text-[10px] font-thin">
                           ไม่จำกัด
                         </p>
@@ -195,11 +195,7 @@ function AllProducts() {
                         fontWeight: "normal",
                       }}
                     >
-                      {product.barcode == null ? (
-                        <p className=" text-[10px] font-thin">ไม่มี</p>
-                      ) : (
-                        product.barcode
-                      )}
+                      {product.barcode == null || product.barcode === "" ? <p className="text-black text-[10px] font-thin">ไม่มี</p> : product.barcode}
                     </th>
                     <th
                       style={{
