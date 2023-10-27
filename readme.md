@@ -13,13 +13,13 @@
 - Database: MongoDB
 
 
-** First commit **
+** First update **
 - สร้างหน้าหลัก Route ของ Aside (Left nav bar)
 - เชื่อม API สินค้าไม่มีบาร์โค้ดมาแสดงหน้าหลัก 
 
 ![สกรีนช็อต 2023-09-30 165341](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/5e7eae68-6e28-4233-8e76-49205b78c613)
 
-** Second commit **
+** Second ubdate **
 - ทำหน้าสต็อก 
 - เพิ่มปุ่มค้นหา
 - เชื่อม API สินค้าที่ใกล้จะหมด พร้อมทำ UI 
@@ -33,7 +33,7 @@
 ![image-1](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/54d15bb5-66f3-4db9-89e5-e25066a613dc)
 
 
-** Third commit **
+** Third update **
 - ทำหน้า scan
 - ทำฟังก์ชันลบข้อมูลจาก scan
 - เพิ่มปุ่มแจ้งเตือนเวลาลบข้อมูลด้วย toatify
@@ -44,7 +44,7 @@
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/c47e9ebe-dc96-4026-b77b-97113e7ddd0f)
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/6797ed15-7030-4e5b-be0a-3b391972b007)
 
-** Fourth commit **
+** Fourth update  **
 - เพิ่ม Popup confirm
   
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/d0aa4f5c-3519-4314-857d-02b3668355e4)
@@ -57,7 +57,7 @@
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/81c07f21-9500-4f99-ad0f-38e02c2856f7)
 
 
-** Fifth commit **
+** Fifth update  **
 
 - เพิ่ม Modal การแก้ไขข้อมูลของ AllProduct , OutStockProduct
 - เพิ่ม Modal คอนเฟิร์มการลบข้อมูลของ AllProduct , OutStockProduct
@@ -65,7 +65,7 @@
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/d64f57f9-2f96-4c37-98d0-c1cbe3639272)
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/32f422eb-5b3d-4cdb-9602-17c7f49029c4)
 
- ** Sixth commit **
+ ** Sixth update  **
 
  - ทำพรีวิวรูปตรง edit products
  - ทำหน้า Login
@@ -75,13 +75,13 @@
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/9baaa2fa-7979-4892-bee4-d83d8ecf6bd0)
 ![image](https://github.com/boytur/POS-MERN-CLIENT-SIDE/assets/104257779/7355794c-7436-4f9d-b4f1-4d0129a24617)
 
-** Seventh commit **
+** Seventh update  **
 
 - ทำเสิร์ชสินค้าและเพิ่มสินค้าเข้าตะกร้า
 
 ![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/2c8ca424-8bf3-4f22-b219-304af7487b59)
 
-** Eighth commit **
+** Eighth update  **
 
 - เชื่อม API delete
 - ทำป๊อบอัพเมื่อลบสินค้าเสร็จ
@@ -90,7 +90,7 @@
 ![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/5444a636-3891-4842-abc0-bf683458c56a)
 ![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/c3a41dba-77ea-4af5-ae5d-ec23718e4e3a)
 
-** Ninth commit **
+** Ninth update  **
 
 - ทำหน้าเพิ่มสินค้า
 - เพิ่มฟอร์มสำหรับเพิ่มสินค้าใหม่
@@ -99,7 +99,7 @@
 ![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/cc3eba02-0180-4a89-8768-1a4c09856ded)
 ![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/1f9dd1f9-9a54-4a4d-9895-a448250eff87)
 
-** Tenth commit **
+** Tenth update  **
 - เชื่อม API login
 - เก็บ token ใน session storage และ username
 - เอาชื่อไปแสดงมุมขวาบน
