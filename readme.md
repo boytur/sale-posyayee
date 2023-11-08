@@ -109,4 +109,14 @@
 ![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/2fd9564c-6f74-4969-8f1c-a02df3baddb7)
 ![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/34acaa89-046a-4f2f-b32b-a64a471330c9)
 
+** Eleventh update **
+- เปลี่ยนให้มี Navbar ส่วนของช่องค้าหาแค่ใน Sale.jsx
+- ลบ Navbar.jsx
+- เอาชื่อ user มาไว้ข้างล่างซ้าย
+
+![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/42a8887d-41a7-4b6c-a208-ece372a1c031)
+![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/751db64b-f928-4411-a165-a9287159c062)
+![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/bd11f931-d09f-4bb8-bae0-00ed8006f095)
+![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/98bc6020-ad21-484e-bb11-0cc7e8a7f9de)
+
 
