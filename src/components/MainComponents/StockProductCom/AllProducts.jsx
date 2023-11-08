@@ -28,6 +28,7 @@ function AllProducts() {
   const [isEditModalOpen,setIsEditModalOpen] = useState(false);
   const [placeholder, setPlaceholder] = useState(''); //ส่ง Placeholder ไปใช้
 
+  const [_id_ , set_Id] = useState("");
   /*ฟังก์ชันแก้ไขสินค้า รับ _id และ _name เพื่อเอา _id ไปเช็คและแก้ไข
     และเอา _name ไปทำ Placeholder
   */
@@ -36,6 +37,7 @@ function AllProducts() {
     console.log(isEditModalOpen);
     openEditModal();
     setPlaceholder(_name);
+    set_Id(_id)
   }
 
   const openEditModal = () => {
@@ -230,6 +232,7 @@ function AllProducts() {
       closeEditModal = {closeEditModal}
       confirmEdit = {confirmEdit}
       placeholder = {placeholder}
+      _id_ = {_id_}
       />
       <DeleteProduct
       isDelelteModalOpen = {isDelelteModalOpen}

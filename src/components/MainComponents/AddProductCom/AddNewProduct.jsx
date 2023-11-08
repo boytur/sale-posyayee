@@ -37,6 +37,13 @@ function AddNewProduct() {
       });
       return;
     }
+    if (formData.price <= 0){
+      Swal.fire({
+        icon: "error",
+        title: "ใส่ราคาให้มันถูกโว้ยยย!",
+      });
+      return;
+    }
 
     
     try {
@@ -80,7 +87,7 @@ function AddNewProduct() {
               ชื่อสินค้าใหม่
             </label>
             <input
-              className="appearance-none block w-full bg-white text-gray-700 border rounded py-3 px-2 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-2 leading-tight focus:outline-[#4C49ED] focus:bg-white focus:border-gray-500 placeholder:text-[#D9D9D9] "
               id="grid-first-name"
               type="text"
               placeholder="โค้ก 1.5 ml."
@@ -91,7 +98,7 @@ function AddNewProduct() {
               }
             />
           </div>
-          <div className="w-2/4 px-3">
+          <div className="w-2/4 px-3 pt-2">
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-left"
               htmlFor="grid-last-name"
@@ -99,7 +106,7 @@ function AddNewProduct() {
               ราคา (บาท)
             </label>
             <input
-              className="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 placeholder:text-[#D9D9D9]"
+              className="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-2 leading-tight focus:outline-[#4C49ED] focus:bg-white focus:border-gray-500 placeholder:text-[#D9D9D9] "
               type="number"
               placeholder="15"
               value={formData.price}
@@ -109,7 +116,7 @@ function AddNewProduct() {
               }
             />
           </div>
-          <div className="w-2/4 px-3">
+          <div className="w-2/4 px-3 pt-2">
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-left"
               htmlFor="grid-last-name"
@@ -117,7 +124,8 @@ function AddNewProduct() {
               จำนวน (ชิ้น)
             </label>
             <input
-              className="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 placeholder:text-[#D9D9D9]"
+              className="appearance-none block w-full bg-white text-gray-700 border 
+              border-gray-200 rounded py-3 px-2 leading-tight focus:outline-[#4C49ED] focus:bg-white focus:border-gray-500 placeholder:text-[#D9D9D9]"
               id="grid-last-name"
               type="number"
               placeholder="20"
@@ -141,7 +149,8 @@ function AddNewProduct() {
                 setFormData({ ...formData, image: e.target.value });
                 setImagePreview(e.target.value);
               }}
-              className="appearance-none block w-full bg-white text-gray-700 border rounded py-3 px-2 mb-3 leading-tight focus:outline-none focus:bg-white placeholder:text-[#D9D9D9] focus:border-gray-500"
+              className="appearance-none block w-full bg-white text-gray-700 
+              border rounded py-3 px-2 mb-3 leading-tight focus:outline-[#4C49ED] focus:bg-white placeholder:text-[#D9D9D9] focus:border-gray-500"
               id="grid-first-name"
               type="text"
               placeholder="https://placehold.co/600x400/EEE/31343C"
@@ -168,7 +177,8 @@ function AddNewProduct() {
             <img src="" alt="" />
             <div className="relative flex w-full">
               <input
-                className="appearance-none block w-[98%] bg-white text-gray-700 border rounded py-3 px-2 mb-3 leading-tight focus:outline-none focus:border-gray-500 placeholder:text-[#D9D9D9]"
+                className="appearance-none block w-[98%] bg-white
+                 text-gray-700 border rounded py-3 px-2 mb-3 leading-tight focus:outline-[#4C49ED] focus:border-gray-500 placeholder:text-[#D9D9D9]"
                 id="grid-first-name"
                 type="number"
                 placeholder="กดรูปบาร์โค้ดเพื่อสแกน"

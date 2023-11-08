@@ -3,7 +3,6 @@ import { Line} from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
 import "chart.js/auto";
 import Aside from "../../NavbarAndAsideCom/Aside";
-import Navbar from "../../NavbarAndAsideCom/Navbar";
 import '../../../assets/css/LoadingAnalysis.css';
 import {
   FcPositiveDynamic,
@@ -101,10 +100,9 @@ function Analysis() {
   })
   return (
     <div>
-      <Navbar />
       <div className="flex w-full h-full">
         <Aside />
-        <div className="w-[80%] flex flex-col pl-1">
+        <div className="w-[80%] flex flex-col pl-1 pt-4">
           <div className="w-full font-semibold items-center flex pl-4 mt-2">
             <div>
               <h1 className=" text-[#4C49ED] text-[32px]">วิเคราะห์ยอดขาย</h1>

@@ -1,10 +1,15 @@
 // eslint-disable-next-line no-unused-vars
-import React from "react";
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GoHomeFill } from "react-icons/go";
 import { BsFillDatabaseFill, BsDatabaseFillAdd } from "react-icons/bs";
 import { IoMdAnalytics } from "react-icons/io";
+import { BsShop } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import userPic from "../../assets/img/user.png";
 
+
+let userName = "";
 function Aside() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,9 +24,25 @@ function Aside() {
     navigate(route);
   };
 
+  useEffect(() => {
+    userName = sessionStorage.getItem("user");
+    if (userName != null) {
+      userName = userName.replace(/"/g, "");
+    }
+  });
+
   return (
-    <div className="bg-white w-[20%] h-[89vh] text-[#646771]">
-      <div className="p-3 h-full">
+    <div className="bg-white w-[20%] full text-[#646771] h-[100vh]">
+      <div className="p-3 pt-2">
+        <Link
+          to="/sale-products"
+          className="flex items-center pl-8 gap-1 w-[24%]"
+        >
+          <BsShop size={32} color="#4C49ED" />
+          <h1 className="font-bold text-[2.7rem]">
+            <span className="text-[#4C49ED]">POS</span>YAYEE
+          </h1>
+        </Link>
         <div className=" flex justify-start h-[6rem] mt-10">
           <button
             className={`flex gap-2 items-center text-[1.3rem] font-semibold w-full p-12 rounded-lg ${getActiveButton(
@@ -65,6 +86,18 @@ function Aside() {
             <IoMdAnalytics size={20} />
             <p>วิเคราะห์ยอดขาย</p>
           </button>
+        </div>
+        <div className="p-6"
+          style={{ height: "calc(100vh - 33rem)" }}>
+            <div className="flex items-center relative top-[90%]">
+            <div>
+            <img src={userPic} className="w-[30px] h-[30]" alt="user" />
+          </div>
+          <div className="font-semibold flex pl-2">
+            <h1>สวัสดี</h1>
+            <h1>, {userName}</h1>
+          </div>
+            </div>
         </div>
       </div>
     </div>

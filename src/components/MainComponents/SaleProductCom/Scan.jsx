@@ -106,7 +106,7 @@ function Scan({ cart, setCart }) {
   
   return (
     <div className=" h-full w-[40%] flex justify-center">
-      <div className="w-full flex flex-col">
+      <div className="w-full flex flex-col pt-4">
         <div className=" bg-white pl-1">
           <table className="w-full text-center bg-[#D9D9D9] h-[3rem] rounded-md">
             <thead>
@@ -134,7 +134,7 @@ function Scan({ cart, setCart }) {
           </table>
           <div
             className="overflow-y-scroll w-full"
-            style={{ height: "calc(100vh - 18.2rem)" }}
+            style={{ height: "calc(100vh - 13.8rem)" }}
           >
             {cartItems.map((item, index) => (
               <div className="mt-3 bg-white pl-1" key={item._id}>

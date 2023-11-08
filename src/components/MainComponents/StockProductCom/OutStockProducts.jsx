@@ -27,6 +27,7 @@ function OutStockProducts() {
   const [placeholder, setPlaceholder] = useState("");
 
   const [_name, set_Name] = useState("");
+  const [_id_ , set_Id] = useState("");
   /* Edit modal */
   //เก็บ _id ไปเช็คเพื่อแก้ไขข้อมูล
   function editClick(_id, _name) {
@@ -35,6 +36,7 @@ function OutStockProducts() {
     console.log(isEditModalOpen);
     openEditModal();
     setPlaceholder(_name);
+    set_Id(_id);
   }
 
   const openEditModal = () => {
@@ -226,7 +228,7 @@ function OutStockProducts() {
         closeEditModal={closeEditModal}
         confirmEdit={confirmEdit}
         placeholder={placeholder}
-        _id = {_id}
+        _id_ = {_id_}
       />
       <DeleteProduct
         isDelelteModalOpen={isDelelteModalOpen}

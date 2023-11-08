@@ -1,190 +1,211 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-/*
-  EditProducts.jsx เป็นหน้าย่อยของ Stock.jsx > OutStockProducts.jsx > รูปปากกา
-  โดยตัวมันเองจะเป็น Modal form เพื่อกรอกข้อมูลในการแก้ไขสินค้า
-
-  DATE : 11/ตุลาคม/2023
-  OWNER : piyawat W.
-
-*/
-
+import axios from "axios"; // Import axios เพื่อทำการ HTTP requests
 import { useState } from "react";
 import Modal from "react-modal";
 Modal.setAppElement("#root");
 import { BiBarcodeReader } from "react-icons/bi";
+import Swal from "sweetalert2";
 
-// eslint-disable-next-line react/prop-types, no-unused-vars
 function EditProduct({
   isEditModalOpen,
   closeEditModal,
-  confirmEdit,
   placeholder,
-  _id,
+  _id_,
 }) {
-  //เซ็ตรูป Preview
   const [isPreviewImg, setIsPreviewImg] = useState(
     "https://placehold.co/600x400/EEE/31343C"
   );
-  function setImagePreview(URL) {
-    setIsPreviewImg(URL);
-  }
-
   const [name, setName] = useState("");
-  const [volume, setVolume] = useState(0);
   const [price, setPrice] = useState(0);
+  const [volume, setVolume] = useState(0);
+  const [barcode, setBarcode] = useState("");
 
-  const updateDataEdit = (_id) => {
-    console.log(name);
-    console.log(price);
-    console.log(volume);
-    console.log(isPreviewImg);
-    console.log(_id);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (barcode && barcode.length !== 13) {
+      Swal.fire({
+        icon: "error",
+        title: "บาร์โค้ดต้องมีความยาว 13 ตัว",
+      });
+      return;
+    }
+    if (price <= 0){
+      Swal.fire({
+        icon: "error",
+        title: "ใส่ราคาให้มันถูกโว้ยยย!",
+      });
+      return;
+    }
+    try {
+      const formData = {
+        name: name,
+        price: price,
+        volume: volume,
+        barcode: barcode,
+        image: isPreviewImg,
+        _id: _id_,
+      };
+
+      const response = await axios.post(
+        "http://localhost:5500/edit-product",
+        formData
+      );
+
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: `แก้ไขสินค้าสำเร็จ`,
+        });
+        closeEditModal();
+      }
+    } catch (error) {
+      console.error("เกิดข้อผิดพลาดในการแก้ไขสินค้า:", JSON.stringify(error));
+      Swal.fire({
+        icon: "error",
+        title: "เกิดข้อผิดพลาดในการแก้ไขสินค้า",
+      });
+    }
   };
 
-  // useEffect (()=>{
-  //   console.log(volume);
-  // })
-
-  // const confirmEditBtn = () => {
-  //   fetch(`http://localhost:5500/edit-product/${_id,name,image,volume}`)
-  // }
+  const setImagePreview = (URL) => {
+    setIsPreviewImg(URL);
+  };
 
   return (
-    <>
-      <Modal
-        isOpen={isEditModalOpen}
-        onRequestClose={closeEditModal}
-        contentLabel="ยืนยันการยกเลิก"
-        style={{
-          overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-          },
-          content: {
-            width: "40rem",
-            height: "42rem",
-            margin: "auto",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: "8px",
-          },
-        }}
-      >
-        <div className="text-center transition-all ">
-          <h2 className="text-[#4C49ED] font-bold text-2xl">
-            แก้ไขรายละเอียดสินค้า
-          </h2>
-          <br />
-          <hr />
-          {/* --------------------------------------------------- */}
-          <form className="w-full max-w-lg mt-4">
-            <div className="flex flex-wrap -mx-3 mb-2">
-              <div className="w-full  px-3 mb-6 md:mb-0">
-                <label
-                  className="block  tracking-wide text-gray-700 text-xs font-bold mb-2 text-left"
-                  htmlFor=""
-                >
-                  ชื่อสินค้าใหม่
-                </label>
-                <input
-                  className="appearance-none block w-full bg-white text-gray-700 border
-                  rounded py-3 px-2 mb-3 leading-tight focus:outline-none focus:bg-white
+    <Modal
+      isOpen={isEditModalOpen}
+      onRequestClose={closeEditModal}
+      contentLabel="ยืนยันการยกเลิก"
+      style={{
+        overlay: {
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+        },
+        content: {
+          width: "40rem",
+          height: "42rem",
+          margin: "auto",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: "8px",
+        },
+      }}
+    >
+      <div className="text-center transition-all">
+        <h2 className="text-[#4C49ED] font-bold text-2xl">
+          แก้ไขรายละเอียดสินค้า
+        </h2>
+        <br />
+        <hr />
+        <form className="w-full max-w-lg mt-4" onSubmit={handleSubmit}>
+          <div className="flex flex-wrap -mx-3 mb-2">
+            <div className="w-full px-3 mb-6 md:mb-0">
+              <label
+                className="block tracking-wide text-gray-700 text-xs font-bold mb-2 text-left"
+                htmlFor=""
+              >
+                ชื่อสินค้าใหม่
+              </label>
+              <input
+                className="appearance-none block w-full bg-white text-gray-700 border
+                  rounded py-3 px-2 mb-3 leading-tight focus:outline-[#4C49ED] focus:bg-white
                   focus:border-gray-500"
-                  id="grid-first-name"
-                  type="text"
-                  placeholder={placeholder}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </div>
-              <div className="w-2/4 px-3">
-                <label
-                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2  text-left"
-                  htmlFor="grid-last-name"
-                >
-                  ราคา (บาท)
-                </label>
-                <input
-                  className="appearance-none block w-full bg-white text-gray-700 border
-                  border-gray-200 rounded py-3 px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500
+                id="grid-first-name"
+                type="text"
+                placeholder={placeholder}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="w-2/4 px-3">
+              <label
+                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2  text-left"
+                htmlFor="grid-last-name"
+              >
+                ราคา (บาท)
+              </label>
+              <input
+                className="appearance-none block w-full bg-white text-gray-700 border
+                  border-gray-200 rounded py-3 px-2 leading-tight focus:outline-[#4C49ED] focus:bg-white focus:border-gray-500
                   placeholder:text-[#D9D9D9]"
-                  id="grid-last-name"
-                  onChange={(e) => setPrice(e.target.value)}
-                  type="number"
-                  placeholder="15"
-                />
-              </div>
-              <div className="w-2/4 px-3">
-                <label
-                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2  text-left"
-                  htmlFor="grid-last-name"
-                >
-                  จำนวน (ชิ้น)
-                </label>
-                <input
-                  className="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-2 leading-tight focus:outline-none focus:bg-white
+                id="grid-last-name"
+                onChange={(e) => setPrice(e.target.value)}
+                type="number"
+                required
+                placeholder="15"
+              />
+            </div>
+            <div className="w-2/4 px-3">
+              <label
+                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2  text-left"
+                htmlFor="grid-last-name"
+              >
+                จำนวน (ชิ้น)
+              </label>
+              <input
+                className="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-2 leading-tight focus:outline-[#4C49ED] focus:bg-white
                    focus:border-gray-500 placeholder:text-[#D9D9D9]"
-                  onChange={(e) => setVolume(e.target.value)}
-                  id="grid-last-name"
-                  type="number"
-                  placeholder="20"
-                />
-              </div>
+                onChange={(e) => setVolume(e.target.value)}
+                id="grid-last-name"
+                type="number"
+                placeholder="20"
+              />
             </div>
-            {/* ---------------------------------------------------- */}
-            <div className="flex flex-wrap -mx-3 mb-2">
-              <div className="w-full px-3 mb-6 md:mb-0">
-                <label
-                  className="block  tracking-wide text-gray-700 text-xs font-bold mb-2 text-left"
-                  htmlFor=""
-                >
-                  URL รูปภาพ
-                </label>
-                <input
-                  onChange={(e) => setImagePreview(e.target.value)}
-                  className="appearance-none block w-full bg-white text-gray-700 border
-                  rounded py-3 px-2 mb-3 leading-tight focus:outline-none focus:bg-white placeholder:text-[#D9D9D9]
+          </div>
+          <div className="flex flex-wrap -mx-3 mb-2">
+            <div className="w-full px-3 mb-6 md:mb-0">
+              <label
+                className="block  tracking-wide text-gray-700 text-xs font-bold mb-2 text-left"
+                htmlFor=""
+              >
+                URL รูปภาพ
+              </label>
+              <input
+                onChange={(e) => setImagePreview(e.target.value)}
+                className="appearance-none block w-full bg-white text-gray-700 border
+                  rounded py-3 px-2 mb-3 leading-tight focus:outline-[#4C49ED] focus:bg-white placeholder:text-[#D9D9D9]
                   focus:border-gray-500"
+                id="grid-first-name"
+                type="text"
+                placeholder="https://placehold.co/600x400/EEE/31343C"
+              />
+              <label className="flex tracking-wide text-gray-700 text-xs font-bold mb-2 text-left">
+                รูปจะแสดงผลดังนี้
+              </label>
+              <img
+                className=" w-[170px] h-[100px] object-cover"
+                src={isPreviewImg}
+                alt=""
+              />
+            </div>
+          </div>
+          <div className="flex flex-wrap -mx-3 mb-6">
+            <div className="w-full  pl-3 mb-6 md:mb-0">
+              <label
+                className="block  tracking-wide text-gray-700 text-xs font-bold mb-2 text-left"
+                htmlFor=""
+              >
+                บาร์โค้ด
+              </label>
+              <img src="" alt="" />
+              <div className="relative flex w-full">
+                <input
+                  className="appearance-none block w-[98%] bg-white text-gray-700 border  rounded py-3 px-2 mb-3 leading-tight focus:outline-[#4C49ED] focus:border-gray-500 placeholder:text-[#D9D9D9]"
                   id="grid-first-name"
-                  type="text"
-                  placeholder="https://placehold.co/600x400/EEE/31343C"
+                  type="number"
+                  placeholder="กดรูปบาร์โค้ดเพื่อสแกน"
+                  onChange={(e) => setBarcode(e.target.value)}
                 />
-                <label className="flex tracking-wide text-gray-700 text-xs font-bold mb-2 text-left">
-                  รูปจะแสดงผลดังนี้
-                </label>
-                <img
-                  className=" w-[170px] h-[100px] object-cover"
-                  src={isPreviewImg}
-                  alt=""
+                <BiBarcodeReader
+                  size={30}
+                  className=" absolute right-5 mt-[8px] cursor-pointer hover:scale-110 z-50"
                 />
               </div>
             </div>
-            {/* ----------------------------------- */}
-            <div className="flex flex-wrap -mx-3 mb-6">
-              <div className="w-full  pl-3 mb-6 md:mb-0">
-                <label
-                  className="block  tracking-wide text-gray-700 text-xs font-bold mb-2 text-left"
-                  htmlFor=""
-                >
-                  บาร์โค้ด
-                </label>
-                <img src="" alt="" />
-                <div className="relative flex w-full">
-                  <input
-                    className="appearance-none block w-[98%] bg-white text-gray-700 border  rounded py-3 px-2 mb-3 leading-tight focus:outline-none focus:border-gray-500 placeholder:text-[#D9D9D9]"
-                    id="grid-first-name"
-                    type="number"
-                    placeholder="กดรูปบาร์โค้ดเพื่อสแกน"
-                  />
-                  <BiBarcodeReader
-                    size={30}
-                    className=" absolute right-5 mt-[8px] cursor-pointer hover:scale-110 z-50"
-                  />
-                </div>
-              </div>
-            </div>
-          </form>
-          {/* --------------------------------- */}
+          </div>
           <div className="w-full gap-6 flex justify-center mt-4">
             <div>
               <button
@@ -196,19 +217,16 @@ function EditProduct({
             </div>
             <div>
               <button
-                onClick={() => {
-                  confirmEdit();
-                  updateDataEdit(_id);
-                }}
+                type="submit"
                 className="w-[15.1rem] bg-[#4C49ED] text-white border h-[4rem] rounded-md hover:bg-[#4c49edc4]"
               >
                 ยืนยัน
               </button>
             </div>
           </div>
-        </div>
-      </Modal>
-    </>
+        </form>
+      </div>
+    </Modal>
   );
 }
 

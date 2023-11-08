@@ -109,10 +109,4 @@
 ![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/2fd9564c-6f74-4969-8f1c-a02df3baddb7)
 ![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/34acaa89-046a-4f2f-b32b-a64a471330c9)
 
-** Eleventh **
-- ทำ UI ของหน้าวิเคราห์ยอดขาย
-- ทำกราฟ ของหน้าวิเคราห์ยอดขาย
-- เชื่อม API ของวิเคราห์ยอดขาย
-
-![image](https://github.com/boytur/POS-YAYEE-CLIENT/assets/104257779/03a27471-d9ae-4c10-8857-c9b4b729ce03)
 

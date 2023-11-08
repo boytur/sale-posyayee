@@ -73,7 +73,7 @@ function Login({ isAuthenticated, setIsAuthenticated }) {
   if (isAuthenticated) {
     return navigate("/sale-products");
   }
-
+  
   return (
     <div className="login-background">
       <div className="w-[380px] h-[514px] bg-white rounded-md flex-col z-50">
