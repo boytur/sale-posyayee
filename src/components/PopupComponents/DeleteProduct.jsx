@@ -7,66 +7,93 @@
   OWNER : piyawat W.
 
 */
-
 /* eslint-disable react/prop-types */
 import Modal from "react-modal";
 Modal.setAppElement("#root");
+import Swal from "sweetalert2";
 
-// eslint-disable-next-line no-unused-vars
-function DeleteProduct({isDelelteModalOpen,closeDelelteModal,deleteConfirm,name,_name}) {
+function DeleteProduct({
+  isDelelteModalOpen,
+  closeDelelteModal,
+  name,
+  _id,
+  fetchProducts
+}) {
+  const handleDelete = () => {
+    fetch(`http://localhost:5500/delete-product/${_id}`, {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        fetchProducts();
+        //Alert เมื่อลบสินค้า
+        Swal.fire({
+          icon: "success",
+          title: `${data.message}`,
+          timer: 3000,
+        });
+      })
+      .catch((error) => {
+        console.error("เกิดข้อผิดพลาดในการลบข้อมูล:", error);
+        // Error alert
+        Swal.fire({
+          icon: "error",
+          title: "เกิดข้อผิดพลาดในการลบข้อมูล",
+          text: "กรุณาลองอีกครั้ง",
+        });
+      });
+    closeDelelteModal(); //ปิด Modal
+  };
   return (
     <>
-    <Modal
-      isOpen={isDelelteModalOpen}
-      onRequestClose={closeDelelteModal}
-      contentLabel="ยืนยันการยกเลิก"
-      style={{
-        overlay: {
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
-        },
-        content: {
-          width: "40rem", // Set the width you desire
-          height: "20rem", // Set the height you desire
-          margin: "auto", // Center the modal horizontally
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          borderRadius: "8px", // Rounded corners
-        },
-      }}
-    >
-      <div className="text-center transition-all">
-        <h2 className="text-[#4C49ED] font-bold text-[2rem]">
-          ยืนยันการลบ
-        </h2>
-        <div>
-        <p className="text-[1.5rem] mt-10">
-          ฉันต้องการจะลบ "{_name}"
-        </p>
+      <Modal
+        isOpen={isDelelteModalOpen}
+        onRequestClose={closeDelelteModal}
+        contentLabel="ยืนยันการยกเลิก"
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+          },
+          content: {
+            width: "40rem",
+            height: "20rem",
+            margin: "auto",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: "8px",
+          },
+        }}
+      >
+        <div className="text-center transition-all">
+          <h2 className="text-[#4C49ED] font-bold text-[2rem]">ยืนยันการลบ</h2>
+          <div>
+            <p className="text-[1.5rem] mt-10">ฉันต้องการจะลบ "{name}"</p>
+          </div>
+          <div className="w-full gap-6 flex justify-center mt-[5rem]">
+            <div>
+              <button
+                onClick={handleDelete}
+                className="w-[15.1rem] bg-[#4C49ED] text-white border h-[4rem] rounded-md hover:bg-[#4c49edc4]"
+              >
+                ยืนยัน
+              </button>
+            </div>
+            <div>
+              <button
+                onClick={closeDelelteModal}
+                className="w-[15.1rem] border h-[4rem] rounded-md text-[#ff000077] bg-[#D6D6D6CC] hover:bg-[#d6d6d6]"
+              >
+                ยกเลิก
+              </button>
+            </div>
+          </div>
         </div>
-      <div className="w-full gap-6 flex justify-center mt-[5rem]">
-        <div>
-          <button
-            onClick={deleteConfirm}
-            className="w-[15.1rem] bg-[#4C49ED] text-white border h-[4rem] rounded-md hover:bg-[#4c49edc4]"
-          >
-            ยืนยัน
-          </button>
-        </div>
-        <div>
-          <button
-            onClick={closeDelelteModal}
-            className="w-[15.1rem] border h-[4rem] rounded-md text-[#ff000077] bg-[#D6D6D6CC] hover:bg-[#d6d6d6]"
-          >
-            ยกเลิก
-          </button>
-        </div>
-      </div>
-      </div>
-    </Modal>
-  </>
-);
+      </Modal>
+    </>
+  );
 }
 
-export default DeleteProduct
+export default DeleteProduct;

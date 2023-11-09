@@ -1,4 +1,4 @@
-import {useState} from "react";
+import { useEffect, useState } from "react";
 import Aside from "../../NavbarAndAsideCom/Aside";
 import AddExisingProduct from "./AddExisingProduct";
 import AddNewProduct from "./AddNewProduct";
@@ -8,6 +8,10 @@ function AddProduct() {
   function onBtnClick() {
     setBtnCheck(!btnCheck);
   }
+
+  useEffect(() => {
+    document.title = "POSYAYEE 📦 เพิ่มสินค้า";
+  });
   return (
     <div>
       <div className="flex w-full h-full">
@@ -37,7 +41,7 @@ function AddProduct() {
               </button>
             </div>
           </div>
-          {btnCheck ? <AddNewProduct/> : <AddExisingProduct />}
+          {btnCheck ? <AddNewProduct /> : <AddExisingProduct />}
         </div>
       </div>
     </div>

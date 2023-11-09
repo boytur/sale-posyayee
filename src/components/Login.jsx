@@ -54,6 +54,7 @@ function Login({ isAuthenticated, setIsAuthenticated }) {
     // ตรวจสอบว่ามีข้อมูล username และ token ใน sessionStorage หรือไม่
     const storedUsername = sessionStorage.getItem("user");
     const storedToken = sessionStorage.getItem("token");
+    document.title = "POSYAYEE 🔐 Login";
 
     if (storedUsername && storedToken) {
       // ถ้ามีข้อมูลใน sessionStorage แสดงว่าผู้ใช้เคยเข้าสู่ระบบแล้ว

@@ -97,6 +97,7 @@ function Analysis() {
   
   useEffect(() => {
     colorLine();
+    document.title = "POSYAYEE 📈 วิเคราะห์ยอดขาย"
   })
   return (
     <div>

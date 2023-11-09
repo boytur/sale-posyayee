@@ -1,12 +1,15 @@
+/* eslint-disable react/prop-types */
 /*
   OutStockProducts.jsx เป็นหน้าย่อยของ Stock.jsx
   โดยตัวมันเองจะแสดงสินค้าที่ใกล้จะหมด
 
-  **เพิ่มเติม**
-  -มีการส่ง props EditProduct ,DeleteProduct ไปใช้ บรรทัด 189
-   เพื่อเขียนคอมโพเน้นต์แยกของหน้า Modal การแก้ไขสินค้า (รูปปากกา)
-   และเพื่อเขียนคอมโพเน้นต์ลบสินค้า Modal การยืนยันลบสินค้า (รูปถังขยะ)
 
+  **เพิ่มเติม**
+  มีการรับ prob มาจาก Stock.jsx เพื่อลดการ call API ดังนี้
+  outStockProducts = สินค้าที่มีจำนวนน้อยกว่า 5 ชิ้น,
+  fetchProducts = ฟังก์ชัน fetch สินค้า ,
+  loading = เช็คหน้าโหลดระหว่างรอ Fecth API 
+   
   DATE : 11/ตุลาคม/2023
   OWNER : piyawat W.
 
@@ -17,26 +20,28 @@ import "../../../assets/css/StockLoadingSpinner.css";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import EditProduct from "../../PopupComponents/EditProduct";
 import DeleteProduct from "../../PopupComponents/DeleteProduct";
-import Swal from "sweetalert2"; // import SweetAlert2
 
-function OutStockProducts() {
-  const [stockProducts, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+function OutStockProducts({ outStockProducts, fetchProducts, loading }) {
+  //Modal การแก้ไขสินค้า
+  const [idEdit, setIdEdit] = useState("");
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isDelelteModalOpen, setDelelteModalOpen] = useState(false);
-  const [placeholder, setPlaceholder] = useState("");
+  const [placeholder, setPlaceholder] = useState(""); //ส่ง Placeholder ไปใช้
 
-  const [_name, set_Name] = useState("");
-  const [_id_ , set_Id] = useState("");
-  /* Edit modal */
-  //เก็บ _id ไปเช็คเพื่อแก้ไขข้อมูล
-  function editClick(_id, _name) {
+  //Modal การลบสินค้า
+  const [isDelelteModalOpen, setDelelteModalOpen] = useState(false);
+  const [idDelete, setIdDelete] = useState("");
+  const [nameDelete, setNameDelete] = useState("");
+
+  /************** Edit modal *************
+   เก็บ _id ไปเช็คเพื่อแก้ไขข้อมูล
+   เก็บ name เพื่อไปทำเป็น placeholder ใน modal
+   ****************************************/
+
+  function editClick(_id, n) {
     setIsEditModalOpen(!isEditModalOpen);
-    console.log(_id);
-    console.log(isEditModalOpen);
     openEditModal();
-    setPlaceholder(_name);
-    set_Id(_id);
+    setPlaceholder(n);
+    setIdEdit(_id);
   }
 
   const openEditModal = () => {
@@ -49,70 +54,39 @@ function OutStockProducts() {
     closeEditModal();
   };
 
-  /* Delete modal */
-  const [_id, set_idDelete] = useState("");
-  // eslint-disable-next-line no-unused-vars
-  function deleteClick(_id, _name) {
-    set_idDelete(_id);
+  /************** Delete modal *************
+  เก็บ _id ไปเช็คเพื่อแก้ไขข้อมูล
+  เก็บ name เพื่อไปทำเป็นแจ้งเตือนก่อนลบ ใน modal
+****************************************/
+  function deleteClick(_id, n) {
+    setIdDelete(_id);
     setDelelteModalOpen(!isDelelteModalOpen);
     openDeleteModal();
-    set_Name(_name);
+    setNameDelete(n);
   }
-
   const openDeleteModal = () => {
     setDelelteModalOpen(true);
   };
   const closeDelelteModal = () => {
     setDelelteModalOpen(false);
   };
+  //valodate ข้อมูลก่อนส่งลบ
   const deleteConfirm = () => {
-    if (!_id) {
-      console.log("ไม่มี _idDelete ที่จะลบ");
+    if (!idDelete) {
+      console.log("ไม่มี id ที่จะลบ");
       return;
     }
-    fetch(`http://localhost:5500/delete-product/${_id}`, {
-      method: "DELETE",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        fetchProducts();
-        //Alert เมื่อลบสินค้า
-        Swal.fire({
-          icon: "success",
-          title: `${data.message}`,
-          timer: 3000,
-        });
-      })
-      .catch((error) => {
-        console.error("เกิดข้อผิดพลาดในการลบข้อมูล:", error);
-        // Error alert
-        Swal.fire({
-          icon: "error",
-          title: "เกิดข้อผิดพลาดในการลบข้อมูล",
-          text: "กรุณาลองอีกครั้ง",
-        });
-      });
     closeDelelteModal();
   };
 
-  /* Fecth API  view-outstock-product */
-  const fetchProducts = () => {
-    fetch("http://localhost:5500/view-outstock-product")
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data.products);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  };
-
-  // Fetch products when the component mounts
+  /****** Fetch สินค้าทุกครั้งที่มีการเปลี่ยนแปลง *******/
   useEffect(() => {
+    document.title = "POSYAYEE 🛒 สินค้าใกล้จะหมด";
     fetchProducts();
   }, []);
+
+  /********************************************/
+
   return (
     <div>
       {loading ? (
@@ -122,9 +96,9 @@ function OutStockProducts() {
       ) : (
         <div
           className=" overflow-y-scroll"
-          style={{ maxHeight: "calc(100vh - 16rem)" }}
+          style={{ maxHeight: "calc(100vh - 12rem)" }}
         >
-          {stockProducts.map((product, index) => (
+          {outStockProducts.map((product, index) => (
             <div key={product._id} className="mt-1 pl-4">
               <table
                 className={`w-full text-center h-[3rem] rounded-md ${
@@ -167,7 +141,7 @@ function OutStockProducts() {
                         fontSize: "22px",
                       }}
                     >
-                      {product.volume === -1 || product.volume == null ? (
+                      {product.volume == null ? (
                         <p className=" text-black text-[10px] font-thin">
                           ไม่จำกัด
                         </p>
@@ -191,7 +165,13 @@ function OutStockProducts() {
                         fontWeight: "normal",
                       }}
                     >
-                      {product.barcode == null || product.barcode === "" ? <p className="text-black text-[10px] font-thin">ไม่มี</p> : product.barcode}
+                      {product.barcode == null || product.barcode === "" ? (
+                        <p className="text-black text-[10px] font-thin">
+                          ไม่มี
+                        </p>
+                      ) : (
+                        product.barcode
+                      )}
                     </th>
                     <th
                       style={{
@@ -223,18 +203,38 @@ function OutStockProducts() {
           ))}
         </div>
       )}
+
+      {/* ส่ง prob ไปใช้ที่ EditProduct.jsx 
+          isisEditModalOpen = เช็คว่า modal เปิดอยู่ไหม
+          closeEditModal = ปิด modal 
+          confirmEdit = กดตกลงจะแก้ไข
+          placeholder = มาจากชื่อสินค้าที่ต้องการจะลบเพื่อแสดง placeholder ที่ modal
+          _id = _id ที่จะแก้ไข
+          fetchProducts = ฟังก์ชัน fetch สินค้าเอาไว้ใช้ตอนแก้ไขเสร็จ(รีเฟรชออโต้)
+      */}
       <EditProduct
         isEditModalOpen={isEditModalOpen}
         closeEditModal={closeEditModal}
         confirmEdit={confirmEdit}
         placeholder={placeholder}
-        _id_ = {_id_}
+        _id={idEdit}
+        fetchProducts={fetchProducts}
       />
+      {/* ส่ง prob ไปใช้ที่ EditProduct.jsx 
+          isDelelteModalOpen = เช็คว่า modal เปิดอยู่ไหม
+          closeDelelteModal= ปิด modal 
+          deleteConfirm = กดตกลงจะแก้ไข
+          name = เอาชื่อสินค้าที่จะลบไปใช้เพื่อแสดงหน้า modal
+          _id = _id ที่จะลบ
+          fetchProducts = ฟังก์ชัน fetch สินค้าเอาไว้ใช้ตอนลบสร็จ(รีเฟรชออโต้)
+      */}
       <DeleteProduct
         isDelelteModalOpen={isDelelteModalOpen}
         closeDelelteModal={closeDelelteModal}
         deleteConfirm={deleteConfirm}
-        _name={_name}
+        name={nameDelete}
+        _id={idDelete}
+        fetchProducts={fetchProducts}
       />
     </div>
   );

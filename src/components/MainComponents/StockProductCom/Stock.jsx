@@ -24,28 +24,37 @@ import AllProducts from "./AllProducts";
 
 function Stock() {
   const [stockProducts, setProducts] = useState([]); //เพื่อดึง Products มาใช้
+  const [loading, setLoading] = useState(true);
+  const [outStockProducts, setOutStockProducts] = useState([]);
   let [btnCheck, setBtnCheck] = useState(true);
   function onBtnClick() {
     setBtnCheck(!btnCheck);
   }
 
-  //Fecth API เพื่อนับสินค้าทั้งหมดในคลัง
-  // Function to fetch products
+  /**** Fecth API สินค้าทั้งหมดในคลัง ***************
+   *หลังจากนั้น filter เอาสินค้าใกล้จะหมดและส่งเป็น 
+   *prob => outStockProducts , allProducts
+   ********************************************/
   const fetchProducts = () => {
     fetch("http://localhost:5500/view-product")
       .then((response) => response.json())
       .then((data) => {
         setProducts(data.products);
+        const filterProducts = data.products.filter((product) => {
+          return product.volume !== null && product.volume < 5;
+        });
+        setOutStockProducts(filterProducts);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        setLoading(false);
       });
   };
-  // Fetch products when the component mounts
   useEffect(() => {
     fetchProducts();
   }, []);
-
+  
   return (
     <div>
       <div className="flex w-full h-full">
@@ -114,7 +123,19 @@ function Stock() {
               </thead>
             </table>
           </div>
-          {btnCheck ? <OutStockProducts /> : <AllProducts />}
+          {btnCheck ? (
+            <OutStockProducts
+              outStockProducts={outStockProducts}
+              fetchProducts={fetchProducts}
+              loading={loading}
+            />
+          ) : (
+            <AllProducts
+              allProducts={stockProducts}
+              fetchProducts={fetchProducts}
+              loading={loading}
+            />
+          )}
         </div>
       </div>
     </div>

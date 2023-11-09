@@ -32,14 +32,14 @@ function Aside() {
   });
 
   return (
-    <div className="bg-white w-[20%] full text-[#646771] h-[100vh]">
+    <div className="bg-white md:w-[20rem] lg:w-[20rem] hidden full text-[#646771] h-[100vh] md:flex">
       <div className="p-3 pt-2">
         <Link
           to="/sale-products"
-          className="flex items-center pl-8 gap-1 w-[24%]"
+          className="flex items-center gap-1 w-full justify-center"
         >
-          <BsShop size={32} color="#4C49ED" />
-          <h1 className="font-bold text-[2.7rem]">
+          <h1 className="font-bold text-[2.7rem] text-black flex items-center">
+            <BsShop size={32} color="#4C49ED" />
             <span className="text-[#4C49ED]">POS</span>YAYEE
           </h1>
         </Link>

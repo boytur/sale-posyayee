@@ -1,26 +1,23 @@
+/* eslint-disable react/prop-types */
 import { AiFillDelete } from "react-icons/ai";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import PropTypes from "prop-types";
 import Modal from "react-modal";
 import CancelOrder from "../../PopupComponents/CancelOrder";
 import ConfirmPayOrder from "../../PopupComponents/ConfirmPayOrder";
 import Swal from "sweetalert2";
+import axios from "axios";
+import paySound from "../../../assets/Sounds/cash-register-purchase-87313.mp3";
+import "../../../assets/css/LoadingWhilePayMoney.css";
+import LoadingWhilePayMoney from "../../LoaddingComponents/LoadingWhilePayMoney";
 
 Modal.setAppElement("#root");
 
-Scan.propTypes = {
-  cart: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      image: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  setCart: PropTypes.func.isRequired,
-};
-
 function Scan({ cart, setCart }) {
+
+  const [loadingWhilePayMoney, setLoadingWhilePayMoney] = useState(false);
+
   let cartItems = Array.isArray(cart) ? cart : [];
 
   let totalPrice = cart.reduce(
@@ -67,10 +64,11 @@ function Scan({ cart, setCart }) {
   const confirmCancelOrder = () => {
     setCart([]);
     closeCancelModal();
+
     Swal.fire({
       icon: "success",
       title: "ยกเลิกการขาย",
-      timer:3000
+      timer: 3000,
     });
     // ทำงานเมื่อผู้ใช้ยืนยันการยกเลิกการขาย
   };
@@ -78,35 +76,57 @@ function Scan({ cart, setCart }) {
   //ยืนยันการจ่ายตัง modal
   const [isComfirmModalOpen, SetComfirmModalOpen] = useState(false);
   const openConfirmModal = () => {
-    if (cartItems.length>0){
+    if (cartItems.length > 0) {
       SetComfirmModalOpen(true);
     }
   };
   const closeConfirmModal = () => {
     SetComfirmModalOpen(false);
   };
-  const confirmPayOrder = () => {
-    setCart([]);
-    closeConfirmModal();
+  const confirmPayOrder = async () => {
+    setLoadingWhilePayMoney(true);
+    try {
+      const formData = {
+        products: cartItems.map((item) => ({
+          _id: item._id,
+          quantity: item.quantity,
+        })),
+      };
+      const response = await axios.post("http://localhost:5500/sale", formData);
+      Swal.fire({
+        icon: "success",
+        title: response.data.message,
+        timer: 3000,
+      });
+      setCart([]);
+      closeConfirmModal();
+      new Audio(paySound).play();
+      setLoadingWhilePayMoney(false);
+    } catch (err) {
+      // การจัดการข้อผิดพลาดในการโทรองข้อมูลไปยังเซิร์ฟเวอร์
+      console.log(err);
+      if (err.response) {
+        // กรณีเซิร์ฟเวอร์ส่งข้อมูลผิด
+        Swal.fire({
+          icon: "error",
+          title: `${err.response.data.message}`,
+          timer: 3000,
+        });
+      } else {
+        // กรณีไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้
+        setLoadingWhilePayMoney(false);
+        Swal.fire({
+          icon: "error",
+          title: "ข้อผิดพลาดในการเชื่อมต่อกับเซิร์ฟเวอร์",
+          timer: 3000,
+        });
+      }
+    }
   };
-  
-  // Enter  เพื่อเปิด Modal การจ่ายเงิน
-  // useEffect(() => {
-  //   const keyDownHandler = (event) => {
-  //     console.log("User pressed: ", event.key);
-  //     if (event.key === "Enter") {
-  //       PayMoney();
-  //     }
-  //   };
-  //   document.addEventListener("keydown", keyDownHandler);
-  //   return () => {
-  //     document.removeEventListener("keydown", keyDownHandler);
-  //   };
-  // }, []);
-  
   return (
-    <div className=" h-full w-[40%] flex justify-center">
-      <div className="w-full flex flex-col pt-4">
+    <div className=" h-full w-[40%] flex justify-center relative">
+      {loadingWhilePayMoney ? <LoadingWhilePayMoney /> : " "}
+      <div className="w-full flex flex-col pt-4 relative">
         <div className=" bg-white pl-1">
           <table className="w-full text-center bg-[#D9D9D9] h-[3rem] rounded-md">
             <thead>
@@ -230,14 +250,13 @@ function Scan({ cart, setCart }) {
         isCancelModalOpen={isCancelModalOpen}
         closeCancelModal={closeCancelModal}
         confirmCancelOrder={confirmCancelOrder}
-
       />
       {/* Modal ยืนยันการจ่ายเงิน */}
       <ConfirmPayOrder
         isComfirmModaOpen={isComfirmModalOpen}
         closeConfirmModal={closeConfirmModal}
         confirmPayOrder={confirmPayOrder}
-        totalPrice = {totalPrice}
+        totalPrice={totalPrice}
       />
     </div>
   );

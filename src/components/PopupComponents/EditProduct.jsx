@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import axios from "axios"; // Import axios เพื่อทำการ HTTP requests
+import axios from "axios";
 import { useState } from "react";
 import Modal from "react-modal";
 Modal.setAppElement("#root");
@@ -11,7 +11,8 @@ function EditProduct({
   isEditModalOpen,
   closeEditModal,
   placeholder,
-  _id_,
+  _id,
+  fetchProducts
 }) {
   const [isPreviewImg, setIsPreviewImg] = useState(
     "https://placehold.co/600x400/EEE/31343C"
@@ -21,9 +22,11 @@ function EditProduct({
   const [volume, setVolume] = useState(0);
   const [barcode, setBarcode] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
 
+  //ส่งข้อมูลเข้าไปแก้ไข
+  const handleSubmit = async (e) => {
+    e.preventDefault(); //รีเซ็ตฟอร์ม
+    //ถ้าบาร์โค้ดสั้นกว่า 13 หลัก
     if (barcode && barcode.length !== 13) {
       Swal.fire({
         icon: "error",
@@ -31,6 +34,7 @@ function EditProduct({
       });
       return;
     }
+    //ถ้าราคาที่ป้อนมาน้อยกว่าหรือเท่ากับ 0
     if (price <= 0){
       Swal.fire({
         icon: "error",
@@ -39,26 +43,29 @@ function EditProduct({
       return;
     }
     try {
+      //เอาค่าใส่ฟอร์ม
       const formData = {
         name: name,
         price: price,
         volume: volume,
         barcode: barcode,
         image: isPreviewImg,
-        _id: _id_,
+        _id: _id,
       };
 
+      //เชื่อม API และเอาค่าในฟอร์มใส่ไปในบอดี้
       const response = await axios.post(
         "http://localhost:5500/edit-product",
         formData
       );
-
+      //ถ้าสเตัสจาก server ปกติ
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
           title: `แก้ไขสินค้าสำเร็จ`,
         });
         closeEditModal();
+        fetchProducts();
       }
     } catch (error) {
       console.error("เกิดข้อผิดพลาดในการแก้ไขสินค้า:", JSON.stringify(error));
@@ -101,6 +108,31 @@ function EditProduct({
         <br />
         <hr />
         <form className="w-full max-w-lg mt-4" onSubmit={handleSubmit}>
+        <div className="flex flex-wrap -mx-3 mb-6">
+            <div className="w-full  pl-3 mb-6 md:mb-0">
+              <label
+                className="block  tracking-wide text-gray-700 text-xs font-bold mb-2 text-left"
+                htmlFor=""
+              >
+                บาร์โค้ด
+              </label>
+              <img src="" alt="" />
+              <div className="relative flex w-full">
+                <input
+                  autoComplete="off"
+                  className="appearance-none block w-[98%] bg-white text-gray-700 border  rounded py-3 px-2 mb-3 leading-tight focus:outline-[#4C49ED] focus:border-gray-500 placeholder:text-[#D9D9D9]"
+                  id="grid-first-name"
+                  type="number"
+                  placeholder="กดรูปบาร์โค้ดเพื่อสแกน"
+                  onChange={(e) => setBarcode(e.target.value)}
+                />
+                <BiBarcodeReader
+                  size={30}
+                  className=" absolute right-5 mt-[8px] cursor-pointer hover:scale-110 z-50"
+                />
+              </div>
+            </div>
+          </div>
           <div className="flex flex-wrap -mx-3 mb-2">
             <div className="w-full px-3 mb-6 md:mb-0">
               <label
@@ -115,6 +147,7 @@ function EditProduct({
                   focus:border-gray-500"
                 id="grid-first-name"
                 type="text"
+                autoComplete="off"
                 placeholder={placeholder}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -164,6 +197,7 @@ function EditProduct({
                 URL รูปภาพ
               </label>
               <input
+                autoComplete="off"
                 onChange={(e) => setImagePreview(e.target.value)}
                 className="appearance-none block w-full bg-white text-gray-700 border
                   rounded py-3 px-2 mb-3 leading-tight focus:outline-[#4C49ED] focus:bg-white placeholder:text-[#D9D9D9]
@@ -180,30 +214,6 @@ function EditProduct({
                 src={isPreviewImg}
                 alt=""
               />
-            </div>
-          </div>
-          <div className="flex flex-wrap -mx-3 mb-6">
-            <div className="w-full  pl-3 mb-6 md:mb-0">
-              <label
-                className="block  tracking-wide text-gray-700 text-xs font-bold mb-2 text-left"
-                htmlFor=""
-              >
-                บาร์โค้ด
-              </label>
-              <img src="" alt="" />
-              <div className="relative flex w-full">
-                <input
-                  className="appearance-none block w-[98%] bg-white text-gray-700 border  rounded py-3 px-2 mb-3 leading-tight focus:outline-[#4C49ED] focus:border-gray-500 placeholder:text-[#D9D9D9]"
-                  id="grid-first-name"
-                  type="number"
-                  placeholder="กดรูปบาร์โค้ดเพื่อสแกน"
-                  onChange={(e) => setBarcode(e.target.value)}
-                />
-                <BiBarcodeReader
-                  size={30}
-                  className=" absolute right-5 mt-[8px] cursor-pointer hover:scale-110 z-50"
-                />
-              </div>
             </div>
           </div>
           <div className="w-full gap-6 flex justify-center mt-4">

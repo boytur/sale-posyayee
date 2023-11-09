@@ -1,8 +1,9 @@
-import { useState } from "react";
+// eslint-disable-next-line no-unused-vars
+import { useState ,useEffect} from "react";
 import Modal from "react-modal";
 import Swal from "sweetalert2";
 Modal.setAppElement("#root");
-import paySound from '../../assets/Sounds/cash-register-purchase-87313.mp3' 
+
 
 function ConfirmPayOrder({
   // eslint-disable-next-line react/prop-types
@@ -22,19 +23,8 @@ function ConfirmPayOrder({
     const change = cashReceived - totalPrice;
 
     if (change >= 0 && totalPrice != 0) {
-      // ทำอย่างอื่นๆ ที่คุณต้องการที่นี่
-      // ตัวอย่าง: ส่งค่าทอนไปยังฟังก์ชันอื่น
-
       // เรียกใช้ฟังก์ชันสำหรับยืนยันการจ่ายเงิน
       confirmPayOrder();
-
-      // แสดง SweetAlert2 เมื่อจ่ายเงินเสร็จสิ้น
-      Swal.fire({
-        icon: "success",
-        title: "จ่ายเงินสำเร็จ",
-        timer:3000
-      });
-      new Audio(paySound).play();
     } else if (totalPrice != 0){
       Swal.fire({
         icon: "error",
@@ -42,17 +32,23 @@ function ConfirmPayOrder({
         timer:3000
       });
     }
-    else {
-        Swal.fire({
-            icon: "error",
-            title: "กรุณาเพิ่มสินค้าก่อนการชำระเงิน",
-            timer:3000
-    });
-    }
     closeConfirmModal();
     setCashReceived();
   };
   
+  //   //Enter  เพื่อเปิด Modal การจ่ายเงิน
+  // useEffect(() => {
+  //   const keyDownHandler = (event) => {
+  //     console.log("User pressed: ", event.key);
+  //     if (event.key === "Enter") {
+  //       handleConfirmPayOrder();
+  //     }
+  //   };
+  //   document.addEventListener("keydown", keyDownHandler);
+  //   return () => {
+  //     document.removeEventListener("keydown", keyDownHandler);
+  //   };
+  // }, []);
   return (
     <>
       <Modal

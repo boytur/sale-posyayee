@@ -51,6 +51,7 @@ function Sale() {
     }
   }
   useEffect(() => {
+    document.title = "POSYAYEE 🛒 ขายของหน้าร้าน";
     // Fetch API สินค้าทั้งหมด
     fetch("http://localhost:5500/view-product")
       .then((response) => response.json())
@@ -65,7 +66,7 @@ function Sale() {
 
   // ฟิลเตอร์หาโปรดัคที่มีบาร์โค้ดเป็น null
   const filteredProducts = products.filter(
-    (product) => product.barcode === null || product.barcode === ""
+    (product) => product.barcode === "" && product.volume > 0 || product.volume == null
   );
 
   useEffect(() => {
@@ -97,9 +98,9 @@ function Sale() {
         />
         {/* Import Aside มาใช้ */}
         <Aside />
-        <div className="w-[45%] ">
+        <div className="w-[40%] ">
           {/* Search box */}
-          <div className="w-full h-[5rem] flex justify-center items-center bg-white px-4">
+          <div className="w-full h-[5rem] flex justify-center items-center bg-white px-1 pr-6">
             <div className="w-full  h-[50px] rounded-[16px] flex items-center relative">0
               <BiSearchAlt size={30} className="z-20 text-[#737791] pl-2" />
               <input
