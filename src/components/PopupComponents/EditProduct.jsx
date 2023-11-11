@@ -108,32 +108,7 @@ function EditProduct({
         <br />
         <hr />
         <form className="w-full max-w-lg mt-4" onSubmit={handleSubmit}>
-        <div className="flex flex-wrap -mx-3 mb-6">
-            <div className="w-full  pl-3 mb-6 md:mb-0">
-              <label
-                className="block  tracking-wide text-gray-700 text-xs font-bold mb-2 text-left"
-                htmlFor=""
-              >
-                บาร์โค้ด
-              </label>
-              <img src="" alt="" />
-              <div className="relative flex w-full">
-                <input
-                  autoComplete="off"
-                  className="appearance-none block w-[98%] bg-white text-gray-700 border  rounded py-3 px-2 mb-3 leading-tight focus:outline-[#4C49ED] focus:border-gray-500 placeholder:text-[#D9D9D9]"
-                  id="grid-first-name"
-                  type="number"
-                  placeholder="กดรูปบาร์โค้ดเพื่อสแกน"
-                  onChange={(e) => setBarcode(e.target.value)}
-                />
-                <BiBarcodeReader
-                  size={30}
-                  className=" absolute right-5 mt-[8px] cursor-pointer hover:scale-110 z-50"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-wrap -mx-3 mb-2">
+          <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full px-3 mb-6 md:mb-0">
               <label
                 className="block tracking-wide text-gray-700 text-xs font-bold mb-2 text-left"
@@ -216,7 +191,7 @@ function EditProduct({
               />
             </div>
           </div>
-          <div className="w-full gap-6 flex justify-center mt-4">
+          <div className="w-full gap-6 flex justify-center mt-12">
             <div>
               <button
                 onClick={closeEditModal}

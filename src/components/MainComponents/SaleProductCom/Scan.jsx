@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { AiFillDelete } from "react-icons/ai";
-import { useState } from "react";
+import {useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Modal from "react-modal";
@@ -15,7 +15,6 @@ import LoadingWhilePayMoney from "../../LoaddingComponents/LoadingWhilePayMoney"
 Modal.setAppElement("#root");
 
 function Scan({ cart, setCart }) {
-
   const [loadingWhilePayMoney, setLoadingWhilePayMoney] = useState(false);
 
   let cartItems = Array.isArray(cart) ? cart : [];
@@ -64,7 +63,6 @@ function Scan({ cart, setCart }) {
   const confirmCancelOrder = () => {
     setCart([]);
     closeCancelModal();
-
     Swal.fire({
       icon: "success",
       title: "ยกเลิกการขาย",
@@ -98,10 +96,12 @@ function Scan({ cart, setCart }) {
         title: response.data.message,
         timer: 3000,
       });
+
       setCart([]);
       closeConfirmModal();
       new Audio(paySound).play();
       setLoadingWhilePayMoney(false);
+      
     } catch (err) {
       // การจัดการข้อผิดพลาดในการโทรองข้อมูลไปยังเซิร์ฟเวอร์
       console.log(err);
@@ -123,6 +123,7 @@ function Scan({ cart, setCart }) {
       }
     }
   };
+
   return (
     <div className=" h-full w-[40%] flex justify-center relative">
       {loadingWhilePayMoney ? <LoadingWhilePayMoney /> : " "}

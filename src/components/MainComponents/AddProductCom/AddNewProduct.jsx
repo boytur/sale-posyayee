@@ -68,8 +68,7 @@ function AddNewProduct() {
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "เกิดข้อผิดพลาดในการส่งข้อมูล",
-        text: error.response.data.error, // เพิ่มบรรทัดนี้เพื่อแสดงข้อความข้อผิดพลาดจากเซิร์ฟเวอร์
+        title: error.response.data.error,
         timer: 5000,
       });
       console.error(error);
@@ -93,19 +92,20 @@ function AddNewProduct() {
             <div className="relative flex w-full">
               <input
                 autoComplete="off"
+                autoFocus
                 className="appearance-none block w-[98%] bg-white
                  text-gray-700 border rounded py-3 px-2 mb-3 leading-tight focus:outline-[#4C49ED] focus:border-gray-500 placeholder:text-[#D9D9D9]"
                 id="grid-first-name"
                 type="number"
-                placeholder="กดรูปบาร์โค้ดเพื่อสแกน"
+                placeholder="กรุณายิงบาร์โค้ด"
                 value={formData.barcode}
                 onChange={(e) =>
                   setFormData({ ...formData, barcode: e.target.value })
                 }
               />
               <BiBarcodeReader
-                size={30}
-                className="absolute right-5 mt-[8px] cursor-pointer hover:scale-110 z-50"
+                size={35}
+                className="absolute right-4 mt-[6px] z-50"
               />
             </div>
           </div>

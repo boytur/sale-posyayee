@@ -23,6 +23,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BiSearchAlt } from "react-icons/bi";
 import { RiAddCircleFill } from "react-icons/ri";
+import useBarcodeScanner from "../../../services/useBarcodeScanner";
+import productNotFoundSound from "../../../assets/Sounds/Productnotfound.mp3";
 
 function Sale() {
   const [products, setProducts] = useState([]); //รอเก็บข้อมูลเข้า Array products
@@ -50,9 +52,8 @@ function Sale() {
       setCart([...cart, { ...product, quantity: 1 }]);
     }
   }
-  useEffect(() => {
-    document.title = "POSYAYEE 🛒 ขายของหน้าร้าน";
-    // Fetch API สินค้าทั้งหมด
+  // Fetch API สินค้าทั้งหมด
+  const fetchProducts = () => {
     fetch("http://localhost:5500/view-product")
       .then((response) => response.json())
       .then((data) => {
@@ -62,11 +63,16 @@ function Sale() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
+  }
+  useEffect(() => {
+    document.title = "POSYAYEE 🛒 ขายของหน้าร้าน";
+    fetchProducts();
   }, []);
 
   // ฟิลเตอร์หาโปรดัคที่มีบาร์โค้ดเป็น null
   const filteredProducts = products.filter(
-    (product) => product.barcode === "" && product.volume > 0 || product.volume == null
+    (product) =>
+      (product.barcode === "" && product.volume > 0) || product.volume == null
   );
 
   useEffect(() => {
@@ -80,6 +86,26 @@ function Sale() {
     }
   }, [searchTerm, products]);
 
+  //Barcode Scan
+  const handleBarcodeScan = (barcode) => {
+    console.log(`Barcode : ${barcode}`);
+    const scannedProduct = products.find(
+      (product) => product.barcode === barcode
+    );
+    if (scannedProduct) {
+      console.log(`สินค้าคือ: 
+       ${scannedProduct.name}
+       ${scannedProduct._id}
+       ${scannedProduct.price}`);
+      addProduct(scannedProduct);
+    } else {
+      console.log("ไม่พบสินค้า!");
+      new Audio(productNotFoundSound).play();
+
+    }
+  };
+  useBarcodeScanner(handleBarcodeScan);
+  
   return (
     <div>
       <div className="flex relative">
@@ -101,7 +127,8 @@ function Sale() {
         <div className="w-[40%] ">
           {/* Search box */}
           <div className="w-full h-[5rem] flex justify-center items-center bg-white px-1 pr-6">
-            <div className="w-full  h-[50px] rounded-[16px] flex items-center relative">0
+            <div className="w-full  h-[50px] rounded-[16px] flex items-center relative">
+              0
               <BiSearchAlt size={30} className="z-20 text-[#737791] pl-2" />
               <input
                 type="text"
@@ -112,12 +139,15 @@ function Sale() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <div className = {
-                searchResults!= 0 ? `absolute bg-white w-full z-50 cursor-pointer rounded-lg top-16 shadow-lg border`
-                : ` absolute bg-white w-full z-50 cursor-pointer rounded-lg top-16 shadow-lg`
-              }>
+              <div
+                className={
+                  searchResults != 0
+                    ? `absolute bg-white w-full z-50 cursor-pointer rounded-lg top-16 shadow-lg border`
+                    : ` absolute bg-white w-full z-50 cursor-pointer rounded-lg top-16 shadow-lg`
+                }
+              >
                 <div className="">
-                  {searchResults.slice(0,11).map((product, index) => (
+                  {searchResults.slice(0, 11).map((product, index) => (
                     <div
                       key={product._id}
                       className={
@@ -167,8 +197,10 @@ function Sale() {
                   className="w-[150px]"
                   onClick={() => addProduct(product)}
                 >
-                  <div className="border mt-2 h-[200px] grid rounded-md bg-white cursor-pointer hover:border-[3px] 
-                  hover:border-[#0085FF] shadow-md">
+                  <div
+                    className="border mt-2 h-[200px] grid rounded-md bg-white cursor-pointer hover:border-[3px] 
+                  hover:border-[#0085FF] shadow-md"
+                  >
                     <img
                       className="h-[8rem] object-cover rounded-lg p-1 w-full"
                       src={product.image}

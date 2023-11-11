@@ -35,20 +35,6 @@ function ConfirmPayOrder({
     closeConfirmModal();
     setCashReceived();
   };
-  
-  //   //Enter  เพื่อเปิด Modal การจ่ายเงิน
-  // useEffect(() => {
-  //   const keyDownHandler = (event) => {
-  //     console.log("User pressed: ", event.key);
-  //     if (event.key === "Enter") {
-  //       handleConfirmPayOrder();
-  //     }
-  //   };
-  //   document.addEventListener("keydown", keyDownHandler);
-  //   return () => {
-  //     document.removeEventListener("keydown", keyDownHandler);
-  //   };
-  // }, []);
   return (
     <>
       <Modal
@@ -70,7 +56,7 @@ function ConfirmPayOrder({
           },
         }}
       >
-        <div className=" w-full h-full text-center">
+        <form className=" w-full h-full text-center" onSubmit={handleConfirmPayOrder}>
           <div>
             <div className="text-[#4C49ED] font-bold text-[2rem]">
               <h2>ยืนยันการจ่ายเงิน</h2>
@@ -80,6 +66,8 @@ function ConfirmPayOrder({
               <div className="mt-[3rem] flex gap-4 w-[20rem]">
                 <label className="h-[3rem] items-center flex">เงินสด</label>
                 <input
+                  required
+                  autoFocus
                   className="block w-fulltext-gray-700 border focus:outline-[#4C49ED] focus:border-none rounded py-3 px-2 mb-3 leading-tight focus:outline-none focus:bg-white"
                   type="number"
                   placeholder="ป้อนเงินรับมา"
@@ -115,14 +103,13 @@ function ConfirmPayOrder({
             </div>
             <div>
               <button
-                onClick={closeConfirmModal}
                 className="w-[17rem]  border h-[4rem] rounded-md text-[#ff000077] bg-[#D6D6D6CC] hover:bg-[#d6d6d6]"
               >
                 ยกเลิก
               </button>
             </div>
           </div>
-        </div>
+        </form>
       </Modal>
     </>
   );

@@ -31,3 +31,15 @@
         background: linear-gradient(290deg, #4C49ED 7.45%, #FC62FF 129.66%);
     }
 }
+
+/* ซ่อนปุ่มเพิ่ม-ลดใน input type number */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}
+

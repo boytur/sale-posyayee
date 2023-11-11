@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Aside from "../../NavbarAndAsideCom/Aside";
-import AddExisingProduct from "./AddExisingProduct";
+import AddExistingProduct from "./AddExistingProduct";
 import AddNewProduct from "./AddNewProduct";
 
 function AddProduct() {
@@ -41,7 +41,7 @@ function AddProduct() {
               </button>
             </div>
           </div>
-          {btnCheck ? <AddNewProduct /> : <AddExisingProduct />}
+          {btnCheck ? <AddNewProduct /> : <AddExistingProduct />}
         </div>
       </div>
     </div>
