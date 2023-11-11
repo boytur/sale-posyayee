@@ -36,7 +36,11 @@
 - Node.js 
 - Expressjs
 - MongoDB (NoSQL Database)
-
+### Build and Deploy
+- [Netlify](https://www.netlify.com/) (Front-end)
+- [PM2](https://pm2.keymetrics.io/) (เวลาใช้งานแค่ภายในหรือ localhost เนื่องจากรับโหลดได้มากกว่า server ฟรี)
+- [Microtica](https://www.microtica.com/) สำหรับ Demo
+- [AWS cloud formation](https://aws.amazon.com/th/cloudformation/)
 
 # อัพเดตครั้งที่ 1
 - สร้างหน้าหลัก Route ของ Aside (Left nav bar)
