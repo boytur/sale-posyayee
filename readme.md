@@ -42,6 +42,11 @@
 - [Microtica](https://www.microtica.com/) สำหรับ Demo
 - [AWS cloud formation](https://aws.amazon.com/th/cloudformation/)
 
+### DEMO 🛒
+[POSYAYEE](https://posyayee-demo.netlify.app/)
+- Username: piyawat@posyayee
+- Password: Piyawat172547;;
+  
 # อัพเดตครั้งที่ 1
 - สร้างหน้าหลัก Route ของ Aside (Left nav bar)
 - เชื่อม API สินค้าไม่มีบาร์โค้ดมาแสดงหน้าหลัก 
