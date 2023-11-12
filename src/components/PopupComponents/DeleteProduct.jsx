@@ -19,8 +19,9 @@ function DeleteProduct({
   _id,
   fetchProducts
 }) {
+  const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
   const handleDelete = () => {
-    fetch(`http://localhost:5500/delete-product/${_id}`, {
+    fetch(`${API_KEY}/delete-product/${_id}`, {
       method: "DELETE",
     })
       .then((response) => response.json())

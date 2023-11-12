@@ -35,8 +35,9 @@ function Stock() {
    *หลังจากนั้น filter เอาสินค้าใกล้จะหมดและส่งเป็น 
    *prob => outStockProducts , allProducts
    ********************************************/
+   const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
   const fetchProducts = () => {
-    fetch("http://localhost:5500/view-product")
+    fetch(`${API_KEY}/view-product`)
       .then((response) => response.json())
       .then((data) => {
         setProducts(data.products);

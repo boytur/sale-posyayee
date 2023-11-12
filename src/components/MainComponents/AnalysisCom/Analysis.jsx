@@ -13,9 +13,9 @@ import {
 
 function Analysis() {
   const [salesData, setSalesData] = useState({});
-
+  const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
   useEffect(() => {
-    fetch("http://localhost:5500/view-dailysale")
+    fetch(`${API_KEY}/view-dailysale`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

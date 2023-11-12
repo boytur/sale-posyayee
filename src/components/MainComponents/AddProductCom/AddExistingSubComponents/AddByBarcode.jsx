@@ -48,6 +48,7 @@ function AddByBarcode({ products }) {
   };
 
   const saveAddProductQuantity = async () => {
+    const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
     try {
       const formData = {
         products: scanProduct.map((item) => ({
@@ -57,7 +58,7 @@ function AddByBarcode({ products }) {
       };
       console.log(formData);
       const response = await axios.post(
-        "http://localhost:5500/add-product-quantity",
+        `${API_KEY}/add-product-quantity`,
         formData
       );
       Swal.fire({

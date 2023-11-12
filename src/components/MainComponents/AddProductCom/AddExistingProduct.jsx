@@ -10,8 +10,9 @@ function AddExistingProduct() {
   const [loadings, setLoadings] = useState(false);
 
   const fetchProducts = async () => {
+    const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
     try {
-      const response = await fetch("http://localhost:5500/view-product");
+      const response = await fetch(`${API_KEY}/view-product`);
       const data = await response.json();
 
       const filteredProducts = data.products.filter(

@@ -63,6 +63,7 @@ function AddBySearch({ productsNobarcode }) {
   };
 
   const saveAddProductQuantity = async () => {
+    const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
     const formData = {
       products:[{
         _id:productsSearch[0]._id,
@@ -72,7 +73,7 @@ function AddBySearch({ productsNobarcode }) {
     console.log(formData);
     try
     {
-      const response = await axios.post("http://localhost:5500/add-product-quantity", formData);
+      const response = await axios.post(`${API_KEY}/add-product-quantity`, formData);
       Swal.fire({
         icon: "success",
         title: response.data.message,

@@ -53,9 +53,10 @@ function EditProduct({
         _id: _id,
       };
 
+      const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
       //เชื่อม API และเอาค่าในฟอร์มใส่ไปในบอดี้
       const response = await axios.post(
-        "http://localhost:5500/edit-product",
+        `${API_KEY}/edit-product`,
         formData
       );
       //ถ้าสเตัสจาก server ปกติ

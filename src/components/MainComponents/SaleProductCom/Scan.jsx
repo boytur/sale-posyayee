@@ -81,6 +81,8 @@ function Scan({ cart, setCart }) {
   const closeConfirmModal = () => {
     SetComfirmModalOpen(false);
   };
+
+  const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
   const confirmPayOrder = async () => {
     setLoadingWhilePayMoney(true);
     try {
@@ -90,7 +92,7 @@ function Scan({ cart, setCart }) {
           quantity: item.quantity,
         })),
       };
-      const response = await axios.post("http://localhost:5500/sale", formData);
+      const response = await axios.post(`${API_KEY}/sale`, formData);
       Swal.fire({
         icon: "success",
         title: response.data.message,

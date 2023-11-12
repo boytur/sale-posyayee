@@ -45,10 +45,10 @@ function AddNewProduct() {
       return;
     }
 
-    
+    const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
     try {
       const response = await axios.post(
-        "http://localhost:5500/add-product",
+        `${API_KEY}/add-product`,
         formData
       );
       console.log("สำเร็จ: ", response.data);

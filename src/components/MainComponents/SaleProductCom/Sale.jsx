@@ -52,9 +52,10 @@ function Sale() {
       setCart([...cart, { ...product, quantity: 1 }]);
     }
   }
+  const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
   // Fetch API สินค้าทั้งหมด
   const fetchProducts = () => {
-    fetch("http://localhost:5500/view-product")
+    fetch(`${API_KEY}/view-product`)
       .then((response) => response.json())
       .then((data) => {
         setProducts(data.products);

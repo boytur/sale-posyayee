@@ -26,10 +26,11 @@ function Login({ isAuthenticated, setIsAuthenticated }) {
   };
 
   // ฟังก์ชันเมื่อผู้ใช้กดปุ่มเข้าสู่ระบบ
+  const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
   const handleLogin = () => {
     if (username.length !== 0) {
       axios
-        .post("http://localhost:5500/login", { username, password })
+        .post(`${API_KEY}/login`, { username, password })
         .then((response) => {
           // ตั้งค่า isAuthenticated เป็น true
           setIsAuthenticated(true);
