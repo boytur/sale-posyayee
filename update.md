@@ -20,4 +20,4 @@
 #### ไฟล์ที่มีการแก้ไขได้แก่ 
 - src\components\PopupComponents\EditProduct.jsx
 
-![image](/image.update/update1.0.3#1.png)
+![image](image.update/update1.0.3-1.png);
