@@ -15,7 +15,7 @@ function AddNewProduct() {
     image: "https://placehold.co/600x400/EEE/31343C",
   });
 
-  function setImagePreview(URL) {
+  const setImagePreview = (URL)=> {
     setIsPreviewImg(URL);
   }
 

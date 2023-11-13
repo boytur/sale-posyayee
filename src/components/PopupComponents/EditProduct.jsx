@@ -10,9 +10,12 @@ import Swal from "sweetalert2";
 function EditProduct({
   isEditModalOpen,
   closeEditModal,
-  placeholder,
   _id,
-  fetchProducts
+  placeholderName,
+  placeholderPrice,
+  placeholderVolume,
+  placeholderImage,
+  fetchProducts,
 }) {
   const [isPreviewImg, setIsPreviewImg] = useState(
     "https://placehold.co/600x400/EEE/31343C"
@@ -21,7 +24,6 @@ function EditProduct({
   const [price, setPrice] = useState(0);
   const [volume, setVolume] = useState(0);
   const [barcode, setBarcode] = useState("");
-
 
   //ส่งข้อมูลเข้าไปแก้ไข
   const handleSubmit = async (e) => {
@@ -35,7 +37,7 @@ function EditProduct({
       return;
     }
     //ถ้าราคาที่ป้อนมาน้อยกว่าหรือเท่ากับ 0
-    if (price <= 0){
+    if (price <= 0) {
       Swal.fire({
         icon: "error",
         title: "ใส่ราคาให้มันถูกโว้ยยย!",
@@ -55,10 +57,7 @@ function EditProduct({
 
       const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
       //เชื่อม API และเอาค่าในฟอร์มใส่ไปในบอดี้
-      const response = await axios.post(
-        `${API_KEY}/edit-product`,
-        formData
-      );
+      const response = await axios.post(`${API_KEY}/edit-product`, formData);
       //ถ้าสเตัสจาก server ปกติ
       if (response.status === 200) {
         Swal.fire({
@@ -77,9 +76,25 @@ function EditProduct({
     }
   };
 
+  //Image settings
+  const [useOldImage, setUseOldImage] = useState(false);
+  const handleCheckboxChange = () => {
+    setUseOldImage(!useOldImage);
+    if (!useOldImage){
+      setImagePreview(placeholderImage);
+    }
+    else if (useOldImage){
+      setImagePreview('https://placehold.co/600x400/EEE/31343C');
+    }
+  }
+
   const setImagePreview = (URL) => {
     setIsPreviewImg(URL);
   };
+  const resetValueImage = () =>{
+    setUseOldImage(false);
+    setIsPreviewImg('https://placehold.co/600x400/EEE/31343C')
+  }
 
   return (
     <Modal
@@ -121,10 +136,11 @@ function EditProduct({
                 className="appearance-none block w-full bg-white text-gray-700 border
                   rounded py-3 px-2 mb-3 leading-tight focus:outline-[#4C49ED] focus:bg-white
                   focus:border-gray-500"
+                autoFocus
                 id="grid-first-name"
                 type="text"
                 autoComplete="off"
-                placeholder={placeholder}
+                placeholder={placeholderName}
                 onChange={(e) => setName(e.target.value)}
                 required
               />
@@ -138,13 +154,12 @@ function EditProduct({
               </label>
               <input
                 className="appearance-none block w-full bg-white text-gray-700 border
-                  border-gray-200 rounded py-3 px-2 leading-tight focus:outline-[#4C49ED] focus:bg-white focus:border-gray-500
-                  placeholder:text-[#D9D9D9]"
+                  border-gray-200 rounded py-3 px-2 leading-tight focus:outline-[#4C49ED] focus:bg-white focus:border-gray-500"
                 id="grid-last-name"
                 onChange={(e) => setPrice(e.target.value)}
                 type="number"
                 required
-                placeholder="15"
+                placeholder={placeholderPrice}
               />
             </div>
             <div className="w-2/4 px-3">
@@ -156,11 +171,11 @@ function EditProduct({
               </label>
               <input
                 className="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-2 leading-tight focus:outline-[#4C49ED] focus:bg-white
-                   focus:border-gray-500 placeholder:text-[#D9D9D9]"
+                   focus:border-gray-500"
                 onChange={(e) => setVolume(e.target.value)}
                 id="grid-last-name"
                 type="number"
-                placeholder="20"
+                placeholder={placeholderVolume}
               />
             </div>
           </div>
@@ -180,23 +195,56 @@ function EditProduct({
                   focus:border-gray-500"
                 id="grid-first-name"
                 type="text"
-                placeholder="https://placehold.co/600x400/EEE/31343C"
+                placeholder={isPreviewImg}
               />
-              <label className="flex tracking-wide text-gray-700 text-xs font-bold mb-2 text-left">
-                รูปจะแสดงผลดังนี้
-              </label>
-              <img
-                className=" w-[170px] h-[100px] object-cover"
-                src={isPreviewImg}
-                alt=""
-              />
+              <div className="flex w-full justify-between mt-5">
+                <div>
+                  <label className="flex tracking-wide text-gray-700 text-xs font-bold mb-2 text-left">
+                    รูปภาพเดิม
+                  </label>
+                  <img
+                    className=" w-[170px] h-[100px] object-contain p-1"
+                    src={placeholderImage}
+                    alt=""
+                  />
+                </div>
+                <div>
+                  <label className="flex tracking-wide text-gray-700 text-xs font-bold mb-2 text-left">
+                    รูปภาพใหม่
+                  </label>
+                  <img
+                    className=" w-[170px] h-[100px] object-contain p-1"
+                    src={isPreviewImg}
+                    alt=""
+                  />
+                </div>
+              </div>
+                <div className="flex items-center me-4 mt-6">
+                  <input
+                    checked = {useOldImage}
+                    onChange={handleCheckboxChange}
+                    id="green-checkbox"
+                    type="checkbox"
+                    value=""
+                    className="w-4 h-4  bg-gray-100 
+                    border-gray-300 rounded  dark:ring-offset-gray-800 
+                    focus:ring-2 dark:bg-gray-700 dark:border-gray-600
+                    cursor-pointer "
+                  />
+                  <label
+                    htmlFor="green-checkbox"
+                    className="ms-2 text-sm font-medium text-blac"
+                  >
+                    ใช้รูปภาพเดิม
+                  </label>
+                </div>
             </div>
           </div>
-          <div className="w-full gap-6 flex justify-center mt-12">
+          <div className="w-full gap-6 flex justify-center mt-10">
             <div>
               <button
-                onClick={closeEditModal}
-                className="w-[15.1rem] border h-[4rem] rounded-md text-[#ff000077] bg-[#D6D6D6CC] hover:bg-[#d6d6d6]"
+                onClick={() => {closeEditModal(),resetValueImage()}}
+                className="w-[15.6rem] border h-[4rem] rounded-md text-[#ff000077] bg-[#D6D6D6CC] hover:bg-[#d6d6d6]"
               >
                 ยกเลิก
               </button>
@@ -204,7 +252,7 @@ function EditProduct({
             <div>
               <button
                 type="submit"
-                className="w-[15.1rem] bg-[#4C49ED] text-white border h-[4rem] rounded-md hover:bg-[#4c49edc4]"
+                className="w-[15.6rem] bg-[#4C49ED] text-white border h-[4rem] rounded-md hover:bg-[#4c49edc4]"
               >
                 ยืนยัน
               </button>

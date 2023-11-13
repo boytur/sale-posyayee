@@ -35,6 +35,11 @@ function ConfirmPayOrder({
     closeConfirmModal();
     setCashReceived();
   };
+
+  const handleCancel = ()=>{
+    setCashReceived();
+    closeConfirmModal();
+  }
   return (
     <>
       <Modal
@@ -66,7 +71,6 @@ function ConfirmPayOrder({
               <div className="mt-[3rem] flex gap-4 w-[20rem]">
                 <label className="h-[3rem] items-center flex">เงินสด</label>
                 <input
-                  required
                   autoFocus
                   className="block w-fulltext-gray-700 border focus:outline-[#4C49ED] focus:border-none rounded py-3 px-2 mb-3 leading-tight focus:outline-none focus:bg-white"
                   type="number"
@@ -103,6 +107,7 @@ function ConfirmPayOrder({
             </div>
             <div>
               <button
+                onClick={handleCancel}
                 className="w-[17rem]  border h-[4rem] rounded-md text-[#ff000077] bg-[#D6D6D6CC] hover:bg-[#d6d6d6]"
               >
                 ยกเลิก

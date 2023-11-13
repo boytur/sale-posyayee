@@ -108,7 +108,7 @@ function Sale() {
   useBarcodeScanner(handleBarcodeScan);
   
   return (
-    <div>
+    <div style={{userSelect: "none"}}>
       <div className="flex relative">
         {/* การแจ้งเตือน */}
         <ToastContainer

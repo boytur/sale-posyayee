@@ -25,7 +25,10 @@ function AllProducts({ allProducts, fetchProducts, loading }) {
   //Modal การแก้ไขสินค้า
   const [idEdit, setIdEdit] = useState("");
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [placeholder, setPlaceholder] = useState("");
+  const [placeholderName, setPlaceholderName] = useState(""); //ส่ง Placeholder ชื่อ
+  const [placeholderPrice, setPlaceholderPrice] = useState(""); //ส่ง Placeholder ราคา
+  const [placeholderVolume, setPlaceholderVolume] = useState(""); //ส่ง Placeholder จำนวน
+  const [placeholderImage, setPlaceholderImage] = useState("");//ส่ง Placeholder รูป
 
   //Modal การลบสินค้า
   const [isDelelteModalOpen, setDelelteModalOpen] = useState(false);
@@ -36,11 +39,14 @@ function AllProducts({ allProducts, fetchProducts, loading }) {
    เก็บ _id ไปเช็คเพื่อแก้ไขข้อมูล
    เก็บ name เพื่อไปทำเป็น placeholder ใน modal
    ****************************************/
-  function editClick(_id, n) {
+  function editClick(_id, n,  p , v,i) {
     setIsEditModalOpen(!isEditModalOpen);
     openEditModal();
-    setPlaceholder(n);
     setIdEdit(_id);
+    setPlaceholderName(n);
+    setPlaceholderPrice(p);
+    setPlaceholderVolume(v);
+    setPlaceholderImage(i);
   }
   const openEditModal = () => {
     setIsEditModalOpen(true);
@@ -81,7 +87,7 @@ function AllProducts({ allProducts, fetchProducts, loading }) {
   useEffect(() => {
     document.title = "POSYAYEE 🛒 สินค้าทั้งหมด";
     fetchProducts();
-  }, []);
+  }, [fetchProducts]);
 
   /********************************************/
   return (
@@ -180,7 +186,7 @@ function AllProducts({ allProducts, fetchProducts, loading }) {
                       <ul className="flex justify-center gap-3">
                         <button
                           className=" hover:scale-110"
-                          onClick={() => editClick(product._id, product.name)}
+                          onClick={() => editClick(product._id, product.name,product.price,product.volume,product.image)}
                         >
                           <AiFillEdit size={30} color="#36454f" />
                         </button>
@@ -213,8 +219,11 @@ function AllProducts({ allProducts, fetchProducts, loading }) {
         isEditModalOpen={isEditModalOpen}
         closeEditModal={closeEditModal}
         confirmEdit={confirmEdit}
-        placeholder={placeholder}
         _id={idEdit}
+        placeholderName={placeholderName}
+        placeholderPrice={placeholderPrice}
+        placeholderVolume={placeholderVolume}
+        placeholderImage={placeholderImage}
         fetchProducts={fetchProducts}
       />
       {/* ส่ง prob ไปใช้ที่ EditProduct.jsx 
