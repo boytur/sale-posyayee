@@ -25,6 +25,8 @@ import { BiSearchAlt } from "react-icons/bi";
 import { RiAddCircleFill } from "react-icons/ri";
 import useBarcodeScanner from "../../../services/useBarcodeScanner";
 import productNotFoundSound from "../../../assets/Sounds/Productnotfound.mp3";
+import beepSound from '../../../assets/Sounds/Barcode-scanner-beep-sound.mp3'
+
 
 function Sale() {
   const [products, setProducts] = useState([]); //รอเก็บข้อมูลเข้า Array products
@@ -106,7 +108,12 @@ function Sale() {
     }
   };
   useBarcodeScanner(handleBarcodeScan);
-  
+  const imgKey = import.meta.env.VITE_IMG_KEY;
+
+  const playBeepSound = ()=>{
+    new Audio(beepSound).play();
+  }
+
   return (
     <div style={{userSelect: "none"}}>
       <div className="flex relative">
@@ -125,11 +132,10 @@ function Sale() {
         />
         {/* Import Aside มาใช้ */}
         <Aside />
-        <div className="w-[40%] ">
+        <div className="w-[40%]">
           {/* Search box */}
           <div className="w-full h-[5rem] flex justify-center items-center bg-white px-1 pr-6">
             <div className="w-full  h-[50px] rounded-[16px] flex items-center relative">
-              0
               <BiSearchAlt size={30} className="z-20 text-[#737791] pl-2" />
               <input
                 type="text"
@@ -160,7 +166,7 @@ function Sale() {
                       <div className=" w-[80px] p-2 h-[60px] flex items-center">
                         <img
                           className=" object-cover w-full h-full rounded-md"
-                          src={product.image}
+                          src={`${imgKey}${product.image}`} 
                           alt=""
                         />
                       </div>
@@ -196,7 +202,7 @@ function Sale() {
                 <div
                   key={product._id}
                   className="w-[150px]"
-                  onClick={() => addProduct(product)}
+                  onClick={() => {addProduct(product) , playBeepSound()}}
                 >
                   <div
                     className="border mt-2 h-[200px] grid rounded-md bg-white cursor-pointer hover:border-[3px] 
@@ -204,7 +210,7 @@ function Sale() {
                   >
                     <img
                       className="h-[8rem] object-cover rounded-lg p-1 w-full"
-                      src={product.image}
+                      src={`${imgKey}${product.image}`}
                       alt={product.name}
                     />
                     <div className="text-left pl-2 pt-3 overflow-hidden h-[2.1rem] text-sm">

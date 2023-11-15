@@ -51,6 +51,14 @@ function Login({ isAuthenticated, setIsAuthenticated }) {
     }
   };
 
+  const [status, setStatus] = useState("");
+  const fetchServerStatus = () => {
+    fetch(`${API_KEY}`)
+    .then((response)=>response)
+    .then((data) => setStatus(data))
+    .catch((err)=>console.log(err));
+  };
+
   useEffect(() => {
     // ตรวจสอบว่ามีข้อมูล username และ token ใน sessionStorage หรือไม่
     const storedUsername = sessionStorage.getItem("user");
@@ -64,7 +72,9 @@ function Login({ isAuthenticated, setIsAuthenticated }) {
     }
 
     setLoading(false); // แสดงว่าข้อมูลได้รับการโหลดแล้ว
-  }, []); // ให้ useEffect ทำงานเมื่อคอมโพเนนต์นี้ถูกโหลดครั้งแรก
+    fetchServerStatus();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setIsAuthenticated]); // ให้ useEffect ทำงานเมื่อคอมโพเนนต์นี้ถูกโหลดครั้งแรก
 
   // ถ้ากำลังโหลดข้อมูล ให้แสดง "กำลังโหลด..."
   if (loading) {
@@ -138,6 +148,9 @@ function Login({ isAuthenticated, setIsAuthenticated }) {
             >
               Facebook
             </a>
+          </div>
+          <div className=" mt-5">
+              <p className=" text-gray-700 text-sm">Server status : {status != "" ? "🟢Online":"⚪Offline" }</p>
           </div>
         </div>
       </div>

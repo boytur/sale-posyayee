@@ -27,13 +27,13 @@ function DeleteProduct({
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        fetchProducts();
         //Alert เมื่อลบสินค้า
         Swal.fire({
           icon: "success",
           title: `${data.message}`,
           timer: 3000,
         });
+        fetchProducts();
       })
       .catch((error) => {
         console.error("เกิดข้อผิดพลาดในการลบข้อมูล:", error);

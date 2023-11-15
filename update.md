@@ -20,4 +20,27 @@
 #### ไฟล์ที่มีการแก้ไขได้แก่ 
 - src\components\PopupComponents\EditProduct.jsx
 
-![image](image.update/update1.0.3-1.png);
+![image](image.update/update1.0.3-1.png)
+
+# อัพเดต 1.0.4
+- UX/UI
+  - เนื่องจากย้าย server มาบน PM2 ซึ่งตอนนี้ยังมีปัญหาอยู่เลยทำ UI เพื่อเช็ค status ของ server ว่าออนไลน์อยู่ไหม
+
+#### ไฟล์ที่มีการแก้ไขได้แก่ 
+- src\components\Login.jsx
+
+![image](image.update/update1.0.4-1.png)
+
+# อัพเดต 1.1.0
+  - Functional problem
+    - มีปัญหาเรื่องการเก็บรูปในรูปแบบลิงก์ทำให้ดึงข้อมูลช้าจึงมีการปรับทาง server เป็นการเก็บรปไว้ใน server และเก็บ path ที่ databse และปรับ UI จากการวางลิงก์เป็นการอัพโหลดรุปแทน
+    - ลบฟังก์ชันเอารูปเดิมมาใช้เนื่องจากเป็นปัญหาเมื่อเก็บรูปบน server
+  - Improve UX
+    - มีการนำเสียงกดมาใช้เมื่อกดขายของที่ไม่มีบาร์โค้ดหน้าร้าน เนื่องจากอาจเผลอกดโดนโดยไม่รู้ตัวและอาจคิดราคาผิดจึงมีการนำเสียงมาใส่เพื่อจะได้หมดปัญหานี้ 
+#### ไฟล์ที่มีการแก้ไขได้แก่ 
+  - ทุกไฟล์ที่มีการแสดงรูป (แก้นิดหน่อย คือเปลี่ยนจากการดึง src ของรูปเป็นดึงจาก api ในไฟล์ uploads/[ ชื่อไฟล์ ])
+  - ไฟล์หลักที่มีการแก้ไข  UI คือไฟล์ที่มีการอัพโหลดรูป
+    - src\components\MainComponents\AddProductCom\AddNewProduct.jsx
+      ![image](image.update//update1.1.0-1.png)
+    - src\components\PopupComponents\EditProduct.jsx
+      ![image](image.update/update1.1.0-2.png)

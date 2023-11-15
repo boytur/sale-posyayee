@@ -93,7 +93,7 @@ function Aside() {
             <div>
             <img src={userPic} className="w-[30px] h-[30]" alt="user" />
           </div>
-          <div className="font-semibold flex pl-2">
+          <div className="font-semibold flex pl-2 text-sm">
             <h1>สวัสดี</h1>
             <h1>, {userName}</h1>
           </div>

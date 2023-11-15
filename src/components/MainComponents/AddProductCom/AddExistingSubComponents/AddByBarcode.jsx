@@ -85,7 +85,7 @@ function AddByBarcode({ products }) {
       }
     }
   };
-
+  const imgKey = import.meta.env.VITE_IMG_KEY;
   return (
     <div>
       <div className="flex flex-wrap -mx-3 mb-2 mt-3">
@@ -130,7 +130,7 @@ function AddByBarcode({ products }) {
                 >
                   <div className="md:w-[5rem] h-full srounded-md justify-center flex items-center">
                     <img
-                      src={p.image}
+                      src={`${imgKey}${p.image}`}
                       className="w-[5rem] h-[5.2rem] object-cover rounded-md"
                       alt=""
                     />

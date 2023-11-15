@@ -21,7 +21,7 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import EditProduct from "../../PopupComponents/EditProduct";
 import DeleteProduct from "../../PopupComponents/DeleteProduct";
 
-function OutStockProducts({ outStockProducts, fetchProducts, loading }) {
+function OutStockProducts({ outStockProducts, loading ,fetchProducts}) {
   //Modal การแก้ไขสินค้า
   const [idEdit, setIdEdit] = useState("");
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -89,10 +89,11 @@ function OutStockProducts({ outStockProducts, fetchProducts, loading }) {
   /****** Fetch สินค้าทุกครั้งที่มีการเปลี่ยนแปลง *******/
   useEffect(() => {
     document.title = "POSYAYEE 🛒 สินค้าใกล้จะหมด";
-    fetchProducts();
-  }, [fetchProducts]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  });
 
   /********************************************/
+  const imgKey = import.meta.env.VITE_IMG_KEY;
 
   return (
     <div>
@@ -123,7 +124,7 @@ function OutStockProducts({ outStockProducts, fetchProducts, loading }) {
                     >
                       <div className="flex gap-2 items-center overflow-hidden">
                         <img
-                          src={product.image}
+                          src={`${imgKey}${product.image}`}
                           className="w-[50px] h-[40px] object-cover rounded-md"
                           alt=""
                         />

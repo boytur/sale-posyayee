@@ -1,3 +1,4 @@
+/* eslint-disable no-dupe-keys */
 /* eslint-disable react/prop-types */
 import { AiFillDelete } from "react-icons/ai";
 import {useState } from "react";
@@ -15,8 +16,8 @@ import LoadingWhilePayMoney from "../../LoaddingComponents/LoadingWhilePayMoney"
 Modal.setAppElement("#root");
 
 function Scan({ cart, setCart }) {
+  
   const [loadingWhilePayMoney, setLoadingWhilePayMoney] = useState(false);
-
   let cartItems = Array.isArray(cart) ? cart : [];
 
   let totalPrice = cart.reduce(
@@ -73,7 +74,8 @@ function Scan({ cart, setCart }) {
 
   //ยืนยันการจ่ายตัง modal
   const [isComfirmModalOpen, SetComfirmModalOpen] = useState(false);
-  const openConfirmModal = () => {
+  const openConfirmModal = (e) => {
+    e.preventDefault()
     if (cartItems.length > 0) {
       SetComfirmModalOpen(true);
     }
@@ -126,6 +128,7 @@ function Scan({ cart, setCart }) {
     }
   };
 
+  const imgKey = import.meta.env.VITE_IMG_KEY;
   return (
     <div className=" h-full w-[40%] flex justify-center relative">
       {loadingWhilePayMoney ? <LoadingWhilePayMoney /> : " "}
@@ -160,9 +163,9 @@ function Scan({ cart, setCart }) {
             style={{ height: "calc(100vh - 13.8rem)" }}
           >
             {cartItems.map((item, index) => (
-              <div className="mt-3 bg-white pl-1" key={item._id}>
+              <div className="bg-white pl-1 mt-1" key={item._id}>
                 <table
-                  className={`w-full text-center h-[3rem] rounded-md ${
+                  className={`w-full text-center h-[3rem] rounded-md border-b ${
                     index % 2 !== 0 ? "bg-[#d9d9d91a]" : "bg-white"
                   }`}
                 >
@@ -177,7 +180,7 @@ function Scan({ cart, setCart }) {
                       >
                         <div className="flex gap-2 items-center overflow-hidden">
                           <img
-                            src={item.image}
+                            src={`${imgKey}${item.image}`}
                             className="w-[40px] h-[40px] object-cover rounded-sm"
                             alt=""
                           />
@@ -189,6 +192,8 @@ function Scan({ cart, setCart }) {
                           width: "15%",
                           fontWeight: "normal",
                           color: "#4C49ED",
+                          fontSize:"25px",
+                          fontWeight:"bold"
                         }}
                       >
                         {item.price}
@@ -197,6 +202,8 @@ function Scan({ cart, setCart }) {
                         style={{
                           width: "5%",
                           fontWeight: "normal",
+                          fontSize:"25px",
+                          fontWeight:"bold"
                         }}
                       >
                         {item.quantity}
@@ -241,7 +248,7 @@ function Scan({ cart, setCart }) {
           </button>
           <button
             className="w-[304px] h-[80px]  bg-[#4C49ED] rounded-md text-[2.5rem] text-white hover:bg-[#4c49edc4]"
-            onClick={openConfirmModal}
+            onClick={(e)=> openConfirmModal(e)}
           >
             <p>จ่าย</p>
           </button>

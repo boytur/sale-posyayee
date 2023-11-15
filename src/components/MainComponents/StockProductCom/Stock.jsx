@@ -36,32 +36,32 @@ function Stock() {
    *prob => outStockProducts , allProducts
    ********************************************/
    const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
-  const fetchProducts = () => {
-    fetch(`${API_KEY}/view-product`)
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data.products);
-        const filterProducts = data.products.filter((product) => {
-          return product.volume !== null && product.volume < 5;
-        });
-        setOutStockProducts(filterProducts);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        setLoading(false);
-      });
-  };
-  useEffect(() => {
+   const fetchProducts = async () => {
+     try {
+       const response = await fetch(`${API_KEY}/view-product`);
+       const data = await response.json();
+       setProducts(data.products);
+       const filterProducts = data.products.filter((product) => {
+         return product.volume !== null && product.volume < 5;
+       });
+       setOutStockProducts(filterProducts);
+       setLoading(false);
+     } catch (error) {
+       console.error("Error fetching data:", error);
+       setLoading(false);
+     }
+   };
+
+   useEffect(() => {
     fetchProducts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
   return (
     <div>
       <div className="flex w-full h-full">
         {/* Import Aside มาใช้ */}
         <Aside />
-        <div className="w-[80%] flex flex-col pl-1 pt-4">
+        <div className="w-[85%] flex flex-col pl-1 pt-2">
           <div className="w-full h-[4rem] text-[#4C49ED] text-[32px] font-semibold items-center flex pl-4 ">
             <div>
               <h1>สินค้าในสต็อก</h1>
@@ -127,14 +127,14 @@ function Stock() {
           {btnCheck ? (
             <OutStockProducts
               outStockProducts={outStockProducts}
-              fetchProducts={fetchProducts}
               loading={loading}
+              fetchProducts={fetchProducts}
             />
           ) : (
             <AllProducts
               allProducts={stockProducts}
-              fetchProducts={fetchProducts}
               loading={loading}
+              fetchProducts={fetchProducts}
             />
           )}
         </div>
