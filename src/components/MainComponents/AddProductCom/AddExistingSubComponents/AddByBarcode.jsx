@@ -5,13 +5,11 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 // eslint-disable-next-line no-unused-vars
-function AddByBarcode({ products }) {
+function AddByBarcode({ products, fetchProducts }) {
   const [scanProduct, setScanProduct] = useState([]);
 
   const scanBarcode = (value) => {
-    console.log("Scanning barcode:", value);
     value = value.replace(" ", "");
-
     if (value.length >= 13) {
       let scannedProductsArray = [];
 
@@ -42,11 +40,6 @@ function AddByBarcode({ products }) {
     );
   };
 
-  // eslint-disable-next-line no-unused-vars
-  const click = () => {
-    console.log("Products add :", scanProduct);
-  };
-
   const saveAddProductQuantity = async () => {
     const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
     try {
@@ -56,7 +49,6 @@ function AddByBarcode({ products }) {
           quantity: item.quantity,
         })),
       };
-      console.log(formData);
       const response = await axios.post(
         `${API_KEY}/add-product-quantity`,
         formData
@@ -66,6 +58,8 @@ function AddByBarcode({ products }) {
         title: response.data.message,
         timer: 3000,
       });
+      setScanProduct([]);
+      fetchProducts();
     } catch (err) {
       // การจัดการข้อผิดพลาดในการโทรองข้อมูลไปยังเซิร์ฟเวอร์
       console.log(err);
@@ -111,11 +105,12 @@ function AddByBarcode({ products }) {
               size={32}
               className="absolute left-2 mt-[6px] top-[4.5%] z-50"
             />
-             <button
-             onClick={saveAddProductQuantity} 
-             className="w-[8rem] border h-[2.9rem] flex justify-center items-center rounded-md bg-[#4C49ED] text-white font-light hover:scale-105 ">
+            <button
+              onClick={saveAddProductQuantity}
+              className="w-[8rem] border h-[2.9rem] flex justify-center items-center rounded-md bg-[#4C49ED] text-white font-light hover:scale-105 "
+            >
               บันทึกข้อมูล
-             </button>
+            </button>
           </div>
           <div>
             <div
@@ -189,7 +184,6 @@ function AddByBarcode({ products }) {
                 </div>
               ))}
             </div>
-            
           </div>
         </div>
       </div>

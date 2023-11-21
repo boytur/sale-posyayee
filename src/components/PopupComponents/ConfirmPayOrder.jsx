@@ -1,9 +1,9 @@
 // eslint-disable-next-line no-unused-vars
-import { useState ,useEffect} from "react";
+import { useState, useEffect } from "react";
 import Modal from "react-modal";
 import Swal from "sweetalert2";
 Modal.setAppElement("#root");
-
+import { FcPlus } from "react-icons/fc";
 
 function ConfirmPayOrder({
   // eslint-disable-next-line react/prop-types
@@ -14,6 +14,8 @@ function ConfirmPayOrder({
   confirmPayOrder,
   // eslint-disable-next-line react/prop-types
   totalPrice,
+  // eslint-disable-next-line react/prop-types
+  confirmPayWithCredit,
 }) {
   const [cashReceived, setCashReceived] = useState(); // สร้าง state เพื่อเก็บจำนวนเงินที่รับมา
 
@@ -25,21 +27,21 @@ function ConfirmPayOrder({
     if (change >= 0 && totalPrice != 0) {
       // เรียกใช้ฟังก์ชันสำหรับยืนยันการจ่ายเงิน
       confirmPayOrder();
-    } else if (totalPrice != 0){
+    } else if (totalPrice != 0) {
       Swal.fire({
         icon: "error",
         title: "จำนวนเงินไม่เพียงพอ",
-        timer:3000
+        timer: 3000,
       });
     }
     closeConfirmModal();
     setCashReceived();
   };
 
-  const handleCancel = ()=>{
+  const handleCancel = () => {
     setCashReceived();
     closeConfirmModal();
-  }
+  };
   return (
     <>
       <Modal
@@ -61,10 +63,28 @@ function ConfirmPayOrder({
           },
         }}
       >
-        <form className=" w-full h-full text-center" onSubmit={handleConfirmPayOrder}>
+        <form
+          className=" w-full h-full text-center"
+          onSubmit={handleConfirmPayOrder}
+        >
           <div>
-            <div className="text-[#4C49ED] font-bold text-[2rem]">
-              <h2>ยืนยันการจ่ายเงิน</h2>
+            <div className=" w-full flex justify-center relative">
+              <div className="text-[#4C49ED] font-bold text-[2rem] w-full">
+                <h2>ยืนยันการจ่ายเงิน</h2>
+              </div>
+              <div className="absolute right-0">
+                <div className="w-full cursor-pointer">
+                  <FcPlus
+                    className="hover:scale-105"
+                    size={40}
+                    onClick={() => {
+                      confirmPayWithCredit(),
+                        closeConfirmModal(),
+                        setCashReceived();
+                    }}
+                  />
+                </div>
+              </div>
             </div>
             <hr />
             <div className="h-full flex pl-7 justify-center">

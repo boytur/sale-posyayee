@@ -14,8 +14,8 @@
 
 # อัพเดต 1.0.3
 - UX/UI
- - แก้ไข placeholder หน้า EditProduct.jsx ให้เป็นข้อมูลของสินค้าที่จะแก้ไข
- - ทำการเพิ่ม checkbox การใช้รูปภาพเดิมจะได้สะดวกต่อการแก้ไขสินค้า
+   - แก้ไข placeholder หน้า EditProduct.jsx ให้เป็นข้อมูลของสินค้าที่จะแก้ไข
+   - ทำการเพิ่ม checkbox การใช้รูปภาพเดิมจะได้สะดวกต่อการแก้ไขสินค้า
 
 #### ไฟล์ที่มีการแก้ไขได้แก่ 
 - src\components\PopupComponents\EditProduct.jsx
@@ -44,3 +44,18 @@
       ![image](image.update//update1.1.0-1.png)
     - src\components\PopupComponents\EditProduct.jsx
       ![image](image.update/update1.1.0-2.png)
+# อัพเดต 1.2.0
+  - UX/UI 
+    - แก้บัคในหน้าเพิ่มสินค้าเดิม(AddExistingProduct.jsx)เมื่อกดเพิ่มสินค้าแล้วให้รีเซ็ตค่าสินค้าที่แสกนมาให้หาย 
+  - Funtional update4
+    - เนื่องจากตอนขายมีการขายผ่านเงินเชื่อ(เครดิต)ทำให้ไม่สามารถระบุจำนวนเงินสดที่ถืออยู่ได้ จึงมีการเพิ่มฟังก์ชันขายเงินเชื่อเข้าไป
+    - นอกจากนั้นยังต้องแสดงจำนวนสัดส่วนเงินเชื่อและเงินสดที่ Analysis
+#### ไฟล์ที่มีการแก้ไขได้แก่  
+  - src\components\MainComponents\AddProductCom\AddExistingProduct.jsx (UX/UI)
+  - src\components\MainComponents\SaleProductCom\Scan.jsx  (เพิ่มฟังก์ชันจ่ายด้วยเครดิต)
+  - src\components\PopupComponents\ConfirmPayOrder.jsx (เพิ่มปุ่มบวกสีเขียวเพื่อจ่ายด้วยเครดิต)
+  - src\components\MainComponents\AnalysisCom\Analysis.jsx (เพิ่มสัดส่วนของเครดิตกับเงินสดและเพิ่มแสดงจำนวนเงินเครดิต)
+
+  - รูปภาพ
+  - ![image](image.update/update1.2.0-1.png)
+  - ![image](image.update/update1.2.0-2.png)

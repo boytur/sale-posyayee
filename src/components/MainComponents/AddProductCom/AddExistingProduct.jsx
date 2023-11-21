@@ -57,7 +57,10 @@ function AddExistingProduct() {
 
         {selectedMethod === "barcode" ? (
           // เพิ่มสินค้าด้วยบาร์โค้ด
-          <AddByBarcode products={products} />
+          <AddByBarcode 
+          products={products} 
+          fetchProducts = {fetchProducts}
+          />
         ) : (
           <AddBySearch productsNobarcode={productsNobarcode} />
         )}

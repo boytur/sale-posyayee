@@ -1,7 +1,7 @@
 /* eslint-disable no-dupe-keys */
 /* eslint-disable react/prop-types */
 import { AiFillDelete } from "react-icons/ai";
-import {useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Modal from "react-modal";
@@ -16,7 +16,6 @@ import LoadingWhilePayMoney from "../../LoaddingComponents/LoadingWhilePayMoney"
 Modal.setAppElement("#root");
 
 function Scan({ cart, setCart }) {
-  
   const [loadingWhilePayMoney, setLoadingWhilePayMoney] = useState(false);
   let cartItems = Array.isArray(cart) ? cart : [];
 
@@ -75,7 +74,7 @@ function Scan({ cart, setCart }) {
   //ยืนยันการจ่ายตัง modal
   const [isComfirmModalOpen, SetComfirmModalOpen] = useState(false);
   const openConfirmModal = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (cartItems.length > 0) {
       SetComfirmModalOpen(true);
     }
@@ -85,6 +84,8 @@ function Scan({ cart, setCart }) {
   };
 
   const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
+  
+  //จ่ายด้วยเงินสดปกติ
   const confirmPayOrder = async () => {
     setLoadingWhilePayMoney(true);
     try {
@@ -105,7 +106,49 @@ function Scan({ cart, setCart }) {
       closeConfirmModal();
       new Audio(paySound).play();
       setLoadingWhilePayMoney(false);
-      
+    } catch (err) {
+      // การจัดการข้อผิดพลาดในการโทรองข้อมูลไปยังเซิร์ฟเวอร์
+      console.log(err);
+      if (err.response) {
+        // กรณีเซิร์ฟเวอร์ส่งข้อมูลผิด
+        Swal.fire({
+          icon: "error",
+          title: `${err.response.data.message}`,
+          timer: 3000,
+        });
+      } else {
+        // กรณีไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้
+        setLoadingWhilePayMoney(false);
+        Swal.fire({
+          icon: "error",
+          title: "ข้อผิดพลาดในการเชื่อมต่อกับเซิร์ฟเวอร์",
+          timer: 3000,
+        });
+      }
+    }
+  };
+
+  //จ่ายด้วยเครดิต
+  const confirmPayWithCredit = async () => {
+    setLoadingWhilePayMoney(true);
+    try {
+      const formData = {
+        products: cartItems.map((item) => ({
+          _id: item._id,
+          quantity: item.quantity,
+        })),
+      };
+      const response = await axios.post(`${API_KEY}/sale-credit`, formData);
+      Swal.fire({
+        icon: "success",
+        title: response.data.message,
+        timer: 3000,
+      });
+
+      setCart([]);
+      closeConfirmModal();
+      new Audio(paySound).play();
+      setLoadingWhilePayMoney(false);
     } catch (err) {
       // การจัดการข้อผิดพลาดในการโทรองข้อมูลไปยังเซิร์ฟเวอร์
       console.log(err);
@@ -130,7 +173,7 @@ function Scan({ cart, setCart }) {
 
   const imgKey = import.meta.env.VITE_IMG_KEY;
   return (
-    <div className=" h-full w-[40%] flex justify-center relative">
+    <div className=" h-full w-[40%] flex justify-center relative bg-white">
       {loadingWhilePayMoney ? <LoadingWhilePayMoney /> : " "}
       <div className="w-full flex flex-col pt-4 relative">
         <div className=" bg-white pl-1">
@@ -192,8 +235,8 @@ function Scan({ cart, setCart }) {
                           width: "15%",
                           fontWeight: "normal",
                           color: "#4C49ED",
-                          fontSize:"25px",
-                          fontWeight:"bold"
+                          fontSize: "25px",
+                          fontWeight: "bold",
                         }}
                       >
                         {item.price}
@@ -202,8 +245,8 @@ function Scan({ cart, setCart }) {
                         style={{
                           width: "5%",
                           fontWeight: "normal",
-                          fontSize:"25px",
-                          fontWeight:"bold"
+                          fontSize: "25px",
+                          fontWeight: "bold",
                         }}
                       >
                         {item.quantity}
@@ -248,7 +291,7 @@ function Scan({ cart, setCart }) {
           </button>
           <button
             className="w-[304px] h-[80px]  bg-[#4C49ED] rounded-md text-[2.5rem] text-white hover:bg-[#4c49edc4]"
-            onClick={(e)=> openConfirmModal(e)}
+            onClick={(e) => openConfirmModal(e)}
           >
             <p>จ่าย</p>
           </button>
@@ -267,6 +310,7 @@ function Scan({ cart, setCart }) {
         closeConfirmModal={closeConfirmModal}
         confirmPayOrder={confirmPayOrder}
         totalPrice={totalPrice}
+        confirmPayWithCredit={confirmPayWithCredit}
       />
     </div>
   );
