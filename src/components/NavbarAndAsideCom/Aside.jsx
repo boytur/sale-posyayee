@@ -4,10 +4,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { GoHomeFill } from "react-icons/go";
 import { BsFillDatabaseFill, BsDatabaseFillAdd } from "react-icons/bs";
 import { IoMdAnalytics } from "react-icons/io";
-import { BsShop } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import userPic from "../../assets/img/user.png";
-
+import { FaBars } from "react-icons/fa";
 
 let userName = "";
 function Aside() {
@@ -39,7 +38,7 @@ function Aside() {
           className="flex items-center gap-1 w-full justify-center"
         >
           <h1 className="font-bold text-[2.7rem] text-black flex items-center">
-            <BsShop size={32} color="#4C49ED" />
+            <FaBars size={32} color="#4C49ED" />
             <span className="text-[#4C49ED]">POS</span>YAYEE
           </h1>
         </Link>

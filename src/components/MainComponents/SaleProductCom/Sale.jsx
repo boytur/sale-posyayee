@@ -26,6 +26,8 @@ import { RiAddCircleFill } from "react-icons/ri";
 import useBarcodeScanner from "../../../services/useBarcodeScanner";
 import productNotFoundSound from "../../../assets/Sounds/Productnotfound.mp3";
 import beepSound from '../../../assets/Sounds/Barcode-scanner-beep-sound.mp3'
+import {config} from "../../../../config";
+import axios from "axios";
 
 
 function Sale() {
@@ -57,16 +59,16 @@ function Sale() {
   const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
   // Fetch API สินค้าทั้งหมด
   const fetchProducts = () => {
-    fetch(`${API_KEY}/view-product`)
-      .then((response) => response.json())
+    axios.get(`${API_KEY}/view-product`, config)
+      .then((response) => response.data)
       .then((data) => {
         setProducts(data.products);
-        setIsLoading(false); // Set หน้าโหลดเป็นโหลดเสร็จ
+        setIsLoading(false);
       })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
+      .catch(err => {
+        console.log("err", err);
       });
-  }
+  };
   useEffect(() => {
     document.title = "POSYAYEE 🛒 ขายของหน้าร้าน";
     fetchProducts();

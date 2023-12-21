@@ -3,6 +3,7 @@ import { BiBarcodeReader } from "react-icons/bi";
 import { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { config } from "../../../../../config";
 
 // eslint-disable-next-line no-unused-vars
 function AddByBarcode({ products, fetchProducts }) {
@@ -51,7 +52,7 @@ function AddByBarcode({ products, fetchProducts }) {
       };
       const response = await axios.post(
         `${API_KEY}/add-product-quantity`,
-        formData
+        formData,config
       );
       Swal.fire({
         icon: "success",

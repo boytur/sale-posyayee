@@ -11,6 +11,8 @@
 import Modal from "react-modal";
 Modal.setAppElement("#root");
 import Swal from "sweetalert2";
+import { config } from "../../../config";
+import axios from "axios";
 
 function DeleteProduct({
   isDelelteModalOpen,
@@ -20,32 +22,36 @@ function DeleteProduct({
   fetchProducts
 }) {
   const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
-  const handleDelete = () => {
-    fetch(`${API_KEY}/delete-product/${_id}`, {
-      method: "DELETE",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        //Alert เมื่อลบสินค้า
-        Swal.fire({
-          icon: "success",
-          title: `${data.message}`,
-          timer: 3000,
-        });
-        fetchProducts();
-      })
-      .catch((error) => {
-        console.error("เกิดข้อผิดพลาดในการลบข้อมูล:", error);
-        // Error alert
-        Swal.fire({
-          icon: "error",
-          title: "เกิดข้อผิดพลาดในการลบข้อมูล",
-          text: "กรุณาลองอีกครั้ง",
-        });
+
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(`${API_KEY}/delete-product/${_id}`, config);
+      const data = response.data;
+        
+      // Alert when deleting a product
+      Swal.fire({
+        icon: "success",
+        title: `${data.message}`,
+        timer: 3000,
       });
-    closeDelelteModal(); //ปิด Modal
+  
+      // Fetch updated product list after deletion
+      fetchProducts();
+    } catch (error) {
+      console.error("เกิดข้อผิดพลาดในการลบข้อมูล", error);
+  
+      // Error alert
+      Swal.fire({
+        icon: "error",
+        title: "เกิดข้อผิดพลาดในการลบข้อมูล",
+        text: "กรุณาลองอีกครั้ง",
+      });
+    }
+  
+    // Close the delete modal regardless of success or failure
+    closeDelelteModal();
   };
+  
   return (
     <>
       <Modal

@@ -12,12 +12,13 @@ import {
   FcSalesPerformance,
   FcSurvey,
 } from "react-icons/fc";
+import { config } from "../../../../config";
 
 function Analysis() {
   const [salesData, setSalesData] = useState({});
   const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
   useEffect(() => {
-    fetch(`${API_KEY}/view-dailysale`)
+    fetch(`${API_KEY}/view-dailysale`,config)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

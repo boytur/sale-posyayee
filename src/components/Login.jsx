@@ -34,6 +34,7 @@ function Login({ isAuthenticated, setIsAuthenticated }) {
         .then((response) => {
           // ตั้งค่า isAuthenticated เป็น true
           setIsAuthenticated(true);
+          localStorage.setItem('token',response.data.token);
           auth(response, navigate("/sale-products"));
         })
         .catch((err) => {
@@ -51,13 +52,13 @@ function Login({ isAuthenticated, setIsAuthenticated }) {
     }
   };
 
-  const [status, setStatus] = useState("");
-  const fetchServerStatus = () => {
-    fetch(`${API_KEY}`)
-    .then((response)=>response)
-    .then((data) => setStatus(data))
-    .catch((err)=>console.log(err));
-  };
+  //const [status, setStatus] = useState("");
+  // const fetchServerStatus = () => {
+  //   fetch(`${API_KEY}`)
+  //   .then((response)=>response)
+  //   .then((data) => setStatus(data))
+  //   .catch((err)=>console.log(err));
+  // };
 
   useEffect(() => {
     // ตรวจสอบว่ามีข้อมูล username และ token ใน sessionStorage หรือไม่
@@ -72,7 +73,7 @@ function Login({ isAuthenticated, setIsAuthenticated }) {
     }
 
     setLoading(false); // แสดงว่าข้อมูลได้รับการโหลดแล้ว
-    fetchServerStatus();
+    // fetchServerStatus();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setIsAuthenticated]); // ให้ useEffect ทำงานเมื่อคอมโพเนนต์นี้ถูกโหลดครั้งแรก
 
@@ -149,9 +150,9 @@ function Login({ isAuthenticated, setIsAuthenticated }) {
               Facebook
             </a>
           </div>
-          <div className=" mt-5">
+          {/* <div className=" mt-5">
               <p className=" text-gray-700 text-sm">Server status : {status != "" ? "🟢Online":"⚪Offline" }</p>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

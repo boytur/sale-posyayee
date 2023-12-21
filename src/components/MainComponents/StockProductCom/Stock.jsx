@@ -21,6 +21,7 @@ import "../../../assets/css/StockLoadingSpinner.css";
 import { useState } from "react";
 import OutStockProducts from "./OutStockProducts";
 import AllProducts from "./AllProducts";
+import { config } from "../../../../config";
 
 function Stock() {
   const [stockProducts, setProducts] = useState([]); //เพื่อดึง Products มาใช้
@@ -38,7 +39,7 @@ function Stock() {
    const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
    const fetchProducts = async () => {
      try {
-       const response = await fetch(`${API_KEY}/view-product`);
+       const response = await fetch(`${API_KEY}/view-product`,config);
        const data = await response.json();
        setProducts(data.products);
        const filterProducts = data.products.filter((product) => {

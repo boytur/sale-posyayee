@@ -3,17 +3,24 @@ import { useEffect, useState } from "react";
 import "../../../assets/css/Login.css";
 import AddByBarcode from "./AddExistingSubComponents/AddByBarcode";
 import AddBySearch from "./AddExistingSubComponents/AddBySearch";
+import { config } from "../../../../config";
+import axios from "axios";
 
 function AddExistingProduct() {
   const [products, setProducts] = useState([]);
   const [productsNobarcode, setProductsNobarcode] = useState([]);
+  const [data, setData] = useState([]);
   const [loadings, setLoadings] = useState(false);
+
+  /*
+    Fecth data products
+  */
 
   const fetchProducts = async () => {
     const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
     try {
-      const response = await fetch(`${API_KEY}/view-product`);
-      const data = await response.json();
+      const response = await axios.get(`${API_KEY}/view-product`, config);
+      const data = response.data;
 
       const filteredProducts = data.products.filter(
         (product) => product.barcode === "" && product.volume !== null
@@ -30,11 +37,14 @@ function AddExistingProduct() {
     document.title = "POSYAYEE 📦 เพิ่มสินค้าเดิม";
     fetchProducts();
   }, []);
+
+  /* Select method to add product */
   const [selectedMethod, setSelectedMethod] = useState("barcode");
 
   const handleMethodChange = (event) => {
     setSelectedMethod(event.target.value);
   };
+
   return (
     <div className="w-[100%] flex bg-white h-full">
       <div className="mt-5 p-2 sm:w-full md:w-2/4">
@@ -57,10 +67,7 @@ function AddExistingProduct() {
 
         {selectedMethod === "barcode" ? (
           // เพิ่มสินค้าด้วยบาร์โค้ด
-          <AddByBarcode 
-          products={products} 
-          fetchProducts = {fetchProducts}
-          />
+          <AddByBarcode products={products} fetchProducts={fetchProducts} />
         ) : (
           <AddBySearch productsNobarcode={productsNobarcode} />
         )}

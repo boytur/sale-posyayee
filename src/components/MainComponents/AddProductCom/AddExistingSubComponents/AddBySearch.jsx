@@ -7,6 +7,7 @@ import { ImPriceTags } from "react-icons/im";
 import { BsBoxSeam } from "react-icons/bs";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { config } from "../../../../../config";
 
 
 // eslint-disable-next-line react/prop-types
@@ -70,10 +71,9 @@ function AddBySearch({ productsNobarcode }) {
         quantity:productsSearch[0].quantity
       }]
     };
-    console.log(formData);
     try
     {
-      const response = await axios.post(`${API_KEY}/add-product-quantity`, formData);
+      const response = await axios.post(`${API_KEY}/add-product-quantity`, formData,config);
       Swal.fire({
         icon: "success",
         title: response.data.message,

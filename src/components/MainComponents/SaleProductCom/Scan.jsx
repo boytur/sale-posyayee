@@ -12,6 +12,7 @@ import axios from "axios";
 import paySound from "../../../assets/Sounds/cash-register-purchase-87313.mp3";
 import "../../../assets/css/LoadingWhilePayMoney.css";
 import LoadingWhilePayMoney from "../../LoaddingComponents/LoadingWhilePayMoney";
+import { config } from "../../../../config";
 
 Modal.setAppElement("#root");
 
@@ -95,7 +96,7 @@ function Scan({ cart, setCart }) {
           quantity: item.quantity,
         })),
       };
-      const response = await axios.post(`${API_KEY}/sale`, formData);
+      const response = await axios.post(`${API_KEY}/sale`, formData,config);
       Swal.fire({
         icon: "success",
         title: response.data.message,
@@ -138,7 +139,7 @@ function Scan({ cart, setCart }) {
           quantity: item.quantity,
         })),
       };
-      const response = await axios.post(`${API_KEY}/sale-credit`, formData);
+      const response = await axios.post(`${API_KEY}/sale-credit`, formData,config);
       Swal.fire({
         icon: "success",
         title: response.data.message,

@@ -2,6 +2,7 @@ import { BiBarcodeReader } from "react-icons/bi";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
+import { config } from "../../../../config";
 
 const AddNewProduct = () => {
   const [isPreviewImg, setIsPreviewImg] = useState(
@@ -61,7 +62,6 @@ const AddNewProduct = () => {
     }
 
     const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
-
     try {
       const formDataForUpload = new FormData();
       formDataForUpload.append("name", formData.name);
@@ -72,7 +72,7 @@ const AddNewProduct = () => {
 
       const response = await axios.post(
         `${API_KEY}/add-product`,
-        formDataForUpload
+        formDataForUpload,config
       );
 
       Swal.fire({

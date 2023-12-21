@@ -6,6 +6,7 @@ import Modal from "react-modal";
 Modal.setAppElement("#root");
 import { BiBarcodeReader } from "react-icons/bi";
 import Swal from "sweetalert2";
+import { config } from "../../../config";
 
 function EditProduct({
   isEditModalOpen,
@@ -74,9 +75,9 @@ function EditProduct({
       //เชื่อม API และเอาค่าในฟอร์มใส่ไปในบอดี้
       const response = await axios.post(
         `${API_KEY}/edit-product`,
-        formDataUpload
+        formDataUpload,config
       );
-      
+
       //ถ้าสเตัสจาก server ปกติ
       if (response.status === 200) {
         Swal.fire({
