@@ -36,6 +36,7 @@ function Login({ isAuthenticated, setIsAuthenticated }) {
           setIsAuthenticated(true);
           localStorage.setItem('token',response.data.token);
           auth(response, navigate("/sale-products"));
+          window.location.reload(false);
         })
         .catch((err) => {
           if (err.response && err.response.data && err.response.data.error) {
