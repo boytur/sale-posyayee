@@ -21,14 +21,14 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import EditProduct from "../../PopupComponents/EditProduct";
 import DeleteProduct from "../../PopupComponents/DeleteProduct";
 
-function OutStockProducts({ outStockProducts, loading ,fetchProducts}) {
+function OutStockProducts({ outStockProducts, loading, fetchProducts }) {
   //Modal การแก้ไขสินค้า
   const [idEdit, setIdEdit] = useState("");
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [placeholderName, setPlaceholderName] = useState(""); //ส่ง Placeholder ชื่อ
   const [placeholderPrice, setPlaceholderPrice] = useState(""); //ส่ง Placeholder ราคา
   const [placeholderVolume, setPlaceholderVolume] = useState(""); //ส่ง Placeholder จำนวน
-  const [placeholderImage, setPlaceholderImage] = useState("");//ส่ง Placeholder รูป
+  const [placeholderImage, setPlaceholderImage] = useState(""); //ส่ง Placeholder รูป
 
   //Modal การลบสินค้า
   const [isDelelteModalOpen, setDelelteModalOpen] = useState(false);
@@ -40,7 +40,7 @@ function OutStockProducts({ outStockProducts, loading ,fetchProducts}) {
    เก็บ name เพื่อไปทำเป็น placeholder ใน modal
    ****************************************/
 
-  function editClick(_id, n , p , v ,i) {
+  function editClick(_id, n, p, v, i) {
     setIsEditModalOpen(!isEditModalOpen);
     openEditModal();
     setIdEdit(_id);
@@ -89,11 +89,10 @@ function OutStockProducts({ outStockProducts, loading ,fetchProducts}) {
   /****** Fetch สินค้าทุกครั้งที่มีการเปลี่ยนแปลง *******/
   useEffect(() => {
     document.title = "POSYAYEE 🛒 สินค้าใกล้จะหมด";
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   });
 
   /********************************************/
-  const imgKey = import.meta.env.VITE_IMG_KEY;
 
   return (
     <div>
@@ -107,9 +106,9 @@ function OutStockProducts({ outStockProducts, loading ,fetchProducts}) {
           style={{ maxHeight: "calc(100vh - 12rem)" }}
         >
           {outStockProducts.map((product, index) => (
-            <div key={product._id} className="mt-1 pl-4">
+            <div key={product._id} className="pl-4">
               <table
-                className={`w-full text-center h-[3rem] rounded-md ${
+                className={`w-full text-center h-[3rem] rounded-md hover:bg-[#E4E3FF] cursor-pointer ${
                   index % 2 !== 0 ? "bg-[#d9d9d91a]" : "bg-white"
                 }`}
               >
@@ -124,7 +123,7 @@ function OutStockProducts({ outStockProducts, loading ,fetchProducts}) {
                     >
                       <div className="flex gap-2 items-center overflow-hidden">
                         <img
-                          src={`${imgKey}${product.image}`}
+                          src={`${product.image}`}
                           className="w-[50px] h-[40px] object-cover rounded-md"
                           alt=""
                         />
@@ -135,10 +134,10 @@ function OutStockProducts({ outStockProducts, loading ,fetchProducts}) {
                       style={{
                         width: "5%",
                         borderLeft: "2px solid #ffff",
-                        fontWeight: "normal",
+                        fontWeight: "bold",
                       }}
                     >
-                      {product.price}
+                      ฿{product.price}
                     </th>
                     <th
                       style={{
@@ -146,7 +145,7 @@ function OutStockProducts({ outStockProducts, loading ,fetchProducts}) {
                         borderLeft: "2px solid #ffff",
                         fontWeight: "bolder",
                         color: "#4C49ED",
-                        fontSize: "22px",
+                        fontSize: "25px",
                       }}
                     >
                       {product.volume == null ? (
@@ -191,7 +190,15 @@ function OutStockProducts({ outStockProducts, loading ,fetchProducts}) {
                       <ul className="flex justify-center gap-3">
                         <button
                           className=" hover:scale-110"
-                          onClick={() => editClick(product._id, product.name,product.price,product.volume,product.image)}
+                          onClick={() =>
+                            editClick(
+                              product._id,
+                              product.name,
+                              product.price,
+                              product.volume,
+                              product.image
+                            )
+                          }
                         >
                           <AiFillEdit size={30} color="#36454f" />
                         </button>
@@ -226,9 +233,9 @@ function OutStockProducts({ outStockProducts, loading ,fetchProducts}) {
         confirmEdit={confirmEdit}
         _id={idEdit}
         placeholderName={placeholderName}
-        placeholderPrice = {placeholderPrice}
-        placeholderVolume = {placeholderVolume}
-        placeholderImage = {placeholderImage}
+        placeholderPrice={placeholderPrice}
+        placeholderVolume={placeholderVolume}
+        placeholderImage={placeholderImage}
         fetchProducts={fetchProducts}
       />
       {/* ส่ง prob ไปใช้ที่ EditProduct.jsx 

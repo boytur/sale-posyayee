@@ -3,8 +3,10 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { config } from "../../../../config";
+import "./loading.css";
 
 const AddNewProduct = () => {
+  const [download, setSetDownload] = useState(false);
   const [isPreviewImg, setIsPreviewImg] = useState(
     "https://placehold.co/600x400/EEE/31343C"
   );
@@ -16,7 +18,7 @@ const AddNewProduct = () => {
     barcode: "",
     file: null,
   });
-  
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setFormData({
@@ -36,7 +38,6 @@ const AddNewProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (formData.barcode && formData.barcode.length !== 13) {
       Swal.fire({
         icon: "error",
@@ -63,23 +64,25 @@ const AddNewProduct = () => {
 
     const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
     try {
+      setSetDownload(true);
       const formDataForUpload = new FormData();
       formDataForUpload.append("name", formData.name);
       formDataForUpload.append("price", formData.price);
       formDataForUpload.append("volume", formData.volume);
       formDataForUpload.append("barcode", formData.barcode);
-      formDataForUpload.append("file", formData.file);
+      formDataForUpload.append("image", formData.file);
 
       const response = await axios.post(
         `${API_KEY}/add-product`,
-        formDataForUpload,config
-      );
-
+        formDataForUpload,
+        config
+      )
       Swal.fire({
         icon: "success",
         title: response.data.message,
         timer: 3000,
       });
+      setSetDownload(false);
 
       setFormData({
         name: "",
@@ -96,8 +99,7 @@ const AddNewProduct = () => {
         title: error.response.data.error,
         timer: 5000,
       });
-
-      console.error(error);
+      setSetDownload(false);
     }
   };
 
@@ -257,10 +259,11 @@ const AddNewProduct = () => {
             </div>
           </div>
         </div>
-        <div className="w-full flex justify-end mt-10">
+        <div className="w-full flex justify-end mt-10  relative">
+          <span className={`loader ${download ? "" : "hidden"}`}></span>
           <button
             type="submit"
-            className="w-[10rem] cursor-pointer hover:scale-105 bg-[#4C49ED] text-white border h-[3.5rem] rounded-md hover:bg-[#4c49edc4]"
+            className="w-full cursor-pointer relative bg-[#4C49ED] text-white border h-[3.5rem] rounded-md hover:bg-[#4c49edc4]"
           >
             บันทึกข้อมูล
           </button>

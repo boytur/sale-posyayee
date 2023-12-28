@@ -92,7 +92,7 @@ function AllProducts({ allProducts, loading,fetchProducts }) {
   },[]);
 
   /********************************************/
-  const imgKey = import.meta.env.VITE_IMG_KEY;
+
   return (
     <div>
       {loading ? (
@@ -105,9 +105,9 @@ function AllProducts({ allProducts, loading,fetchProducts }) {
           style={{ maxHeight: "calc(100vh - 12rem)" }}
         >
           {allProducts.map((product, index) => (
-            <div key={product._id} className="mt-1 pl-4">
+            <div key={product._id} className="pl-4">
               <table
-                className={`w-full text-center h-[3rem] rounded-md ${
+                className={`w-full text-center h-[3rem] rounded-md hover:bg-[#E4E3FF] cursor-pointer ${
                   index % 2 !== 0 ? "bg-[#d9d9d91a]" : "bg-white"
                 }`}
               >
@@ -122,7 +122,7 @@ function AllProducts({ allProducts, loading,fetchProducts }) {
                     >
                       <div className="flex gap-2 items-center overflow-hidden">
                         <img
-                          src={`${imgKey}${product.image}`}
+                          src={`${product.image}`}
                           className="w-[50px] h-[40px] object-cover rounded-md"
                           alt=""
                         />
@@ -133,10 +133,10 @@ function AllProducts({ allProducts, loading,fetchProducts }) {
                       style={{
                         width: "5%",
                         borderLeft: "2px solid #ffff",
-                        fontWeight: "normal",
+                        fontWeight: "bold",
                       }}
                     >
-                      {product.price}
+                      ฿{product.price}
                     </th>
                     <th
                       style={{
@@ -144,7 +144,7 @@ function AllProducts({ allProducts, loading,fetchProducts }) {
                         borderLeft: "2px solid #ffff",
                         fontWeight: "bolder",
                         color: "#4C49ED",
-                        fontSize: "22px",
+                        fontSize: "25px",
                       }}
                     >
                       {product.volume === null ? (

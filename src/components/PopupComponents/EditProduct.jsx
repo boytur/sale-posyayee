@@ -67,7 +67,7 @@ function EditProduct({
       formDataUpload.append("price", formData.price);
       formDataUpload.append("volume", formData.volume);
       formDataUpload.append("barcode", formData.barcode);
-      formDataUpload.append("file", formData.file);
+      formDataUpload.append("image", formData.file);
       formDataUpload.append("_id", _id);
 
       const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;

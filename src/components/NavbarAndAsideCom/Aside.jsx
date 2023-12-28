@@ -1,11 +1,10 @@
 // eslint-disable-next-line no-unused-vars
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GoHomeFill } from "react-icons/go";
 import { BsFillDatabaseFill, BsDatabaseFillAdd } from "react-icons/bs";
 import { IoMdAnalytics } from "react-icons/io";
 import { Link } from "react-router-dom";
-import userPic from "../../assets/img/user.png";
 import { FaBars } from "react-icons/fa";
 
 let userName = "";
@@ -15,7 +14,9 @@ function Aside() {
 
   // กำหนดปุ่มที่เป็น "active" ตามเส้นทางปัจจุบัน
   const getActiveButton = (route) => {
-    return location.pathname === route ? "bg-[#E4E3FF] text-[#4C49ED]" : "";
+    return location.pathname === route
+      ? "bg-[#E4E3FF] text-[#4C49ED] rounded-sm border-r-4 border-[#4C49ED]"
+      : "";
   };
 
   // ฟังก์ชันสำหรับการนำทางไปยังเส้นทางอื่น ๆ
@@ -31,20 +32,19 @@ function Aside() {
   });
 
   return (
-    <div className="bg-white md:w-[20rem] lg:w-[20rem] hidden full text-[#646771] h-[100vh] md:flex">
-      <div className="p-3 pt-2">
-        <Link
-          to="/sale-products"
+    <div className="bg-white w-[12rem] hidden text-[#646771] h-[100vh] md:flex">
+      <div className="w-full mt-3">
+        <div
           className="flex items-center gap-1 w-full justify-center"
         >
-          <h1 className="font-bold text-[2.7rem] text-black flex items-center">
-            <FaBars size={32} color="#4C49ED" />
-            <span className="text-[#4C49ED]">POS</span>YAYEE
+          <h1 className="font-bold text-[2rem] text-black flex items-center p-1">
+            <FaBars size={29} color="#4C49ED" className="mt-1"/>
+            <Link to="/sale-products"><span className="text-[#4C49ED]">POS</span>YAYEE</Link>
           </h1>
-        </Link>
-        <div className=" flex justify-start h-[6rem] mt-10">
+        </div>
+        <div className="flex justify-start h-[4rem] w-full mt-3">
           <button
-            className={`flex gap-2 items-center text-[1.3rem] font-semibold w-full p-12 rounded-lg ${getActiveButton(
+            className={`flex gap-2 items-center text-[1rem] font-semibold w-full justify-start pl-4 ${getActiveButton(
               "/sale-products"
             )}`}
             onClick={() => handleNavigate("/sale-products")}
@@ -53,9 +53,9 @@ function Aside() {
             <p>ขายของหน้าร้าน</p>
           </button>
         </div>
-        <div className="flex justify-start h-[6rem]">
+        <div className="flex justify-start h-[4rem] w-full">
           <button
-            className={`flex gap-2 items-center text-[1.3rem] font-semibold w-full p-12 rounded-lg ${getActiveButton(
+            className={`flex gap-2 items-center text-[1rem] font-semibold w-full justify-start pl-4 rounded-lg ${getActiveButton(
               "/view-stock"
             )}`}
             onClick={() => handleNavigate("/view-stock")}
@@ -64,9 +64,9 @@ function Aside() {
             <p>ดูสต็อกสินค้า</p>
           </button>
         </div>
-        <div className="flex justify-start h-[6rem]">
+        <div className=" flex justify-start h-[4rem]">
           <button
-            className={`flex gap-2 items-center text-[1.3rem] font-semibold w-full p-12 rounded-lg ${getActiveButton(
+            className={`flex gap-2 items-center text-[1rem] font-semibold w-full justify-start pl-4 rounded-lg ${getActiveButton(
               "/add-product"
             )}`}
             onClick={() => handleNavigate("/add-product")}
@@ -75,9 +75,9 @@ function Aside() {
             <p>เพิ่มสต็อกสินค้า</p>
           </button>
         </div>
-        <div className="flex justify-start h-[6rem]">
+        <div className=" flex justify-start h-[4rem]">
           <button
-            className={`flex gap-2 items-center text-[1.3rem] font-semibold w-full p-12 rounded-lg ${getActiveButton(
+            className={`flex gap-2 items-center text-[1rem] font-semibold w-full justify-start pl-4 rounded-lg ${getActiveButton(
               "/analysis"
             )}`}
             onClick={() => handleNavigate("/analysis")}
@@ -85,18 +85,6 @@ function Aside() {
             <IoMdAnalytics size={20} />
             <p>วิเคราะห์ยอดขาย</p>
           </button>
-        </div>
-        <div className="p-6"
-          style={{ height: "calc(100vh - 33rem)" }}>
-            <div className="flex items-center relative top-[90%]">
-            <div>
-            <img src={userPic} className="w-[30px] h-[30]" alt="user" />
-          </div>
-          <div className="font-semibold flex pl-2 text-sm">
-            <h1>สวัสดี</h1>
-            <h1>, {userName}</h1>
-          </div>
-            </div>
         </div>
       </div>
     </div>

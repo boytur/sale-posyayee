@@ -172,7 +172,7 @@ function Scan({ cart, setCart }) {
     }
   };
 
-  const imgKey = import.meta.env.VITE_IMG_KEY;
+
   return (
     <div className=" h-full w-[40%] flex justify-center relative bg-white">
       {loadingWhilePayMoney ? <LoadingWhilePayMoney /> : " "}
@@ -224,7 +224,7 @@ function Scan({ cart, setCart }) {
                       >
                         <div className="flex gap-2 items-center overflow-hidden">
                           <img
-                            src={`${imgKey}${item.image}`}
+                            src={`${item.image}`}
                             className="w-[40px] h-[40px] object-cover rounded-sm"
                             alt=""
                           />
@@ -234,19 +234,18 @@ function Scan({ cart, setCart }) {
                       <th
                         style={{
                           width: "15%",
-                          fontWeight: "normal",
-                          color: "#4C49ED",
-                          fontSize: "25px",
                           fontWeight: "bold",
+                          color: "#4C49ED",
+                          fontSize: "20px",
                         }}
                       >
-                        {item.price}
+                        ฿{item.price}
                       </th>
                       <th
                         style={{
                           width: "5%",
                           fontWeight: "normal",
-                          fontSize: "25px",
+                          fontSize: "20px",
                           fontWeight: "bold",
                         }}
                       >
@@ -279,7 +278,7 @@ function Scan({ cart, setCart }) {
             <p>ราคารวม</p>
           </div>
           <div className="text-[2.5rem] text-[#4C49ED] pr-4 flex">
-            <p className="font-semibold">{totalPriceCommas}.00</p>
+            <p className="font-bold">{totalPriceCommas}.00</p>
             <p>&nbsp;฿</p>
           </div>
         </div>

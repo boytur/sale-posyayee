@@ -99,7 +99,6 @@ function AddBySearch({ productsNobarcode }) {
       }
     }
   }
-  const imgKey = import.meta.env.VITE_IMG_KEY;
   return (
     // เพิ่มสินค้าด้วยการค้นหา
     <div className="flex flex-wrap -mx-3 mb-2 mt-3">
@@ -141,7 +140,7 @@ function AddBySearch({ productsNobarcode }) {
               >
                 <div className="md:w-[5rem] h-full srounded-md justify-center flex items-center">
                   <img
-                    src={`${imgKey}${p.image}`}
+                    src={`${p.image}`}
                     className="w-[5rem] h-[5.2rem] object-cover rounded-md"
                     alt=""
                   />
@@ -190,7 +189,7 @@ function AddBySearch({ productsNobarcode }) {
                     <img
                       className=" w-full h-full object-cover rounded-md border-none"
                       src={
-                        productsSearch.length > 0 ? `${imgKey}${productsSearch[0].image}` : ""
+                        productsSearch.length > 0 ? `${productsSearch[0].image}` : ""
                       }
                       alt=""
                     />

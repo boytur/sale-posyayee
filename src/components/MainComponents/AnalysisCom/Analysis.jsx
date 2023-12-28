@@ -139,16 +139,16 @@ function Analysis() {
   let allSaleToday = parseInt(salesData.day1 + salesData.creditSale);
   return (
     <div>
-      <div className="flex w-full h-full">
+      <div className="flex">
         <Aside />
-        <div className="w-[80%] flex flex-col pl-4 pt-2">
+        <div className="w-full flex flex-col pl-4 pt-2">
           <div className="w-full font-semibold items-center flex  mt-2">
             <div>
               <h1 className=" text-[#4C49ED] text-[32px]">วิเคราะห์ยอดขาย</h1>
             </div>
           </div>
-          <div className="w-full h-full flex">
-            <div className="w-[70%] h-full gap-3 flex items-center flex-wrap">
+          <div className="w-full h-full flex mt-3">
+            <div className="w-[70%] h-full gap-3 flex items-center flex-wrap max-h-0">
               <div className="w-[32%] rounded-md flex-col bg-[#FFE2E5]">
                 <div className="flex-col w-full  text-center mt-4 mb-2">
                   <div className=" flex justify-center">
@@ -264,15 +264,15 @@ function Analysis() {
                 </div>
               </div>
             </div>
-            <div className="w-[20rem] flex justify-center items-center">
+            <div className="w-[20rem] flex justify-center">
               <PolarArea data={dataCashWithCredit}/>
             </div>
           </div>
-          <div className="flex pr-5">
-            <div className="w-[50%] h-[18rem] mt-3">
+          <div className="flex">
+            <div className="w-[40rem]">
               <Line data={data} />
             </div>
-            <div className="w-[50%] h-[18rem] mt-3">
+            <div className="w-[40rem]">
               <Bar data={barData} />
             </div>
           </div>

@@ -62,7 +62,7 @@ function Stock() {
       <div className="flex w-full h-full">
         {/* Import Aside มาใช้ */}
         <Aside />
-        <div className="w-[85%] flex flex-col pl-1 pt-2">
+        <div className="w-full flex flex-col pl-1 pt-2">
           <div className="w-full h-[4rem] text-[#4C49ED] text-[32px] font-semibold items-center flex pl-4 ">
             <div>
               <h1>สินค้าในสต็อก</h1>

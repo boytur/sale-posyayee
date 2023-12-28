@@ -25,10 +25,9 @@ import { BiSearchAlt } from "react-icons/bi";
 import { RiAddCircleFill } from "react-icons/ri";
 import useBarcodeScanner from "../../../services/useBarcodeScanner";
 import productNotFoundSound from "../../../assets/Sounds/Productnotfound.mp3";
-import beepSound from '../../../assets/Sounds/Barcode-scanner-beep-sound.mp3'
-import {config} from "../../../../config";
+import beepSound from "../../../assets/Sounds/Barcode-scanner-beep-sound.mp3";
+import { config } from "../../../../config";
 import axios from "axios";
-
 
 function Sale() {
   const [products, setProducts] = useState([]); //รอเก็บข้อมูลเข้า Array products
@@ -59,13 +58,14 @@ function Sale() {
   const API_KEY = import.meta.env.VITE_POSYAYEE_API_KEY;
   // Fetch API สินค้าทั้งหมด
   const fetchProducts = () => {
-    axios.get(`${API_KEY}/view-product`, config)
+    axios
+      .get(`${API_KEY}/view-product`, config)
       .then((response) => response.data)
       .then((data) => {
         setProducts(data.products);
         setIsLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("err", err);
       });
   };
@@ -106,18 +106,16 @@ function Sale() {
     } else {
       console.log("ไม่พบสินค้า!");
       new Audio(productNotFoundSound).play();
-
     }
   };
   useBarcodeScanner(handleBarcodeScan);
-  const imgKey = import.meta.env.VITE_IMG_KEY;
 
-  const playBeepSound = ()=>{
+  const playBeepSound = () => {
     new Audio(beepSound).play();
-  }
+  };
 
   return (
-    <div style={{userSelect: "none"}}>
+    <div style={{ userSelect: "none" }}>
       <div className="flex relative">
         {/* การแจ้งเตือน */}
         <ToastContainer
@@ -134,9 +132,9 @@ function Sale() {
         />
         {/* Import Aside มาใช้ */}
         <Aside />
-        <div className="w-[40%]">
+        <div className="w-full ml-1">
           {/* Search box */}
-          <div className="w-full h-[5rem] flex justify-center items-center bg-white px-1 pr-6">
+          <div className="w-full h-[5rem] flex justify-center items-center bg-[white] px-1 pr-6">
             <div className="w-full  h-[50px] rounded-[16px] flex items-center relative">
               <BiSearchAlt size={30} className="z-20 text-[#737791] pl-2" />
               <input
@@ -168,7 +166,7 @@ function Sale() {
                       <div className=" w-[80px] p-2 h-[60px] flex items-center">
                         <img
                           className=" object-cover w-full h-full rounded-md"
-                          src={`${imgKey}${product.image}`} 
+                          src={`${product.image}`}
                           alt=""
                         />
                       </div>
@@ -192,7 +190,7 @@ function Sale() {
             </div>
           </div>
           <div
-            className="flex bg-white flex-wrap justify-center full overflow-y-scroll gap-1"
+            className="flex bg-[white] flex-wrap justify-center overflow-y-scroll gap-1"
             style={{ height: "calc(100vh - 5rem)" }}
           >
             {/* ถ้ายังโหลดให้แสดงหน้าโหลด ถ้าไม่ ให้แสดงข้อมูล*/}
@@ -204,7 +202,9 @@ function Sale() {
                 <div
                   key={product._id}
                   className="w-[150px]"
-                  onClick={() => {addProduct(product) , playBeepSound()}}
+                  onClick={() => {
+                    addProduct(product), playBeepSound();
+                  }}
                 >
                   <div
                     className="border mt-2 h-[200px] grid rounded-md bg-white cursor-pointer hover:border-[3px] 
@@ -212,14 +212,14 @@ function Sale() {
                   >
                     <img
                       className="h-[8rem] object-cover rounded-lg p-1 w-full"
-                      src={`${imgKey}${product.image}`}
+                      src={`${product.image}`}
                       alt={product.name}
                     />
                     <div className="text-left pl-2 pt-3 overflow-hidden h-[2.1rem] text-sm">
                       <p>{product.name}</p>
                     </div>
                     <div className="font-bold text-[#4C49ED] pl-2 text-[20px]">
-                      <h1>{product.price.toFixed(2)} ฿</h1>
+                      <h1>฿{product.price.toFixed(2)}</h1>
                     </div>
                   </div>
                 </div>
